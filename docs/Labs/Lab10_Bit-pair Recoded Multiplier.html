@@ -1,0 +1,754 @@
+<!DOCTYPE html> <html lang="en-US"> <head> <meta charset="UTF-8"> <meta http-equiv="X-UA-Compatible" content="IE=Edge"> <link rel="stylesheet" href="/ParallelProgrammingLabs/assets/css/just-the-docs-default.css"> <link rel="stylesheet" href="/ParallelProgrammingLabs/assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet"> <style id="jtd-nav-activation"> .site-nav > ul.nav-list:first-child > li > a, .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(10)) > a, .site-nav > ul.nav-list:first-child > li > ul > li > ul > li > a { background-image: none; } .site-nav > ul.nav-list:not(:first-child) a, .site-nav li.external a { background-image: none; } .site-nav > ul.nav-list:first-child > li:nth-child(4) > ul > li:nth-child(10) > a { font-weight: 600; text-decoration: none; }.site-nav > ul.nav-list:first-child > li:nth-child(4) > button svg, .site-nav > ul.nav-list:first-child > li:nth-child(4) > ul > li:nth-child(10) > button svg { transform: rotate(-90deg); }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(4) > ul.nav-list, .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(4) > ul.nav-list > li.nav-list-item:nth-child(10) > ul.nav-list { display: block; } </style> <script src="/ParallelProgrammingLabs/assets/js/vendor/lunr.min.js"></script> <script src="/ParallelProgrammingLabs/assets/js/just-the-docs.js"></script> <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- Begin Jekyll SEO tag v2.8.0 --> <title>Lab10 | FPGA/SoC/Verilog/HLS</title> <meta name="generator" content="Jekyll v4.3.3" /> <meta property="og:title" content="Lab10" /> <meta property="og:locale" content="en_US" /> <meta name="description" content="FPGA, SoC, Verilog, and HLS labs" /> <meta property="og:description" content="FPGA, SoC, Verilog, and HLS labs" /> <link rel="canonical" href="https://wei-nextlab.github.io/ParallelProgrammingLabs/docs/Labs/Lab10_Bit-pair%20Recoded%20Multiplier.html" /> <meta property="og:url" content="https://wei-nextlab.github.io/ParallelProgrammingLabs/docs/Labs/Lab10_Bit-pair%20Recoded%20Multiplier.html" /> <meta property="og:site_name" content="FPGA/SoC/Verilog/HLS" /> <meta property="og:type" content="website" /> <meta name="twitter:card" content="summary" /> <meta property="twitter:title" content="Lab10" /> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"WebPage","description":"FPGA, SoC, Verilog, and HLS labs","headline":"Lab10","url":"https://wei-nextlab.github.io/ParallelProgrammingLabs/docs/Labs/Lab10_Bit-pair%20Recoded%20Multiplier.html"}</script> <!-- End Jekyll SEO tag --> </head> <body> <a class="skip-to-main" href="#main-content">Skip to main content</a> <svg xmlns="http://www.w3.org/2000/svg" class="d-none"> <symbol id="svg-link" viewBox="0 0 24 24"> <title>Link</title> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"> <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path> </svg> </symbol> <symbol id="svg-menu" viewBox="0 0 24 24"> <title>Menu</title> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"> <line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line> </svg> </symbol> <symbol id="svg-arrow-right" viewBox="0 0 24 24"> <title>Expand</title> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"> <polyline points="9 18 15 12 9 6"></polyline> </svg> </symbol> <!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE --> <symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"> <title id="svg-external-link-title">(external link)</title> <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line> </symbol> <symbol id="svg-doc" viewBox="0 0 24 24"> <title>Document</title> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"> <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline> </svg> </symbol> <symbol id="svg-search" viewBox="0 0 24 24"> <title>Search</title> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"> <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line> </svg> </symbol> <!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md --> <symbol id="svg-copy" viewBox="0 0 16 16"> <title>Copy</title> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16"> <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/> <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/> </svg> </symbol> <symbol id="svg-copied" viewBox="0 0 16 16"> <title>Copied</title> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16"> <path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/> <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/> </svg> </symbol> </svg> <div class="side-bar"> <div class="site-header" role="banner"> <a href="/ParallelProgrammingLabs/" class="site-title lh-tight"> FPGA/SoC/Verilog/HLS </a> <button id="menu-button" class="site-button btn-reset" aria-label="Toggle menu" aria-pressed="false"> <svg viewBox="0 0 24 24" class="icon" aria-hidden="true"><use xlink:href="#svg-menu"></use></svg> </button> </div> <nav aria-label="Main" id="site-nav" class="site-nav"> <ul class="nav-list"><li class="nav-list-item"><a href="/ParallelProgrammingLabs/" class="nav-list-link">Home</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Preparation category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/ParallelProgrammingLabs/docs/Vitis_HLS_Tutor/" class="nav-list-link">Preparation</a><ul class="nav-list"><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Vitis_HLS_Tutor/Install_Vitis.html" class="nav-list-link">Install Vitis</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Vitis_HLS_Tutor/Create_Vitis_HLS_Prj.html" class="nav-list-link">Create Vitis HLS Project</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Vitis_HLS_Tutor/Generating_bitstream_in_Vivado.html" class="nav-list-link">Generating Bitstream in Vivado</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Vitis_HLS_Tutor/Deploying_the_Adder_on_FPGA.html" class="nav-list-link">Deploying the Adder on FPGA</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Verilog Labs (Basics) category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/" class="nav-list-link">Verilog Labs (Basics)</a><ul class="nav-list"><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/Lab1_Modeling_Concepts.html" class="nav-list-link">Lab1</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/Lab2_Addition.html" class="nav-list-link">Lab2</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/Lab3_Multi-Output%20Circuits.html" class="nav-list-link">Lab3</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/Lab4_Tasks,%20Functions,%20and%20Testbench%20.html" class="nav-list-link">Lab4</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/Lab5_Modeling%20Latches%20and%20Flip-flops%20.html" class="nav-list-link">Lab5</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/Lab6_Modeling%20Registers%20and%20Counters%20.html" class="nav-list-link">Lab6</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/Lab7_Behavioral%20Modeling%20and%20Timing%20Constraints.html" class="nav-list-link">Lab7</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/Lab8_Architectural%20Wizard%20and%20IP%20Catalog.html" class="nav-list-link">Lab8</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/Lab9_Counters,%20Timers%20and%20Real-Time%20Clock.html" class="nav-list-link">Lab9</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/Lab10_Finite%20State%20Machines%20.html" class="nav-list-link">Lab10</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/Lab11_Sequential%20System%20Design%20Using%20ASM%20Charts%20.html" class="nav-list-link">Lab11</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in FPGA/SoC Labs category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/ParallelProgrammingLabs/docs/Labs/" class="nav-list-link">FPGA/SoC Labs</a><ul class="nav-list"><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Labs/Lab1_led.html" class="nav-list-link">Lab1</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Labs/Lab2_uart.html" class="nav-list-link">Lab2</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Labs/Lab3_IO_Planning.html" class="nav-list-link">Lab3</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Labs/Lab4_ILA.html" class="nav-list-link">Lab4</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Labs/Lab5_IPI.html" class="nav-list-link">Lab5</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Labs/Lab6_DMA.html" class="nav-list-link">Lab6</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Labs/Lab7_Fibonacci_sp.html" class="nav-list-link">Lab7</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Labs/Lab8_State_Machines.html" class="nav-list-link">Lab8</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Labs/Lab9_Simple_Processor.html" class="nav-list-link">Lab9</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Labs/Lab10_Bit-pair%20Recoded%20Multiplier.html" class="nav-list-link">Lab10</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in HLS Labs category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/ParallelProgrammingLabs/docs/HLS_Labs/" class="nav-list-link">HLS Labs</a><ul class="nav-list"><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab1.html" class="nav-list-link">Lab1</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab2.html" class="nav-list-link">Lab2</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab3.html" class="nav-list-link">Lab3</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab4.html" class="nav-list-link">Lab4</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab5.html" class="nav-list-link">Lab5</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab6.html" class="nav-list-link">Lab6</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab7.html" class="nav-list-link">Lab7</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab8.html" class="nav-list-link">Lab8</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab9.html" class="nav-list-link">Lab9</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab10.html" class="nav-list-link">Lab10</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab11.html" class="nav-list-link">Lab11</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab12.html" class="nav-list-link">Lab12</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab13.html" class="nav-list-link">Lab13</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab14.html" class="nav-list-link">Lab14</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab15.html" class="nav-list-link">Lab15</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab16.html" class="nav-list-link">Lab16</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab17.html" class="nav-list-link">Lab17</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab18.html" class="nav-list-link">Lab18</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab19.html" class="nav-list-link">Lab19</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab20.html" class="nav-list-link">Lab20</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab21.html" class="nav-list-link">Lab21</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab22.html" class="nav-list-link">Lab22</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab23.html" class="nav-list-link">Lab23</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab24.html" class="nav-list-link">Lab24</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab25.html" class="nav-list-link">Lab25</a></li></ul></li></ul> </nav> <footer class="site-footer"> This site uses <a href="https://github.com/just-the-docs/just-the-docs">Just the Docs</a>, a documentation theme for Jekyll. </footer> </div> <div class="main" id="top"> <div id="main-header" class="main-header"> <div class="search" role="search"> <div class="search-input-wrap"> <input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search FPGA/SoC/Verilog/HLS" aria-label="Search FPGA/SoC/Verilog/HLS" autocomplete="off"> <label for="search-input" class="search-label"><svg viewBox="0 0 24 24" class="search-icon"><use xlink:href="#svg-search"></use></svg></label> </div> <div id="search-results" class="search-results"></div> </div> <nav aria-label="Auxiliary" class="aux-nav"> <ul class="aux-nav-list"> <li class="aux-nav-list-item"> <a href="https://github.com/wei-nextlab/ParallelProgrammingLabs" class="site-button" > GitHub Repository </a> </li> </ul> </nav> </div> <div class="main-content-wrap"> <nav aria-label="Breadcrumb" class="breadcrumb-nav"> <ol class="breadcrumb-nav-list"> <li class="breadcrumb-nav-list-item"><a href="/ParallelProgrammingLabs/docs/Labs/">FPGA/SoC Labs</a></li> <li class="breadcrumb-nav-list-item"><span>Lab10</span></li> </ol> </nav> <div id="main-content" class="main-content"> <main> <h1 id="lab10_bit-pair-recoded-multiplier"> <a href="#lab10_bit-pair-recoded-multiplier" class="anchor-heading" aria-labelledby="lab10_bit-pair-recoded-multiplier"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Lab10_Bit-pair Recoded Multiplier </h1> <h2 id="lab-overview"> <a href="#lab-overview" class="anchor-heading" aria-labelledby="lab-overview"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Lab Overview </h2> <p>In this lab, you will implement a Bit-pair Recoded fixed point multiplier in Verilog. The top-level entity should be a structural design, and all lower-level components should be kept completely modular and use Verilog parameters. The processor should be tested in Vivado Simulator with appropriate testbench(es) that test for all cases (+/- and varying ranges) in an 8-bit multiplier. You will map your top-level entity to the board using a shortened 4-bit version of the multiplier.</p> <h2 id="multiplier-design"> <a href="#multiplier-design" class="anchor-heading" aria-labelledby="multiplier-design"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Multiplier Design </h2> <p>You are to design an N-bit shift-add multiplier using bit-pair recoding. Each component in the design should be a separate module that you will connect to your top-level structural entity. You must set the design to 4 bits to program it to the board and 8 bits when performing test bench simulations.</p> <p>Model your design based on the figure below. Multiplication will begin when the start signal is high, and the busy signal is low (note, busy and done are set by the state machine, <strong>Ctrl</strong>). The system will multiply through the following steps:</p> <ul> <li> <p>1) Load the <em>multiplicand</em> and <em>multiplier</em> into their corresponding registers and activate the <em>busy</em> signal.</p> </li> <li> <p>2) Iteratively perform N/2 add/shift cycles. (N is the number of bits in the multiplicand and multiplier)</p> </li> <li> <p>3) Activate the <em>done</em> signal in the last clock cycle when the product is on the output.</p> </li> <li> <p>4) Deactivate the <em>busy</em> and <em>done</em> signals while the machine waits for the next multiplication.</p> </li> </ul> <div align="center"><img src="imgs/v2/18.png" alt="drawing" width="600" /></div> <h2 id="understanding-multiplication"> <a href="#understanding-multiplication" class="anchor-heading" aria-labelledby="understanding-multiplication"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Understanding Multiplication </h2> <p>This multiplier utilizes a very similar algorithm to the one we typically learn in grade school but for binary numbers. This algorithm works by partitioning the multiplier into its distinct digits and then iteratively performing (multiply =&gt; add =&gt; shifts) until all the digits of the multiplier have been used. Compare the following decimal and binary multiplication algorithms.</p> <div align="center"><img src="imgs/v2/19.png" alt="drawing" width="600" /></div> <p>Moving to binary multiplication there are a few things we need to consider.</p> <ul> <li> <p>1) Recoding – Rather than directly multiplying by the binary digit, we use booth encoding to determine the digit (-2, -1, 0, 1, 2) to multiply by.</p> </li> <li> <p>2) Shift – Shift by two binary digits rather than one. This implies N/2 iterations of the algorithm rather than N.</p> </li> <li> <p>3) Signs – The sign of a binary number is indicated by the leading digit rather than a <code class="language-plaintext highlighter-rouge">-</code> sign. Ensure that your values are preserved while performing shifts and additions. For example, in the 2nd Add, adding 2 negative numbers should never be positive; however, if we do not sign the extension properly, our leading bit will be 0. This is a common issue.</p> </li> </ul> <h2 id="implementation-details"> <a href="#implementation-details" class="anchor-heading" aria-labelledby="implementation-details"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Implementation Details </h2> <p>Most of the components in this design should be fairly familiar to you by now. However, this design is fairly optimized, so here are a few clarifications to help you implement it.</p> <h3 id="multiplication"> <a href="#multiplication" class="anchor-heading" aria-labelledby="multiplication"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Multiplication </h3> <p>This design decomposes the multiplier into a series of {-2, -1, 0, 1, 2} representing it. We do this because multiplying any binary number by these values is super easy to implement. All these implementation requires are shift («), NOT, sign extends, and +1 operations. Of these, the most difficult to perform is the +1. Luckily, since we already have an adder in our design, we can absorb this +1 operation into it. We do this by passing that +1 in as the carry-in bit of the adder when the partial product is added. See the figure for more details.</p> <div align="center"><img src="imgs/v2/20.png" alt="drawing" width="300" /></div> <h3 id="productreg"> <a href="#productreg" class="anchor-heading" aria-labelledby="productreg"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> ProductReg </h3> <p>The product register is optimized to store the product, partial product, and multiplier at different times during the multiplication operation. The accompanying figure depicts how each flip-flop in the register is mapped to the other components. Upon starting a new multiplication, the system will initialize the most significant N+2 bits and the least significant bits of this register with 0’s and bits 1 to N with the multiplier.</p> <div align="center"><img src="imgs/v2/21.png" alt="drawing" width="300" /></div> <p>Then, the three least significant bits will be used to determine the first partial product. This will be added to the running partial product contained in bits N+1 to 2N+1 and stored in bits N+1 to 2N+2. Then, each of the will be shifted rightward in the register, copying the sign bit for the top two bits. This will occur N/2 times until the multiplication is complete. The product will be contained in bits 1 to 2N after completion. The figure below shows how data would move through the Product Register as the product -6 x -5 is computed.</p> <div align="center"><img src="imgs/v2/22.png" alt="drawing" width="600" /></div> <h3 id="ctrl-and-timerreg"> <a href="#ctrl-and-timerreg" class="anchor-heading" aria-labelledby="ctrl-and-timerreg"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Ctrl and TimerReg </h3> <p>Similar to the previous lab, the control unit drives the control signals of the other components to orchestrate the multiplication. However, this time, it also comes with a TimerReg. This is because we know exactly how many add/shift cycles a week need to be completed to compute fixed width multiplication (N/2). This TimerReg is an alarm that signals the control unit is finished and needs to stop the added shift cycle. There are many ways to implement this alarm. But, one of the easiest is to utilize another shift register. When the multiplier starts an operation, this register is initialized to a specific N-bit value such as “100…00” then, after each cycle is completed you shift the bits by 1, “010…00”. After N cycles, the one will have shifted to the right, “000…01”, which can be easily used to send a signal to the controller to tell it to conclude the operation.</p> <h2 id="demoing-on-the-board"> <a href="#demoing-on-the-board" class="anchor-heading" aria-labelledby="demoing-on-the-board"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Demoing on the board </h2> <p>You are to map a 4-bit instance of your top-level entity to the board. You should test 4 different multiplications: (-2 x 7), (6 x 5), (5 x 6), and (4 x -7).</p> <h3 id="add-the-source-file"> <a href="#add-the-source-file" class="anchor-heading" aria-labelledby="add-the-source-file"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Add the source file </h3> <p><strong>shift_reg.v</strong></p> <div class="language-verilog highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">module</span> <span class="n">shift_reg</span> <span class="p">#(</span>
+    <span class="k">parameter</span> <span class="n">N</span> <span class="o">=</span> <span class="mi">8</span>  <span class="c1">// N is the number of bits in the shift register.</span>
+<span class="p">)(</span>
+    <span class="kt">input</span> <span class="n">clk</span><span class="p">,</span>                     <span class="c1">// Clock input: triggers the shifting or setting actions.</span>
+    <span class="kt">input</span> <span class="n">set</span><span class="p">,</span>                     <span class="c1">// Set control: if high, load 'din' into the register.</span>
+    <span class="kt">input</span> <span class="n">shift</span><span class="p">,</span>                   <span class="c1">// Shift control: if high, perform a right shift on the register content.</span>
+    <span class="kt">input</span> <span class="p">[</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">shift_in</span><span class="p">,</span>          <span class="c1">// 2-bit input value to be shifted into the register from the left.</span>
+    <span class="kt">input</span> <span class="p">[</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">din</span><span class="p">,</span>             <span class="c1">// Data input: value to load into the register when 'set' is high.</span>
+    <span class="kt">output</span> <span class="kt">reg</span> <span class="p">[</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">dout</span>        <span class="c1">// Data output: the current value of the shift register.</span>
+<span class="p">);</span>
+    
+    <span class="c1">// Sequential logic block triggered by the rising edge of the clock.</span>
+    <span class="k">always</span> <span class="o">@</span><span class="p">(</span><span class="kt">posedge</span> <span class="n">clk</span><span class="p">)</span> <span class="k">begin</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">set</span> <span class="o">==</span> <span class="mb">1'b1</span><span class="p">)</span> <span class="k">begin</span>
+            <span class="c1">// When 'set' is high, load 'din' into the register.</span>
+            <span class="n">dout</span> <span class="o">&lt;=</span> <span class="n">din</span><span class="p">;</span> 
+        <span class="k">end</span> 
+        <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">shift</span> <span class="o">==</span> <span class="mb">1'b1</span><span class="p">)</span> <span class="k">begin</span>
+            <span class="c1">// When 'shift' is high, perform a right shift of the register content by two bits,</span>
+            <span class="c1">// and insert 'shift_in' in the two bits on the leftmost side.</span>
+            <span class="n">dout</span> <span class="o">&lt;=</span> <span class="o">{</span><span class="n">shift_in</span><span class="p">,</span> <span class="n">dout</span><span class="p">[</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">2</span><span class="p">]</span><span class="o">}</span><span class="p">;</span>  <span class="c1">// Correct for a 2-bit right shift</span>
+        <span class="k">end</span>
+    <span class="k">end</span>
+
+<span class="k">endmodule</span>
+
+
+</code></pre></div></div> <p><strong>MUX_multiplicand.v</strong></p> <div class="language-verilog highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Define a module for a multiplexer that selects one of five multiplicand values.</span>
+<span class="c1">// The width of each multiplicand and the output is parameterizable through N.</span>
+<span class="k">module</span> <span class="n">MUX_multiplicand</span> <span class="p">#(</span><span class="k">parameter</span> <span class="n">N</span> <span class="o">=</span> <span class="mi">8</span><span class="p">)(</span>
+    <span class="kt">input</span> <span class="p">[</span><span class="mi">2</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">sel</span><span class="p">,</span>         <span class="c1">// 3-bit select input to choose which data line is output.</span>
+    <span class="kt">input</span> <span class="p">[</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">x1</span><span class="p">,</span>        <span class="c1">// Multiplicand option +0 (no change).</span>
+    <span class="kt">input</span> <span class="p">[</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">x2</span><span class="p">,</span>        <span class="c1">// Multiplicand option +1 (original value).</span>
+    <span class="kt">input</span> <span class="p">[</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">x3</span><span class="p">,</span>        <span class="c1">// Multiplicand option -1 (two's complement or negated value).</span>
+    <span class="kt">input</span> <span class="p">[</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">x4</span><span class="p">,</span>        <span class="c1">// Multiplicand option +2 (double the original value).</span>
+    <span class="kt">input</span> <span class="p">[</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">x5</span><span class="p">,</span>        <span class="c1">// Multiplicand option -2 (negated double value).</span>
+    <span class="kt">output</span> <span class="kt">reg</span> <span class="p">[</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">y</span>     <span class="c1">// Output of the multiplexer, selected based on `sel`.</span>
+    <span class="p">);</span>
+    
+    <span class="c1">// Combinational logic to select the output based on the select signal.</span>
+    <span class="k">always</span> <span class="o">@</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="k">begin</span>
+        <span class="k">case</span><span class="p">(</span><span class="n">sel</span><span class="p">)</span>
+            <span class="mb">3'b000</span><span class="o">:</span> <span class="n">y</span> <span class="o">=</span> <span class="n">x1</span><span class="p">;</span> <span class="c1">// Selects +0 multiplicand, often used for no operation.</span>
+            <span class="mb">3'b001</span><span class="o">:</span> <span class="n">y</span> <span class="o">=</span> <span class="n">x2</span><span class="p">;</span> <span class="c1">// Selects +1 multiplicand, equivalent to the original number.</span>
+            <span class="mb">3'b101</span><span class="o">:</span> <span class="n">y</span> <span class="o">=</span> <span class="n">x3</span><span class="p">;</span> <span class="c1">// Selects -1 multiplicand, which is the negated original number.</span>
+            <span class="mb">3'b010</span><span class="o">:</span> <span class="n">y</span> <span class="o">=</span> <span class="n">x4</span><span class="p">;</span> <span class="c1">// Selects +2 multiplicand, double the original number.</span>
+            <span class="mb">3'b110</span><span class="o">:</span> <span class="n">y</span> <span class="o">=</span> <span class="n">x5</span><span class="p">;</span> <span class="c1">// Selects -2 multiplicand, negated and double the original number.</span>
+            <span class="c1">// Note: Other case values like 3'b011, 3'b100, and 3'b111 are not covered.</span>
+            <span class="c1">// Depending on the design, you may want to handle these undefined states.</span>
+        <span class="k">endcase</span>    
+    <span class="k">end</span>
+<span class="k">endmodule</span>
+
+</code></pre></div></div> <p><strong>adder.v</strong></p> <div class="language-verilog highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Parameterizable N-bit adder module.</span>
+<span class="k">module</span> <span class="n">adder</span> <span class="p">#(</span><span class="k">parameter</span> <span class="n">N</span> <span class="o">=</span> <span class="mi">8</span><span class="p">)(</span>
+    <span class="kt">input</span> <span class="n">cin</span><span class="p">,</span>                    <span class="c1">// Carry-in input: Adds an extra bit to the sum if set to 1.</span>
+    <span class="kt">input</span> <span class="p">[</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">x0</span><span class="p">,</span>              <span class="c1">// First N-bit input operand.</span>
+    <span class="kt">input</span> <span class="p">[</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">x1</span><span class="p">,</span>              <span class="c1">// Second N-bit input operand.</span>
+    <span class="kt">output</span> <span class="kt">reg</span> <span class="n">extend</span><span class="p">,</span>            <span class="c1">// Output flag for sign extension (carry-out or overflow indication).</span>
+    <span class="kt">output</span> <span class="kt">reg</span> <span class="p">[</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">y</span>          <span class="c1">// N-bit output sum of the inputs.</span>
+<span class="p">);</span>
+
+    <span class="c1">// Combinational logic block to compute the sum.</span>
+    <span class="k">always</span> <span class="o">@</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="k">begin</span>
+        <span class="c1">// If carry-in (cin) is high, add both operands and an additional 1.</span>
+        <span class="c1">// Otherwise, just add the two operands.</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">cin</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="n">x0</span> <span class="o">+</span> <span class="n">x1</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>  <span class="c1">// Add with carry</span>
+        <span class="k">else</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="n">x0</span> <span class="o">+</span> <span class="n">x1</span><span class="p">;</span>      <span class="c1">// Regular addition</span>
+    <span class="k">end</span>
+
+    <span class="c1">// Combinational logic block to determine the need for sign extension.</span>
+    <span class="k">always</span> <span class="o">@</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="k">begin</span>
+        <span class="c1">// Check combinations of the most significant bits (MSBs) of inputs for sign extension.</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">x0</span><span class="p">[</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mb">1'b1</span> <span class="o">&amp;</span> <span class="n">x1</span><span class="p">[</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mb">1'b1</span><span class="p">)</span>
+            <span class="n">extend</span> <span class="o">=</span> <span class="mb">1'b1</span><span class="p">;</span>  <span class="c1">// Both MSBs are 1, indicating potential overflow for positive numbers.</span>
+        <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">x0</span><span class="p">[</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mb">1'b0</span> <span class="o">&amp;</span> <span class="n">x1</span><span class="p">[</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mb">1'b0</span><span class="p">)</span>
+            <span class="n">extend</span> <span class="o">=</span> <span class="mb">1'b0</span><span class="p">;</span>  <span class="c1">// Both MSBs are 0, with no overflow for positive numbers.</span>
+        <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">x0</span><span class="p">[</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mb">1'b1</span> <span class="o">&amp;</span> <span class="n">x1</span><span class="p">[</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mb">1'b0</span><span class="p">)</span>
+            <span class="n">extend</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">];</span>  <span class="c1">// Mixed MSBs, check MSB of result for overflow indication.</span>
+        <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">x0</span><span class="p">[</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mb">1'b0</span> <span class="o">&amp;</span> <span class="n">x1</span><span class="p">[</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mb">1'b1</span><span class="p">)</span>
+            <span class="n">extend</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">];</span>  <span class="c1">// Mixed MSBs, check MSB of result for overflow indication.</span>
+        <span class="k">else</span>
+            <span class="n">extend</span> <span class="o">=</span> <span class="mb">1'b0</span><span class="p">;</span>  <span class="c1">// Default case, should logically never occur due to covered cases.</span>
+    <span class="k">end</span>
+
+<span class="k">endmodule</span>
+</code></pre></div></div> <p><strong>RESET.v</strong></p> <div class="language-verilog highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Module definition for a resettable register.</span>
+<span class="c1">// Parameter N specifies the width of the register.</span>
+<span class="k">module</span> <span class="n">RESET</span> <span class="p">#(</span>
+	<span class="k">parameter</span> <span class="n">N</span> <span class="o">=</span> <span class="mi">8</span>  <span class="c1">// Width of the register and the inputs/outputs.</span>
+<span class="p">)(</span>
+	<span class="kt">input</span> <span class="n">s</span><span class="p">,</span>                <span class="c1">// Reset signal: when high, output follows input; when low, output is cleared.</span>
+	<span class="kt">input</span> <span class="p">[</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">x1</span><span class="p">,</span>       <span class="c1">// Data input: value to be loaded into the register when 's' is high.</span>
+	<span class="kt">output</span> <span class="kt">reg</span> <span class="p">[</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">y</span>    <span class="c1">// Data output: the current value of the register.</span>
+<span class="p">);</span>
+
+    <span class="c1">// The always block triggers on any change of inputs.</span>
+	<span class="k">always</span> <span class="o">@</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> 
+	<span class="k">begin</span>
+		<span class="k">if</span> <span class="p">(</span><span class="n">s</span> <span class="o">==</span> <span class="mb">1'b1</span><span class="p">)</span>
+			<span class="n">y</span> <span class="o">=</span> <span class="n">x1</span><span class="p">;</span>  <span class="c1">// If reset signal 's' is high, load 'x1' into the output 'y'.</span>
+		<span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">s</span> <span class="o">==</span> <span class="mb">1'b0</span><span class="p">)</span>
+			<span class="n">y</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>   <span class="c1">// If reset signal 's' is low, clear the output 'y'.</span>
+	<span class="k">end</span>
+	
+<span class="k">endmodule</span>
+
+
+</code></pre></div></div> <p><strong>MultiReg.v</strong></p> <div class="language-verilog highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Define a module for a multi-functional register with parameterizable width N.</span>
+<span class="k">module</span> <span class="n">MultiReg</span> <span class="p">#(</span>
+    <span class="k">parameter</span> <span class="n">N</span> <span class="o">=</span> <span class="mi">8</span>  <span class="c1">// N is the number of bits in the register.</span>
+<span class="p">)(</span>
+    <span class="kt">input</span> <span class="n">clk</span><span class="p">,</span>                    <span class="c1">// Clock input: triggers the operations within the register.</span>
+    <span class="kt">input</span> <span class="n">set</span><span class="p">,</span>                    <span class="c1">// Set control: if high, load 'din' into the register.</span>
+    <span class="kt">input</span> <span class="n">shift</span><span class="p">,</span>                  <span class="c1">// Shift control: if high, perform a shift operation on the register content.</span>
+    <span class="kt">input</span> <span class="p">[</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">shift_in</span><span class="p">,</span>         <span class="c1">// 2-bit input value to be shifted into the register from the left.</span>
+    <span class="kt">input</span> <span class="p">[</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">din</span><span class="p">,</span>            <span class="c1">// Data input: value to load into the register when 'set' is high.</span>
+    <span class="kt">output</span> <span class="kt">reg</span> <span class="p">[</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">dout</span>       <span class="c1">// Data output: the current value of the register.</span>
+<span class="p">);</span>
+    
+    <span class="c1">// Sequential logic block triggered by the rising edge of the clock.</span>
+    <span class="k">always</span> <span class="o">@</span><span class="p">(</span><span class="kt">posedge</span> <span class="n">clk</span><span class="p">)</span> <span class="k">begin</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">shift</span> <span class="o">==</span> <span class="mb">1'b1</span><span class="p">)</span> <span class="k">begin</span>
+            <span class="c1">// When 'shift' is high, perform a shift operation.</span>
+            <span class="c1">// The content of 'dout' is updated to include the 2-bit 'shift_in' value at the left</span>
+            <span class="c1">// and the existing 'din' data shifted right by two positions.</span>
+            <span class="n">dout</span> <span class="o">&lt;=</span> <span class="o">{</span><span class="n">shift_in</span><span class="p">,</span> <span class="n">din</span><span class="p">[</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">2</span><span class="p">]</span><span class="o">}</span><span class="p">;</span>
+        <span class="k">end</span> 
+        <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">set</span> <span class="o">==</span> <span class="mb">1'b1</span><span class="p">)</span> <span class="k">begin</span>
+            <span class="c1">// When 'set' is high, load the 'din' value directly into 'dout'.</span>
+            <span class="c1">// This operation overrides the shifting behavior if both 'shift' and 'set' are high.</span>
+            <span class="n">dout</span> <span class="o">&lt;=</span> <span class="n">din</span><span class="p">;</span>  
+        <span class="k">end</span>
+    <span class="k">end</span>
+
+<span class="k">endmodule</span>
+</code></pre></div></div> <p><strong>Counter.v</strong></p> <div class="language-verilog highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Define a module for a countdown counter with a parameterizable width N.</span>
+<span class="k">module</span> <span class="n">Counter</span> <span class="p">#(</span>
+    <span class="k">parameter</span> <span class="n">N</span> <span class="o">=</span> <span class="mi">8</span>  <span class="c1">// N defines the total count range; actual counter width is N/2.</span>
+<span class="p">)(</span>
+    <span class="kt">input</span> <span class="n">start</span><span class="p">,</span>          <span class="c1">// Start signal: when high, resets or initializes the counter.</span>
+    <span class="kt">input</span> <span class="n">tick</span><span class="p">,</span>           <span class="c1">// Tick signal: serves as a clock input, driving the counter's decrement.</span>
+    <span class="kt">output</span> <span class="n">done</span>           <span class="c1">// Done signal: goes high when the counter reaches zero.</span>
+<span class="p">);</span>
+
+    <span class="c1">// Internal counter register with a width of N/2 bits.</span>
+    <span class="c1">// The counter size is halved presumably to fit specific design constraints or requirements.</span>
+    <span class="kt">reg</span> <span class="p">[</span><span class="n">N</span><span class="o">/</span><span class="mi">2</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">count</span><span class="p">;</span>
+    
+    <span class="c1">// Sequential logic block triggered by the rising edge of 'tick' or 'start'.</span>
+    <span class="c1">// This block is responsible for resetting the counter on 'start' and decrementing it on 'tick'.</span>
+    <span class="k">always</span> <span class="o">@</span><span class="p">(</span><span class="kt">posedge</span> <span class="n">tick</span> <span class="kt">or</span> <span class="kt">posedge</span> <span class="n">start</span><span class="p">)</span> <span class="k">begin</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">start</span><span class="p">)</span>
+            <span class="n">count</span> <span class="o">&lt;=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span> <span class="c1">// Reset the counter to its maximum value (all bits set due to -1 in two's complement).</span>
+        <span class="k">else</span> 
+            <span class="n">count</span> <span class="o">&lt;=</span> <span class="o">{</span><span class="mb">1'b0</span><span class="p">,</span> <span class="n">count</span><span class="p">[</span><span class="n">N</span><span class="o">/</span><span class="mi">2</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">1</span><span class="p">]</span><span class="o">}</span><span class="p">;</span> <span class="c1">// Perform a right shift, effectively decrementing the counter.</span>
+    <span class="k">end</span>
+    
+    <span class="c1">// The 'done' signal is assigned the value of the least significant bit of the counter.</span>
+    <span class="c1">// When the counter reaches zero, 'count[0]' would be 0, indicating the countdown is not yet complete.</span>
+    <span class="c1">// There seems to be a logical discrepancy here: typically, 'done' might be expected to signal completion.</span>
+    <span class="c1">// You may need to revise this based on your intended counter behavior.</span>
+    <span class="k">assign</span> <span class="n">done</span> <span class="o">=</span> <span class="n">count</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+
+<span class="k">endmodule</span>
+</code></pre></div></div> <p><strong>CTRL.v</strong></p> <div class="language-verilog highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Control module for managing operations such as counting, shifting, and loading,</span>
+<span class="c1">// parameterized by bit width N.</span>
+<span class="k">module</span> <span class="n">CTRL</span> <span class="p">#(</span>
+    <span class="k">parameter</span> <span class="n">N</span> <span class="o">=</span> <span class="mi">8</span>  <span class="c1">// Bit width for shift_data.</span>
+<span class="p">)(</span>
+    <span class="kt">input</span> <span class="n">clk</span><span class="p">,</span>              <span class="c1">// Clock input for synchronous operation.</span>
+    <span class="kt">input</span> <span class="n">rst</span><span class="p">,</span>              <span class="c1">// Active low reset to initialize the state machine.</span>
+    <span class="kt">input</span> <span class="n">start</span><span class="p">,</span>            <span class="c1">// Start signal to initiate counting or processing.</span>
+    <span class="kt">input</span> <span class="n">alarm</span><span class="p">,</span>            <span class="c1">// Alarm or external signal to transition from counting.</span>
+    <span class="kt">input</span> <span class="p">[</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="nb">bits</span><span class="p">,</span>       <span class="c1">// Input bits for shifting into shift_data.</span>
+    <span class="kt">output</span> <span class="kt">reg</span> <span class="n">busy</span><span class="p">,</span>        <span class="c1">// Busy signal indicating the machine is in operation.</span>
+    <span class="kt">output</span> <span class="kt">reg</span> <span class="n">done</span><span class="p">,</span>        <span class="c1">// Done signal indicating completion of a cycle.</span>
+    <span class="kt">output</span> <span class="kt">reg</span> <span class="n">count</span><span class="p">,</span>       <span class="c1">// Count signal to trigger counting (unused in current context).</span>
+    <span class="kt">output</span> <span class="kt">reg</span> <span class="n">tick</span><span class="p">,</span>        <span class="c1">// Tick signal, typically used for timing or synchronization.</span>
+    <span class="kt">output</span> <span class="kt">reg</span> <span class="n">addReg</span><span class="p">,</span>      <span class="c1">// Control signal to trigger addition operation.</span>
+    <span class="kt">output</span> <span class="kt">reg</span> <span class="n">shiftReg</span><span class="p">,</span>    <span class="c1">// Control signal to trigger shifting operation.</span>
+    <span class="kt">output</span> <span class="kt">reg</span> <span class="n">loadReg</span><span class="p">,</span>     <span class="c1">// Control signal to trigger loading operation.</span>
+    <span class="kt">output</span> <span class="kt">reg</span> <span class="p">[</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">shift_data</span>  <span class="c1">// Data register for holding or shifting data.</span>
+<span class="p">);</span>
+
+    <span class="c1">// State definitions for the state machine.</span>
+    <span class="kt">reg</span> <span class="p">[</span><span class="mi">2</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">state</span><span class="p">,</span> <span class="n">next_state</span><span class="p">;</span>  <span class="c1">// Current and next state variables.</span>
+    
+    <span class="c1">// State constants for readability and maintainability.</span>
+    <span class="k">parameter</span> <span class="n">RESET</span> <span class="o">=</span> <span class="mb">2'b00</span><span class="p">;</span>  <span class="c1">// State constant for the reset state.</span>
+    <span class="k">parameter</span> <span class="n">COUNT</span> <span class="o">=</span> <span class="mb">2'b11</span><span class="p">;</span>  <span class="c1">// State constant for the counting state.</span>
+    
+    <span class="c1">// Shift operation for shift_data, happens every positive clock edge or when reset.</span>
+    <span class="k">always</span> <span class="o">@</span><span class="p">(</span><span class="kt">posedge</span> <span class="n">clk</span> <span class="kt">or</span> <span class="kt">negedge</span> <span class="n">rst</span><span class="p">)</span> <span class="k">begin</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">rst</span><span class="p">)</span>
+            <span class="n">shift_data</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">;</span>  <span class="c1">// Clear shift_data on reset.</span>
+        <span class="k">else</span>
+            <span class="n">shift_data</span> <span class="o">&lt;=</span> <span class="o">{</span><span class="nb">bits</span><span class="p">,</span> <span class="n">shift_data</span><span class="p">[</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">2</span><span class="p">]</span><span class="o">}</span><span class="p">;</span>  <span class="c1">// Shift in new bits on clock edge.</span>
+    <span class="k">end</span>
+    
+    <span class="c1">// State transition logic, triggered on clock edge or reset.</span>
+    <span class="k">always</span> <span class="o">@</span><span class="p">(</span><span class="kt">posedge</span> <span class="n">clk</span> <span class="kt">or</span> <span class="kt">negedge</span> <span class="n">rst</span><span class="p">)</span> <span class="k">begin</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">rst</span><span class="p">)</span>
+            <span class="n">state</span> <span class="o">&lt;=</span> <span class="n">RESET</span><span class="p">;</span>  <span class="c1">// Move to RESET state on reset.</span>
+        <span class="k">else</span>
+            <span class="n">state</span> <span class="o">&lt;=</span> <span class="n">next_state</span><span class="p">;</span>  <span class="c1">// Transition to next state on clock edge.</span>
+    <span class="k">end</span>
+    
+    <span class="c1">// State behavior and output logic based on current state and inputs.</span>
+    <span class="k">always</span> <span class="o">@</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="k">begin</span>
+        <span class="k">case</span> <span class="p">(</span><span class="n">state</span><span class="p">)</span>
+            <span class="nl">RESET:</span> <span class="k">begin</span>  <span class="c1">// In RESET state...</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">start</span> <span class="o">==</span> <span class="mb">1'b1</span><span class="p">)</span> <span class="k">begin</span>
+                    <span class="n">next_state</span> <span class="o">=</span> <span class="n">COUNT</span><span class="p">;</span>  <span class="c1">// Move to COUNT state if start is high.</span>
+                    <span class="n">busy</span> <span class="o">=</span> <span class="mb">1'b1</span><span class="p">;</span>  <span class="c1">// Indicate that machine is busy.</span>
+                    <span class="n">done</span> <span class="o">=</span> <span class="mb">1'b0</span><span class="p">;</span>  <span class="c1">// Not done yet.</span>
+                <span class="k">end</span> <span class="k">else</span> <span class="k">begin</span>
+                    <span class="n">next_state</span> <span class="o">=</span> <span class="n">RESET</span><span class="p">;</span>  <span class="c1">// Stay in RESET if start is not high.</span>
+                    <span class="n">busy</span> <span class="o">=</span> <span class="mb">1'b0</span><span class="p">;</span>  <span class="c1">// Indicate machine is not busy.</span>
+                    <span class="n">done</span> <span class="o">=</span> <span class="mb">1'b0</span><span class="p">;</span>  <span class="c1">// Not done as we are in reset.</span>
+                <span class="k">end</span>
+            <span class="k">end</span>
+            <span class="nl">COUNT:</span> <span class="k">begin</span>  <span class="c1">// In COUNT state...</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">alarm</span> <span class="o">==</span> <span class="mb">1'b0</span><span class="p">)</span> <span class="k">begin</span>
+                    <span class="n">next_state</span> <span class="o">=</span> <span class="n">RESET</span><span class="p">;</span>  <span class="c1">// Return to RESET state if alarm is low.</span>
+                    <span class="n">busy</span> <span class="o">=</span> <span class="mb">1'b1</span><span class="p">;</span>  <span class="c1">// Still busy as we were counting.</span>
+                    <span class="n">done</span> <span class="o">=</span> <span class="mb">1'b1</span><span class="p">;</span>  <span class="c1">// Indicate completion as we leave COUNT state.</span>
+                <span class="k">end</span> <span class="k">else</span> <span class="k">begin</span>
+                    <span class="n">next_state</span> <span class="o">=</span> <span class="n">COUNT</span><span class="p">;</span>  <span class="c1">// Stay in COUNT state if alarm is high.</span>
+                    <span class="n">busy</span> <span class="o">=</span> <span class="mb">1'b1</span><span class="p">;</span>  <span class="c1">// Indicate machine is busy.</span>
+                    <span class="n">done</span> <span class="o">=</span> <span class="mb">1'b0</span><span class="p">;</span>  <span class="c1">// Not done as counting continues.</span>
+                <span class="k">end</span>
+            <span class="k">end</span>
+            <span class="nl">default:</span> <span class="k">begin</span>  <span class="c1">// In default case...</span>
+                <span class="n">next_state</span> <span class="o">=</span> <span class="n">RESET</span><span class="p">;</span>  <span class="c1">// Return to RESET for any undefined states.</span>
+                <span class="n">busy</span> <span class="o">=</span> <span class="mb">1'b0</span><span class="p">;</span>  <span class="c1">// Not busy in undefined state.</span>
+                <span class="n">done</span> <span class="o">=</span> <span class="mb">1'b0</span><span class="p">;</span>  <span class="c1">// Not done as this is an unexpected state.</span>
+            <span class="k">end</span>
+        <span class="k">endcase</span>
+    <span class="k">end</span>
+    
+    <span class="c1">// Output logic for control signals based on current state.</span>
+    <span class="k">always</span> <span class="o">@</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="k">begin</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">rst</span> <span class="o">==</span> <span class="mb">1'b0</span><span class="p">)</span> <span class="k">begin</span>  <span class="c1">// If in reset...</span>
+            <span class="n">loadReg</span> <span class="o">=</span> <span class="mb">1'b1</span><span class="p">;</span>  <span class="c1">// Prepare to load data.</span>
+            <span class="n">addReg</span> <span class="o">=</span> <span class="mb">1'b0</span><span class="p">;</span>  <span class="c1">// No addition.</span>
+            <span class="n">shiftReg</span> <span class="o">=</span> <span class="mb">1'b0</span><span class="p">;</span>  <span class="c1">// No shifting.</span>
+            <span class="n">tick</span> <span class="o">=</span> <span class="mb">1'b0</span><span class="p">;</span>  <span class="c1">// No tick signal.</span>
+        <span class="k">end</span> <span class="k">else</span> <span class="k">begin</span>
+            <span class="k">case</span> <span class="p">(</span><span class="n">state</span><span class="p">)</span>
+              <span class="nl">RESET:</span> 
+		<span class="k">begin</span>		
+			<span class="k">if</span> <span class="p">(</span><span class="n">start</span> <span class="o">==</span> <span class="mb">1'b1</span><span class="p">)</span>
+				<span class="n">loadReg</span> 	<span class="o">=</span> <span class="mb">1'b1</span><span class="p">;</span>
+			<span class="k">else</span>
+				<span class="n">loadReg</span> 	<span class="o">=</span> <span class="mb">1'b0</span><span class="p">;</span>
+			<span class="n">addReg</span> 	<span class="o">=</span> <span class="mb">1'b0</span><span class="p">;</span>
+			<span class="n">shiftReg</span> <span class="o">=</span> <span class="mb">1'b0</span><span class="p">;</span>
+			<span class="n">tick</span> 	<span class="o">=</span> <span class="mb">1'b0</span><span class="p">;</span>					
+		<span class="k">end</span>
+		<span class="nl">COUNT:</span> 
+		<span class="k">begin</span>
+			<span class="n">loadReg</span>  <span class="o">=</span> <span class="mb">1'b0</span><span class="p">;</span>
+			<span class="n">addReg</span> 	<span class="o">=</span> <span class="mb">1'b1</span><span class="p">;</span>
+			<span class="n">shiftReg</span> <span class="o">=</span> <span class="mb">1'b1</span><span class="p">;</span>
+			<span class="n">tick</span> 	<span class="o">=</span> <span class="o">~</span><span class="n">clk</span><span class="p">;</span>
+		<span class="k">end</span>
+		<span class="nl">default:</span> 
+			<span class="k">begin</span>
+			<span class="n">loadReg</span>  <span class="o">=</span> <span class="mb">1'b0</span><span class="p">;</span>
+			<span class="n">addReg</span> 	<span class="o">=</span> <span class="mb">1'b0</span><span class="p">;</span>
+			<span class="n">shiftReg</span> <span class="o">=</span> <span class="mb">1'b0</span><span class="p">;</span>
+			<span class="n">tick</span> 	<span class="o">=</span> <span class="mb">1'b0</span><span class="p">;</span>
+			<span class="k">end</span>
+	<span class="k">endcase</span>	
+	<span class="k">end</span>
+<span class="k">end</span>
+
+<span class="k">endmodule</span>
+</code></pre></div></div> <p><strong>MUX_recoded.v</strong></p> <div class="language-verilog highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Module for recoding multiplier data according to Booth's encoding.</span>
+<span class="c1">// This is typically used to reduce the number of operations in binary multiplication.</span>
+<span class="k">module</span> <span class="n">MUX_recoded</span><span class="p">(</span>
+    <span class="kt">input</span> <span class="p">[</span><span class="mi">2</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">mul_data</span><span class="p">,</span>       <span class="c1">// 3-bit input representing a part of the multiplier.</span>
+    <span class="kt">output</span> <span class="kt">reg</span> <span class="p">[</span><span class="mi">2</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">recoded_data</span> <span class="c1">// 3-bit output representing the recoded multiplier data.</span>
+<span class="p">);</span>
+
+    <span class="c1">// Combinational logic to recode the input data based on typical Booth's algorithm patterns.</span>
+    <span class="k">always</span> <span class="o">@</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="k">begin</span>
+        <span class="k">case</span> <span class="p">(</span><span class="n">mul_data</span><span class="p">)</span>
+            <span class="c1">// No change needed: Represents multiplication by 0.</span>
+            <span class="mb">3'b000</span><span class="o">:</span> <span class="n">recoded_data</span> <span class="o">=</span> <span class="mb">3'b000</span><span class="p">;</span> <span class="c1">// +0</span>
+
+            <span class="c1">// Standard positive multipliers: Represents multiplication by +1.</span>
+            <span class="mb">3'b001</span><span class="o">:</span> <span class="n">recoded_data</span> <span class="o">=</span> <span class="mb">3'b001</span><span class="p">;</span> <span class="c1">// +1</span>
+            <span class="mb">3'b010</span><span class="o">:</span> <span class="n">recoded_data</span> <span class="o">=</span> <span class="mb">3'b001</span><span class="p">;</span> <span class="c1">// +1 (redundant, but aligns with Booth for certain implementations)</span>
+
+            <span class="c1">// Special case for handling +2 (not typically standard Booth but may represent a double operation).</span>
+            <span class="mb">3'b011</span><span class="o">:</span> <span class="n">recoded_data</span> <span class="o">=</span> <span class="mb">3'b010</span><span class="p">;</span> <span class="c1">// +2</span>
+
+            <span class="c1">// Negative multipliers: Represents multiplication by -1.</span>
+            <span class="mb">3'b100</span><span class="o">:</span> <span class="n">recoded_data</span> <span class="o">=</span> <span class="mb">3'b110</span><span class="p">;</span> <span class="c1">// -2 (In two's complement, '110' represents -2)</span>
+            <span class="mb">3'b101</span><span class="o">:</span> <span class="n">recoded_data</span> <span class="o">=</span> <span class="mb">3'b101</span><span class="p">;</span> <span class="c1">// -1</span>
+            <span class="mb">3'b110</span><span class="o">:</span> <span class="n">recoded_data</span> <span class="o">=</span> <span class="mb">3'b101</span><span class="p">;</span> <span class="c1">// -1 (redundant, but aligns with Booth for certain implementations)</span>
+
+            <span class="c1">// Represents a return to zero or no operation needed at the end of a cycle.</span>
+            <span class="mb">3'b111</span><span class="o">:</span> <span class="n">recoded_data</span> <span class="o">=</span> <span class="mb">3'b000</span><span class="p">;</span> <span class="c1">// +0</span>
+            
+            <span class="c1">// Default cases can be added if required, especially for handling unexpected inputs.</span>
+            <span class="c1">// default: recoded_data = 3'bxxx; // Undefined or X state for illegal inputs.</span>
+        <span class="k">endcase</span>    
+    <span class="k">end</span>
+<span class="k">endmodule</span>
+</code></pre></div></div> <p><strong>Bitpair_Mult.v</strong></p> <div class="language-verilog highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Parameterized module for bit-pair multiplication, typically used in DSPs or ALUs.</span>
+<span class="k">module</span> <span class="n">Bitpair_Mult</span> <span class="p">#(</span>
+    <span class="k">parameter</span> <span class="n">N</span> <span class="o">=</span> <span class="mi">8</span>  <span class="c1">// Specifies the bit width for the multiplicand and multiplier.</span>
+<span class="p">)(</span>
+    <span class="kt">input</span> <span class="n">clk</span><span class="p">,</span>                         <span class="c1">// Clock input for synchronization.</span>
+    <span class="kt">input</span> <span class="n">rst</span><span class="p">,</span>                         <span class="c1">// Asynchronous reset signal.</span>
+    <span class="kt">input</span> <span class="n">start</span><span class="p">,</span>                       <span class="c1">// Start signal to initiate the multiplication process.</span>
+    <span class="kt">input</span> <span class="p">[</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">multiplican</span><span class="p">,</span>         <span class="c1">// Input multiplicand.</span>
+    <span class="kt">input</span> <span class="p">[</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">multiplier</span><span class="p">,</span>          <span class="c1">// Input multiplier.</span>
+    <span class="kt">output</span> <span class="p">[</span><span class="mi">2</span><span class="o">*</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">product</span><span class="p">,</span>          <span class="c1">// Result of the multiplication.</span>
+    <span class="kt">output</span> <span class="n">busy</span><span class="p">,</span>                       <span class="c1">// Flag indicating the module is currently processing.</span>
+    <span class="kt">output</span> <span class="n">done</span>                        <span class="c1">// Flag indicating completion of multiplication.</span>
+<span class="p">);</span>
+
+    <span class="c1">// Control signals for internal operations.</span>
+    <span class="kt">wire</span> <span class="n">load</span><span class="p">,</span> <span class="n">shift</span><span class="p">,</span> <span class="n">add</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span> <span class="n">tick</span><span class="p">,</span> <span class="n">LorA</span><span class="p">,</span> <span class="n">sign_extend</span><span class="p">;</span>
+    <span class="kt">wire</span> <span class="p">[</span><span class="mi">2</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">code</span><span class="p">;</span>                   <span class="c1">// Encoded value for multiplication steps.</span>
+
+    <span class="c1">// Intermediate values and registers.</span>
+    <span class="kt">wire</span> <span class="p">[</span><span class="n">N</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">product_1</span><span class="p">,</span> <span class="n">product_0</span><span class="p">;</span>   <span class="c1">// Extended product registers for accumulation.</span>
+    <span class="kt">wire</span> <span class="p">[</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">multiplican_save</span><span class="p">;</span>     <span class="c1">// Register to store the multiplicand.</span>
+    <span class="kt">wire</span> <span class="p">[</span><span class="n">N</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">multi_multiplican</span><span class="p">;</span>      <span class="c1">// Result of selected operation on multiplicand.</span>
+    <span class="kt">wire</span> <span class="p">[</span><span class="n">N</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">partial</span><span class="p">;</span>                <span class="c1">// Partial sum/product for each step.</span>
+    <span class="kt">wire</span> <span class="p">[</span><span class="n">N</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">reset</span><span class="p">;</span>                  <span class="c1">// Reset value for the adder block.</span>
+    <span class="kt">wire</span> <span class="p">[</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">data</span><span class="p">;</span>                 <span class="c1">// Additional data, possibly for future use or debugging.</span>
+
+    <span class="c1">// Register to store and potentially modify the multiplicand.</span>
+    <span class="n">shift_reg</span> <span class="p">#(</span>
+        <span class="p">.</span><span class="n">N</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+    <span class="p">)</span> <span class="n">multiplican_Reg</span> <span class="p">(</span>
+        <span class="p">.</span><span class="n">clk</span><span class="p">(</span><span class="n">clk</span><span class="p">),</span>
+        <span class="p">.</span><span class="n">set</span><span class="p">(</span><span class="n">load</span><span class="p">),</span>
+        <span class="p">.</span><span class="n">shift</span><span class="p">(),</span>              <span class="c1">// Not used here as multiplicand does not need shifting.</span>
+        <span class="p">.</span><span class="n">shift_in</span><span class="p">(),</span>           <span class="c1">// No input needed as there's no shift operation.</span>
+        <span class="p">.</span><span class="n">din</span><span class="p">(</span><span class="n">multiplican</span><span class="p">),</span>
+        <span class="p">.</span><span class="n">dout</span><span class="p">(</span><span class="n">multiplican_save</span><span class="p">)</span>
+    <span class="p">);</span>
+    
+    <span class="c1">// Register to store and shift the multiplier, integrating partial products.</span>
+    <span class="n">shift_reg</span> <span class="p">#(</span>
+        <span class="p">.</span><span class="n">N</span><span class="p">(</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="p">)</span> <span class="n">multiplier_Reg</span> <span class="p">(</span>
+        <span class="p">.</span><span class="n">clk</span><span class="p">(</span><span class="n">clk</span><span class="p">),</span>
+        <span class="p">.</span><span class="n">set</span><span class="p">(</span><span class="n">load</span><span class="p">),</span>
+        <span class="p">.</span><span class="n">shift</span><span class="p">(</span><span class="n">shift</span><span class="p">),</span>
+        <span class="p">.</span><span class="n">shift_in</span><span class="p">(</span><span class="n">product_1</span><span class="p">[</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]),</span>  <span class="c1">//Feedback lower bits of product for Booth encoding.</span>
+        <span class="p">.</span><span class="n">din</span><span class="p">(</span><span class="o">{</span><span class="n">multiplier</span><span class="p">,</span><span class="mb">1'b0</span><span class="o">}</span><span class="p">),</span>    <span class="c1">// Initialize with multiplier and an added zero bit.</span>
+        <span class="p">.</span><span class="n">dout</span><span class="p">(</span><span class="n">product_0</span><span class="p">)</span>
+    <span class="p">);</span>	
+    <span class="kt">wire</span> <span class="p">[</span><span class="n">N</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">x3</span><span class="p">;</span>
+    <span class="c1">// Compute complementary version of the multiplicand for subtraction.</span>
+    <span class="k">assign</span> <span class="n">x3</span> <span class="o">=</span> <span class="p">(</span><span class="n">multiplican_save</span><span class="p">[</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mb">1'b1</span><span class="p">)</span> <span class="o">?</span> <span class="o">{</span><span class="mb">1'b0</span><span class="p">,</span> <span class="o">~</span><span class="n">multiplican_save</span><span class="o">}</span> <span class="o">:</span> <span class="o">{</span><span class="mb">1'b1</span><span class="p">,</span> <span class="o">~</span><span class="n">multiplican_save</span><span class="o">}</span><span class="p">;</span>	
+
+    <span class="c1">// Multiplexing different operation results based on Booth encoding.</span>
+    <span class="n">MUX_multiplicand</span> <span class="p">#(</span>
+        <span class="p">.</span><span class="n">N</span><span class="p">(</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="p">)</span> <span class="n">multi_multi</span> <span class="p">(</span>
+        <span class="p">.</span><span class="n">sel</span><span class="p">(</span><span class="n">code</span><span class="p">),</span>                           <span class="c1">// Selection based on Booth recoding.</span>
+        <span class="p">.</span><span class="n">x1</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span>                               <span class="c1">// No operation (mult by 0).</span>
+        <span class="p">.</span><span class="n">x2</span><span class="p">(</span><span class="o">{</span><span class="mb">1'b0</span><span class="p">,</span> <span class="n">multiplican_save</span><span class="o">}</span><span class="p">),</span>        <span class="c1">// Addition (mult by +1).</span>
+        <span class="p">.</span><span class="n">x3</span><span class="p">(</span><span class="n">x3</span><span class="p">),</span>                              <span class="c1">// Subtraction (mult by -1).</span>
+        <span class="p">.</span><span class="n">x4</span><span class="p">(</span><span class="o">{</span><span class="n">multiplican_save</span><span class="p">,</span> <span class="mb">1'b0</span><span class="o">}</span><span class="p">),</span>        <span class="c1">// Double (mult by +2).</span>
+        <span class="p">.</span><span class="n">x5</span><span class="p">(</span><span class="o">{~</span><span class="n">multiplican_save</span><span class="p">,</span> <span class="mb">1'b1</span><span class="o">}</span><span class="p">),</span>       <span class="c1">// Negative double (mult by -2).</span>
+        <span class="p">.</span><span class="n">y</span><span class="p">(</span><span class="n">multi_multiplican</span><span class="p">)</span>                 <span class="c1">// Output selected operation result.</span>
+    <span class="p">);</span>
+    
+    <span class="c1">// Adder for accumulating the multiplication results.</span>
+<span class="n">adder</span> <span class="p">#(</span>
+		<span class="p">.</span><span class="n">N</span><span class="p">(</span><span class="n">N</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+	<span class="p">)</span> <span class="n">adder_inst</span> <span class="p">(</span>
+		<span class="p">.</span><span class="n">cin</span><span class="p">(</span><span class="n">code</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span><span class="c1">//+1</span>
+		<span class="p">.</span><span class="n">extend</span><span class="p">(</span><span class="n">sign_extend</span><span class="p">),</span>
+		<span class="p">.</span><span class="n">x0</span><span class="p">(</span><span class="n">multi_multiplican</span><span class="p">),</span>
+		<span class="p">.</span><span class="n">x1</span><span class="p">(</span><span class="n">product_1</span><span class="p">),</span>
+		<span class="p">.</span><span class="n">y</span><span class="p">(</span><span class="n">partial</span><span class="p">)</span>
+	<span class="p">);</span>
+    <span class="c1">// Reset block to clear or set the partial sum/product.</span>
+    <span class="n">RESET</span> <span class="p">#(</span>
+        <span class="p">.</span><span class="n">N</span><span class="p">(</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="p">)</span> <span class="n">Reset_blk</span> <span class="p">(</span>
+        <span class="p">.</span><span class="n">s</span><span class="p">(</span><span class="o">!</span><span class="n">load</span><span class="p">),</span>
+        <span class="p">.</span><span class="n">x1</span><span class="p">(</span><span class="n">partial</span><span class="p">),</span>
+        <span class="p">.</span><span class="n">y</span><span class="p">(</span><span class="n">reset</span><span class="p">)</span>
+    <span class="p">);</span>
+
+    <span class="c1">// Logic to determine load or add operation.</span>
+    <span class="k">assign</span> <span class="n">LorA</span> <span class="o">=</span> <span class="n">load</span> <span class="o">|</span> <span class="n">add</span><span class="p">;</span>
+    
+    <span class="c1">// Register block used for updating and shifting the partial product.</span>
+    <span class="n">MultiReg</span> <span class="p">#(</span>
+        <span class="p">.</span><span class="n">N</span><span class="p">(</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>  <span class="c1">// Parameter for bit width, extended by one for overflow.</span>
+    <span class="p">)</span> <span class="n">product_Reg</span> <span class="p">(</span>
+        <span class="p">.</span><span class="n">clk</span><span class="p">(</span><span class="n">clk</span><span class="p">),</span>                           <span class="c1">// Clock signal to synchronize operations.</span>
+        <span class="p">.</span><span class="n">set</span><span class="p">(</span><span class="n">LorA</span><span class="p">),</span>                          <span class="c1">// Signal to set (load) or add to the register.</span>
+        <span class="p">.</span><span class="n">shift</span><span class="p">(</span><span class="n">shift</span><span class="p">),</span>                       <span class="c1">// Signal to shift the contents of the register.</span>
+        <span class="p">.</span><span class="n">shift_in</span><span class="p">(</span><span class="o">{</span><span class="n">sign_extend</span><span class="p">,</span> <span class="n">sign_extend</span><span class="o">}</span><span class="p">),</span> <span class="c1">// Input bits for shifting, based on sign extension.</span>
+        <span class="p">.</span><span class="n">din</span><span class="p">(</span><span class="n">reset</span><span class="p">),</span>                         <span class="c1">// Data input, coming from the RESET module or partial sum.</span>
+        <span class="p">.</span><span class="n">dout</span><span class="p">(</span><span class="n">product_1</span><span class="p">)</span>                     <span class="c1">// Output of the register, fed back into the system.</span>
+    <span class="p">);</span>
+    
+    <span class="c1">// Counter used for controlling the number of multiplication cycles.</span>
+    <span class="n">Counter</span><span class="p">#(</span>
+        <span class="p">.</span><span class="n">N</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>  <span class="c1">// Using the same parameter N for consistency with bit width.</span>
+    <span class="p">)</span> <span class="n">timer</span> <span class="p">(</span>
+        <span class="p">.</span><span class="n">start</span><span class="p">(</span><span class="n">load</span><span class="p">),</span>   <span class="c1">// Start signal for the counter, initiates counting.</span>
+        <span class="p">.</span><span class="n">tick</span><span class="p">(</span><span class="n">count</span><span class="p">),</span>   <span class="c1">// Tick signal used to increment the counter.</span>
+        <span class="p">.</span><span class="n">done</span><span class="p">(</span><span class="n">tick</span><span class="p">)</span>     <span class="c1">// Done signal, indicates counting is complete.</span>
+    <span class="p">);</span>
+    
+    <span class="c1">// Control unit orchestrates the overall operation of the multiplication.</span>
+    <span class="n">CTRL</span> <span class="p">#(</span>
+        <span class="p">.</span><span class="n">N</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>  <span class="c1">// Parameter for matching bit width.</span>
+    <span class="p">)</span> <span class="n">ctrl_unit</span> <span class="p">(</span>
+        <span class="p">.</span><span class="n">clk</span><span class="p">(</span><span class="n">clk</span><span class="p">),</span>         <span class="c1">// Clock signal for synchronization.</span>
+        <span class="p">.</span><span class="n">rst</span><span class="p">(</span><span class="n">rst</span><span class="p">),</span>         <span class="c1">// Reset signal for initializing the control unit.</span>
+        <span class="p">.</span><span class="n">start</span><span class="p">(</span><span class="n">start</span><span class="p">),</span>     <span class="c1">// Start signal to kick-off the multiplication process.</span>
+        <span class="p">.</span><span class="n">alarm</span><span class="p">(</span><span class="n">tick</span><span class="p">),</span>      <span class="c1">// Alarm or trigger from the counter indicating a cycle is complete.</span>
+        <span class="p">.</span><span class="nb">bits</span><span class="p">(</span><span class="n">reset</span><span class="p">[</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]),</span> <span class="c1">// Bits used for control decisions, derived from the RESET module.</span>
+        <span class="p">.</span><span class="n">shiftReg</span><span class="p">(</span><span class="n">shift</span><span class="p">),</span>  <span class="c1">// Signal to control shifting operation.</span>
+        <span class="p">.</span><span class="n">addReg</span><span class="p">(</span><span class="n">add</span><span class="p">),</span>      <span class="c1">// Signal to control addition operation.</span>
+        <span class="p">.</span><span class="n">loadReg</span><span class="p">(</span><span class="n">load</span><span class="p">),</span>    <span class="c1">// Signal to control data loading operation.</span>
+        <span class="p">.</span><span class="n">tick</span><span class="p">(</span><span class="n">count</span><span class="p">),</span>      <span class="c1">// Signal to manage timing and counting.</span>
+        <span class="p">.</span><span class="n">busy</span><span class="p">(</span><span class="n">busy</span><span class="p">),</span>       <span class="c1">// Output signal indicating the module is processing.</span>
+        <span class="p">.</span><span class="n">done</span><span class="p">(</span><span class="n">done</span><span class="p">),</span>       <span class="c1">// Output signal indicating the multiplication is complete.</span>
+        <span class="p">.</span><span class="n">shift_data</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>  <span class="c1">// Data involved in shifting operations.</span>
+    <span class="p">);</span>  
+    
+    <span class="c1">// Booth recoding unit for transforming multiplier bits into control signals.</span>
+    <span class="n">MUX_recoded</span> <span class="n">booth</span> <span class="p">(</span>
+        <span class="p">.</span><span class="n">mul_data</span><span class="p">(</span><span class="n">product_0</span><span class="p">[</span><span class="mi">2</span><span class="o">:</span><span class="mi">0</span><span class="p">]),</span>  <span class="c1">// Input data from the shifted multiplier.</span>
+        <span class="p">.</span><span class="n">recoded_data</span><span class="p">(</span><span class="n">code</span><span class="p">)</span>         <span class="c1">// Output recoded data for controlling the multiplication steps.</span>
+    <span class="p">);</span>
+
+    <span class="c1">// Final product assembly, combining sign extension, partial product, and data.</span>
+    <span class="c1">// This forms the complete output product from the multiplication process.</span>
+    <span class="k">assign</span> <span class="n">product</span> <span class="o">=</span> <span class="o">{</span><span class="n">sign_extend</span><span class="p">,</span> <span class="n">product_1</span><span class="p">[</span><span class="n">N</span><span class="o">:</span><span class="mi">0</span><span class="p">],</span> <span class="n">data</span><span class="o">}</span><span class="p">;</span>  <span class="c1">// Concatenate to form the full product.</span>
+
+<span class="k">endmodule</span>
+</code></pre></div></div> <p>We will map <code class="language-plaintext highlighter-rouge">clk</code> port to the button, so we also need the debouncing module like below:</p> <p><strong>btn_lab4.v</strong></p> <div class="language-verilog highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1">// Module definition for lab 4 button interface with parameterizable data width N.</span>
+<span class="k">module</span> <span class="n">btn_lab4</span> <span class="p">#(</span>
+    <span class="k">parameter</span> <span class="n">N</span> <span class="o">=</span> <span class="mi">4</span>  <span class="c1">// Define the data width for the system.</span>
+<span class="p">)(</span>
+    <span class="kt">input</span> <span class="n">clk</span><span class="p">,</span>               <span class="c1">// Clock input for synchronization.</span>
+    <span class="kt">input</span> <span class="n">rst</span><span class="p">,</span>               <span class="c1">// Global reset signal.</span>
+    <span class="kt">input</span> <span class="n">key</span><span class="p">,</span>               <span class="c1">// Input signal from a physical button.</span>
+    <span class="kt">input</span> <span class="n">start</span><span class="p">,</span>             <span class="c1">// Control signal to start the processor.</span>
+    <span class="kt">input</span> <span class="p">[</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">multiplican</span><span class="p">,</span>    <span class="c1">// Data input port for the multiplicand.</span>
+    <span class="kt">input</span> <span class="p">[</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">multiplier</span><span class="p">,</span>       <span class="c1">// Data input port for the multiplier.</span>
+    <span class="kt">output</span> <span class="p">[</span><span class="mi">2</span><span class="o">*</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">product</span><span class="p">,</span>       <span class="c1">// Output port for the product result.</span>
+    <span class="kt">output</span> <span class="n">Busy</span><span class="p">,</span>                     <span class="c1">// Processor's busy status output.</span>
+    <span class="kt">output</span> <span class="n">Done</span>                      <span class="c1">// Signal indicating completion of the operation.</span>
+<span class="p">);</span>
+    
+    <span class="c1">// Internal signals for debouncing logic.</span>
+    <span class="kt">wire</span> <span class="n">key_pulse</span><span class="p">;</span>          <span class="c1">// Pulse signal generated after key debounce.</span>
+    <span class="kt">reg</span> <span class="p">[</span><span class="mi">7</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">key_buffer</span><span class="p">;</span>    <span class="c1">// Buffer to store states of the key for debouncing.</span>
+    <span class="kt">reg</span> <span class="n">key_reg</span><span class="p">;</span>             <span class="c1">// Register to hold the debounced key value.</span>
+    
+    <span class="c1">// Debounce logic for the key input, triggered on clock edge or reset.</span>
+    <span class="k">always</span> <span class="o">@</span><span class="p">(</span><span class="kt">posedge</span> <span class="n">clk</span> <span class="kt">or</span> <span class="kt">negedge</span> <span class="n">rst</span><span class="p">)</span> <span class="k">begin</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">rst</span><span class="p">)</span>
+            <span class="n">key_reg</span> <span class="o">&lt;=</span> <span class="mb">1'b0</span><span class="p">;</span>  <span class="c1">// Clear the key register on reset.</span>
+        <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">key</span> <span class="o">==</span> <span class="mb">1'b1</span><span class="p">)</span>
+            <span class="n">key_reg</span> <span class="o">&lt;=</span> <span class="mb">1'b1</span><span class="p">;</span>  <span class="c1">// Set the key register if key input is high.</span>
+        <span class="k">else</span> 
+            <span class="n">key_reg</span> <span class="o">&lt;=</span> <span class="mb">1'b0</span><span class="p">;</span>  <span class="c1">// Clear the key register if key input is low.</span>
+    <span class="k">end</span>
+
+<span class="kt">integer</span> <span class="n">i</span><span class="p">;</span> 
+    <span class="c1">// Update key buffer on each clock cycle, used for edge detection.</span>
+    <span class="k">always</span> <span class="o">@</span><span class="p">(</span><span class="kt">posedge</span> <span class="n">clk</span> <span class="kt">or</span> <span class="kt">negedge</span> <span class="n">rst</span><span class="p">)</span> <span class="k">begin</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">rst</span><span class="p">)</span>
+            <span class="n">key_buffer</span> <span class="o">&lt;=</span> <span class="mb">8'b0</span><span class="p">;</span>  <span class="c1">// Reset the key buffer on reset.</span>
+        <span class="k">else</span> <span class="k">begin</span>
+            <span class="c1">// Sequentially fill the buffer based on the debounced key value.</span>
+            <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">8</span><span class="p">;</span> <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">begin</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">key_reg</span> <span class="o">==</span> <span class="mb">1'b1</span><span class="p">)</span>
+                    <span class="n">key_buffer</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mb">1'b1</span><span class="p">;</span>  <span class="c1">// Set buffer bits if key is pressed.</span>
+                <span class="k">else</span>
+                    <span class="n">key_buffer</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mb">1'b0</span><span class="p">;</span>  <span class="c1">// Clear buffer bits if key is not pressed.</span>
+            <span class="k">end</span>            
+        <span class="k">end</span>  
+    <span class="k">end</span>
+    
+    <span class="c1">// Generate a single-cycle pulse when the key is pressed.</span>
+    <span class="c1">// This is a simplification; typically, edge detection logic would be used.</span>
+    <span class="k">assign</span> <span class="n">key_pulse</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">key_buffer</span><span class="p">;</span>  <span class="c1">// AND all bits to generate a pulse.</span>
+    
+    <span class="c1">// Instantiation of the system_processor (or Bitpair_Mult) module </span>
+    <span class="c1">// with the debounced key_pulse signal as the clock input.</span>
+    <span class="n">Bitpair_Mult</span> <span class="p">#(</span>
+        <span class="p">.</span><span class="n">N</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>  <span class="c1">// Pass the parameter N to the instantiated module.</span>
+    <span class="p">)</span> <span class="n">dut</span> <span class="p">(</span>
+        <span class="p">.</span><span class="n">clk</span><span class="p">(</span><span class="n">key_pulse</span><span class="p">),</span>        <span class="c1">// Use the debounced key signal as a clock for simulation purposes.</span>
+        <span class="p">.</span><span class="n">rst</span><span class="p">(</span><span class="n">rst</span><span class="p">),</span>              <span class="c1">// Pass the reset signal.</span>
+        <span class="p">.</span><span class="n">start</span><span class="p">(</span><span class="n">start</span><span class="p">),</span>          <span class="c1">// Pass the start control signal.</span>
+        <span class="p">.</span><span class="n">multiplican</span><span class="p">(</span><span class="n">multiplican</span><span class="p">),</span> <span class="c1">// Pass the multiplicand input.</span>
+        <span class="p">.</span><span class="n">multiplier</span><span class="p">(</span><span class="n">multiplier</span><span class="p">),</span>   <span class="c1">// Pass the multiplier input.</span>
+        <span class="p">.</span><span class="n">product</span><span class="p">(</span><span class="n">product</span><span class="p">),</span>         <span class="c1">// Connect to the product output.</span>
+        <span class="p">.</span><span class="n">busy</span><span class="p">(</span><span class="n">Busy</span><span class="p">),</span>               <span class="c1">// Connect to the busy status output.</span>
+        <span class="p">.</span><span class="n">done</span><span class="p">(</span><span class="n">Done</span><span class="p">)</span>                <span class="c1">// Connect to the done signal output.</span>
+    <span class="p">);</span>
+    
+<span class="k">endmodule</span>
+</code></pre></div></div> <p>Now we can see the <code class="language-plaintext highlighter-rouge">Schematic</code> under the RTL ANALYSIS part like below:</p> <div align="center"><img src="imgs/v2/23.png" alt="drawing" width="700" /></div> <p>For the system module, we can see:</p> <div align="center"><img src="imgs/v2/24.png" alt="drawing" width="1200" /></div> <h3 id="creating-a-testbench"> <a href="#creating-a-testbench" class="anchor-heading" aria-labelledby="creating-a-testbench"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Creating a testbench </h3> <p>Then we can run a Simulation to check the code of the <code class="language-plaintext highlighter-rouge">Bitpair_Mult</code> module.</p> <p><strong>tb.v</strong></p> <div class="language-verilog highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Define a testbench module for the Bitpair_Mult</span>
+<span class="k">module</span> <span class="n">BitPairMult_tst</span><span class="p">();</span>
+
+    <span class="c1">// Define variables for loop iterations and their maximum values</span>
+    <span class="kt">integer</span> <span class="n">i</span><span class="p">;</span>
+    <span class="kt">integer</span> <span class="n">j</span><span class="p">;</span>
+    <span class="kt">integer</span> <span class="n">max_i</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span> <span class="c1">// Maximum value for i loop</span>
+    <span class="kt">integer</span> <span class="n">max_j</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span> <span class="c1">// Maximum value for j loop</span>
+    
+    <span class="k">parameter</span> <span class="n">N</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span> <span class="c1">// Bit width for multiplicand and multiplier</span>
+
+    <span class="c1">// Testbench control signals</span>
+    <span class="kt">reg</span> <span class="n">clk</span><span class="p">;</span>        <span class="c1">// Clock signal for synchronization</span>
+    <span class="kt">reg</span> <span class="n">rst</span><span class="p">;</span>        <span class="c1">// Reset signal to initialize the module</span>
+    <span class="kt">reg</span> <span class="n">start</span><span class="p">;</span>      <span class="c1">// Start signal to trigger multiplication</span>
+
+    <span class="c1">// Input values for the multiplier</span>
+    <span class="kt">reg</span> <span class="p">[</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">multiplican</span><span class="p">;</span> <span class="c1">// Input multiplicand</span>
+    <span class="kt">reg</span> <span class="p">[</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">multiplier</span><span class="p">;</span>  <span class="c1">// Input multiplier</span>
+    
+    <span class="c1">// Outputs from the multiplier module</span>
+    <span class="kt">wire</span> <span class="n">busy</span><span class="p">;</span>               <span class="c1">// Indicates if the module is currently processing</span>
+    <span class="kt">wire</span> <span class="n">done</span><span class="p">;</span>               <span class="c1">// Indicates if the multiplication is complete</span>
+    <span class="kt">wire</span> <span class="p">[</span><span class="mi">2</span><span class="o">*</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">product</span><span class="p">;</span>  <span class="c1">// The result of the multiplication</span>
+
+    <span class="c1">// Instantiate the Bitpair_Mult module with parameter N</span>
+    <span class="n">Bitpair_Mult</span> <span class="p">#(</span>
+        <span class="p">.</span><span class="n">N</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+    <span class="p">)</span> <span class="n">dut</span> <span class="p">(</span>
+        <span class="p">.</span><span class="n">clk</span><span class="p">(</span><span class="n">clk</span><span class="p">),</span>
+        <span class="p">.</span><span class="n">rst</span><span class="p">(</span><span class="n">rst</span><span class="p">),</span>
+        <span class="p">.</span><span class="n">start</span><span class="p">(</span><span class="n">start</span><span class="p">),</span>
+        <span class="p">.</span><span class="n">multiplican</span><span class="p">(</span><span class="n">multiplican</span><span class="p">),</span>
+        <span class="p">.</span><span class="n">multiplier</span><span class="p">(</span><span class="n">multiplier</span><span class="p">),</span>
+        <span class="p">.</span><span class="n">product</span><span class="p">(</span><span class="n">product</span><span class="p">),</span>
+        <span class="p">.</span><span class="n">busy</span><span class="p">(</span><span class="n">busy</span><span class="p">),</span>
+        <span class="p">.</span><span class="n">done</span><span class="p">(</span><span class="n">done</span><span class="p">)</span>
+    <span class="p">);</span>
+    
+    <span class="c1">// Clock generation block</span>
+    <span class="k">initial</span> <span class="k">begin</span>
+        <span class="n">clk</span> <span class="o">&lt;=</span> <span class="mb">1'b0</span><span class="p">;</span> <span class="c1">// Initialize the clock to 0</span>
+        <span class="c1">// Toggle clock every 5-time units to create a clock signal</span>
+        <span class="kt">repeat</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="mi">2</span> <span class="o">+</span> <span class="n">max_i</span> <span class="o">*</span> <span class="n">max_j</span> <span class="o">*</span> <span class="mi">3</span> <span class="o">+</span> <span class="mi">3</span><span class="p">))</span> <span class="k">begin</span>
+            <span class="p">#</span><span class="mi">5</span> <span class="n">clk</span> <span class="o">&lt;=</span> <span class="o">~</span><span class="n">clk</span><span class="p">;</span>
+        <span class="k">end</span>
+    <span class="k">end</span>
+    
+    <span class="c1">// Test sequence block</span>
+    <span class="k">initial</span> <span class="k">begin</span>
+        <span class="p">$</span><span class="nb">display</span><span class="p">(</span><span class="s">"Running testbench"</span><span class="p">);</span> <span class="c1">// Display message on simulation start</span>
+        
+        <span class="c1">// Initialize inputs</span>
+        <span class="n">rst</span> <span class="o">&lt;=</span> <span class="mb">1'b0</span><span class="p">;</span>         <span class="c1">// Assert reset initially</span>
+        <span class="n">start</span> <span class="o">&lt;=</span> <span class="mb">1'b0</span><span class="p">;</span>       <span class="c1">// Ensure start is low</span>
+        <span class="n">multiplican</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">;</span>    <span class="c1">// Initialize multiplicand</span>
+        <span class="n">multiplier</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">;</span>     <span class="c1">// Initialize multiplier</span>
+        <span class="p">#</span><span class="mi">10</span><span class="p">;</span>                 <span class="c1">// Wait for two clock cycles</span>
+        <span class="n">rst</span> <span class="o">&lt;=</span> <span class="mb">1'b1</span><span class="p">;</span>         <span class="c1">// De-assert reset to start module operation</span>
+        <span class="p">#</span><span class="mi">10</span><span class="p">;</span>                 <span class="c1">// Wait for two more clock cycles before starting test</span>
+
+        <span class="c1">// Set test values for multiplicand and multiplier</span>
+        <span class="n">multiplican</span> <span class="o">&lt;=</span> <span class="mb">4'b0100</span><span class="p">;</span> <span class="c1">// Set multiplicand to 4</span>
+        <span class="n">multiplier</span> <span class="o">&lt;=</span>  <span class="mb">4'b1001</span><span class="p">;</span>  <span class="c1">// Set multiplier to -7</span>
+    <span class="c1">//  multiplican	&lt;= 4'b1110;//-2</span>
+    <span class="c1">//  multiplier	&lt;= 4'b0111;//7</span>
+    <span class="c1">//  multiplican	&lt;= 4'b0110; //6</span>
+    <span class="c1">//  multiplier	&lt;= 4'b0101;//5</span>
+    <span class="c1">//  multiplican	&lt;= 4'b1010; //-6</span>
+    <span class="c1">//  multiplier	&lt;= 4'b1011;//-5</span>
+        <span class="p">#</span><span class="mi">2</span><span class="p">;</span>                      <span class="c1">// Wait a short time</span>
+        <span class="n">start</span> <span class="o">&lt;=</span> <span class="mb">1'b1</span><span class="p">;</span>           <span class="c1">// Assert start to begin multiplication</span>
+        <span class="p">#</span><span class="mi">4</span><span class="p">;</span>                      <span class="c1">// Wait two clock cycles</span>
+        <span class="n">start</span> <span class="o">&lt;=</span> <span class="mb">1'b0</span><span class="p">;</span>           <span class="c1">// Deassert start to simulate single pulse</span>
+        <span class="p">#</span><span class="mi">4</span><span class="p">;</span>                      <span class="c1">// Wait two more clock cycles for results</span>
+    <span class="k">end</span>   
+<span class="k">endmodule</span>
+</code></pre></div></div> <p>We can run a Simulation to check the code by clicking the <code class="language-plaintext highlighter-rouge">Run Simulation</code> under <code class="language-plaintext highlighter-rouge">SIMULATION</code> and choosing the first <code class="language-plaintext highlighter-rouge">Run Behavioral Simulation</code>. Here, the function of the <code class="language-plaintext highlighter-rouge">clk</code> is the same as the <code class="language-plaintext highlighter-rouge">submit</code> of the lab8.</p> <div align="center"><img src="imgs/v2/25.png" alt="drawing" width="1000" /></div> <p>The multiplicand is 4 and the multiplier is -7, then the result is -28.</p> <div align="center"><img src="imgs/v2/26.png" alt="drawing" width="1000" /></div> <p>The multiplicand is -2 and the multiplier is 7, then the result is -14.</p> <div align="center"><img src="imgs/v2/27.png" alt="drawing" width="1000" /></div> <p>The multiplicand is 6 and the multiplier is 5, then the result is 00111110, which is equal to the 30.</p> <div align="center"><img src="imgs/v2/28.png" alt="drawing" width="1000" /></div> <p>The multiplicand is -6 and the multiplier is -5, then the result is 30.</p> <p>For the showing the real data we want, you can set the radix to the signed like below:</p> <div align="center"><img src="imgs/v2/show_data.png" alt="drawing" width="800" /></div> <h3 id="implementation"> <a href="#implementation" class="anchor-heading" aria-labelledby="implementation"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Implementation </h3> <p>The part can reference the <a href="https://uri-nextlab.github.io/ParallelProgrammingLabs/docs/Labs/Lab1_led.html">Generate Bitstream</a> in lab1.</p> <p>The block design is shown below:</p> <div align="center"><img src="imgs/v2/29.png" alt="drawing" width="800" /></div> <p>For the value of <code class="language-plaintext highlighter-rouge">start</code> <code class="language-plaintext highlighter-rouge">multiplican</code> <code class="language-plaintext highlighter-rouge">multiplier</code> ports can be read from the <code class="language-plaintext highlighter-rouge">AXI_GPIO</code> IP, and we need to write data to the <code class="language-plaintext highlighter-rouge">product</code> input ports by <code class="language-plaintext highlighter-rouge">AXI_GPIO</code> and the <code class="language-plaintext highlighter-rouge">key</code> port will map to the button(L19) and the <code class="language-plaintext highlighter-rouge">Done</code> port will map to the LED(M14) and the <code class="language-plaintext highlighter-rouge">Busy</code> will map to the LED(R14) of the board.</p> <h3 id="download-the-bitstream-file-to-pynq"> <a href="#download-the-bitstream-file-to-pynq" class="anchor-heading" aria-labelledby="download-the-bitstream-file-to-pynq"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Download the bitstream file to PYNQ </h3> <p>We need to download the design_1_wrapper.bit to the local machine. Go to Lab9/project_1/project_1.runs/impl_1, download design_1_wrapper.bit, and upload the file to the PYNQ. And we also need to upload the design_1.hwh file which is in the Lab9/project_1/project_1.gen/sources_1/bd/design_1/hw_handoff.</p> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">pynq</span> <span class="kn">import</span> <span class="n">Overlay</span>
+<span class="kn">from</span> <span class="n">pynq</span> <span class="kn">import</span> <span class="n">Bitstream</span>
+<span class="n">bit</span> <span class="o">=</span> <span class="nc">Bitstream</span><span class="p">(</span><span class="sh">"</span><span class="s">design_1.bit</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">bit</span><span class="p">.</span><span class="nf">download</span><span class="p">()</span>
+<span class="n">bit</span><span class="p">.</span><span class="n">bitfile_name</span>
+
+</code></pre></div></div> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">pynq</span> <span class="kn">import</span> <span class="n">MMIO</span> 
+<span class="n">GPIO_BASE_ADDRESS</span> <span class="o">=</span> <span class="mh">0X41200000</span>
+<span class="n">GPIO_RANGE</span> <span class="o">=</span> <span class="mh">0x1000</span>
+<span class="n">start_write</span> <span class="o">=</span> <span class="nc">MMIO</span><span class="p">(</span><span class="n">GPIO_BASE_ADDRESS</span><span class="p">,</span> <span class="n">GPIO_RANGE</span><span class="p">)</span>
+</code></pre></div></div> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">GPIO_BASE_ADDRESS</span> <span class="o">=</span> <span class="mh">0X41210000</span>
+<span class="n">GPIO_RANGE</span> <span class="o">=</span> <span class="mh">0x1000</span>
+<span class="n">multiplican</span> <span class="o">=</span> <span class="nc">MMIO</span><span class="p">(</span><span class="n">GPIO_BASE_ADDRESS</span><span class="p">,</span> <span class="n">GPIO_RANGE</span><span class="p">)</span>
+</code></pre></div></div> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">GPIO_BASE_ADDRESS</span> <span class="o">=</span> <span class="mh">0X41220000</span>
+<span class="n">GPIO_RANGE</span> <span class="o">=</span> <span class="mh">0x1000</span>
+<span class="n">multiplier</span> <span class="o">=</span> <span class="nc">MMIO</span><span class="p">(</span><span class="n">GPIO_BASE_ADDRESS</span><span class="p">,</span> <span class="n">GPIO_RANGE</span><span class="p">)</span>
+</code></pre></div></div> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">GPIO_BASE_ADDRESS_r</span> <span class="o">=</span> <span class="mh">0X41230000</span>
+<span class="n">GPIO_RANGE</span> <span class="o">=</span> <span class="mh">0x1000</span>
+<span class="n">product</span> <span class="o">=</span> <span class="nc">MMIO</span><span class="p">(</span><span class="n">GPIO_BASE_ADDRESS_r</span><span class="p">,</span> <span class="n">GPIO_RANGE</span><span class="p">)</span>
+</code></pre></div></div> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">representations</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="sh">'</span><span class="s">0</span><span class="sh">'</span><span class="p">:</span> <span class="p">(</span><span class="sh">'</span><span class="s">###</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s"># #</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s"># #</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s"># #</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">###</span><span class="sh">'</span><span class="p">),</span>
+    <span class="sh">'</span><span class="s">1</span><span class="sh">'</span><span class="p">:</span> <span class="p">(</span><span class="sh">'</span><span class="s">  #</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">  #</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">  #</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">  #</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">  #</span><span class="sh">'</span><span class="p">),</span>
+    <span class="sh">'</span><span class="s">2</span><span class="sh">'</span><span class="p">:</span> <span class="p">(</span><span class="sh">'</span><span class="s">###</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">  #</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">###</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">#  </span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">###</span><span class="sh">'</span><span class="p">),</span>
+    <span class="sh">'</span><span class="s">3</span><span class="sh">'</span><span class="p">:</span> <span class="p">(</span><span class="sh">'</span><span class="s">###</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">  #</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">###</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">  #</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">###</span><span class="sh">'</span><span class="p">),</span>
+    <span class="sh">'</span><span class="s">4</span><span class="sh">'</span><span class="p">:</span> <span class="p">(</span><span class="sh">'</span><span class="s"># #</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s"># #</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">###</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">  #</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">  #</span><span class="sh">'</span><span class="p">),</span>
+    <span class="sh">'</span><span class="s">5</span><span class="sh">'</span><span class="p">:</span> <span class="p">(</span><span class="sh">'</span><span class="s">###</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">#  </span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">###</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">  #</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">###</span><span class="sh">'</span><span class="p">),</span>
+    <span class="sh">'</span><span class="s">6</span><span class="sh">'</span><span class="p">:</span> <span class="p">(</span><span class="sh">'</span><span class="s">###</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">#  </span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">###</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s"># #</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">###</span><span class="sh">'</span><span class="p">),</span>
+    <span class="sh">'</span><span class="s">7</span><span class="sh">'</span><span class="p">:</span> <span class="p">(</span><span class="sh">'</span><span class="s">###</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">  #</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">  #</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">  #</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">  #</span><span class="sh">'</span><span class="p">),</span>
+    <span class="sh">'</span><span class="s">8</span><span class="sh">'</span><span class="p">:</span> <span class="p">(</span><span class="sh">'</span><span class="s">###</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s"># #</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">###</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s"># #</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">###</span><span class="sh">'</span><span class="p">),</span>
+    <span class="sh">'</span><span class="s">9</span><span class="sh">'</span><span class="p">:</span> <span class="p">(</span><span class="sh">'</span><span class="s">###</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s"># #</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">###</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">  #</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">###</span><span class="sh">'</span><span class="p">),</span>
+    <span class="sh">'</span><span class="s">-</span><span class="sh">'</span><span class="p">:</span> <span class="p">(</span><span class="sh">'</span><span class="s">   </span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">   </span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">###</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">   </span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">   </span><span class="sh">'</span><span class="p">),</span>
+    <span class="sh">'</span><span class="s">.</span><span class="sh">'</span><span class="p">:</span> <span class="p">(</span><span class="sh">'</span><span class="s">   </span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">   </span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">   </span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">   </span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">  #</span><span class="sh">'</span><span class="p">),</span>
+<span class="p">}</span>
+
+<span class="k">def</span> <span class="nf">seven_segment</span><span class="p">(</span><span class="n">number</span><span class="p">):</span>
+    <span class="c1"># treat the number as a string, since that makes it easier to deal with
+</span>    <span class="c1"># on a digit-by-digit basis
+</span>    <span class="n">digits</span> <span class="o">=</span> <span class="p">[</span><span class="n">representations</span><span class="p">[</span><span class="n">digit</span><span class="p">]</span> <span class="k">for</span> <span class="n">digit</span> <span class="ow">in</span> <span class="nf">str</span><span class="p">(</span><span class="n">number</span><span class="p">)]</span>
+    <span class="c1"># now digits is a list of 5-tuples, each representing a digit in the given number
+</span>    <span class="c1"># We'll print the first lines of each digit, the second lines of each digit, etc.
+</span>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">  </span><span class="sh">"</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="n">segment</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">segment</span> <span class="ow">in</span> <span class="n">digits</span><span class="p">))</span>
+</code></pre></div></div> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">DATA_OFFSET</span> <span class="o">=</span> <span class="mh">0X0</span>
+<span class="n">DATA_0</span> <span class="o">=</span> <span class="mh">0x06</span>
+<span class="n">DATA_1</span> <span class="o">=</span> <span class="mh">0X05</span>
+<span class="n">multiplican</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="n">DATA_OFFSET</span><span class="p">,</span><span class="n">DATA_0</span><span class="p">)</span>
+<span class="n">multiplier</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="n">DATA_OFFSET</span><span class="p">,</span><span class="n">DATA_1</span><span class="p">)</span>
+</code></pre></div></div> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">start_write</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="mh">0x0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div></div> <p>Then we need to press the button(L19) until you can see the LED(M14) is on which means the process is done. We need to press the button again and you can see the LED is off we can see the result below:</p> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Decimal value
+</span><span class="n">decimal_value</span> <span class="o">=</span> <span class="n">product</span><span class="p">.</span><span class="nf">read</span><span class="p">(</span><span class="mh">0x0</span><span class="p">)</span>
+
+<span class="c1"># Convert the decimal value to an 8-bit binary string
+</span><span class="n">binary_str</span> <span class="o">=</span> <span class="nf">format</span><span class="p">(</span><span class="n">decimal_value</span><span class="p">,</span> <span class="sh">'</span><span class="s">08b</span><span class="sh">'</span><span class="p">)</span>
+
+<span class="c1"># Convert to signed decimal
+</span><span class="k">if</span> <span class="n">binary_str</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="sh">'</span><span class="s">1</span><span class="sh">'</span><span class="p">:</span>  <span class="c1"># Check if the number is negative in two's complement
+</span>    <span class="c1"># Invert the digits
+</span>    <span class="n">inverted_str</span> <span class="o">=</span> <span class="sh">''</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="sh">'</span><span class="s">1</span><span class="sh">'</span> <span class="k">if</span> <span class="n">bit</span> <span class="o">==</span> <span class="sh">'</span><span class="s">0</span><span class="sh">'</span> <span class="k">else</span> <span class="sh">'</span><span class="s">0</span><span class="sh">'</span> <span class="k">for</span> <span class="n">bit</span> <span class="ow">in</span> <span class="n">binary_str</span><span class="p">)</span>
+    <span class="c1"># Convert to decimal and subtract 1 to get the magnitude
+</span>    <span class="n">signed_decimal</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="p">(</span><span class="nf">int</span><span class="p">(</span><span class="n">inverted_str</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="c1"># If the number is positive, just convert it directly
+</span>    <span class="n">signed_decimal</span> <span class="o">=</span> <span class="nf">int</span><span class="p">(</span><span class="n">binary_str</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="nf">seven_segment</span><span class="p">(</span><span class="n">signed_decimal</span><span class="p">)</span>
+</code></pre></div></div> <div align="center"><img src="imgs/v2/35.png" alt="drawing" width="400" /></div> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">DATA_OFFSET</span> <span class="o">=</span> <span class="mh">0X0</span>
+<span class="n">DATA_0</span> <span class="o">=</span> <span class="mh">0x05</span>
+<span class="n">DATA_1</span> <span class="o">=</span> <span class="mh">0X06</span>
+<span class="n">multiplican</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="n">DATA_OFFSET</span><span class="p">,</span><span class="n">DATA_0</span><span class="p">)</span>
+<span class="n">multiplier</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="n">DATA_OFFSET</span><span class="p">,</span><span class="n">DATA_1</span><span class="p">)</span>
+</code></pre></div></div> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">start_write</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="mh">0x0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div></div> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Decimal value
+</span><span class="n">decimal_value</span> <span class="o">=</span> <span class="n">product</span><span class="p">.</span><span class="nf">read</span><span class="p">(</span><span class="mh">0x0</span><span class="p">)</span>
+
+<span class="c1"># Convert the decimal value to an 8-bit binary string
+</span><span class="n">binary_str</span> <span class="o">=</span> <span class="nf">format</span><span class="p">(</span><span class="n">decimal_value</span><span class="p">,</span> <span class="sh">'</span><span class="s">08b</span><span class="sh">'</span><span class="p">)</span>
+
+<span class="c1"># Convert to signed decimal
+</span><span class="k">if</span> <span class="n">binary_str</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="sh">'</span><span class="s">1</span><span class="sh">'</span><span class="p">:</span>  <span class="c1"># Check if the number is negative in two's complement
+</span>    <span class="c1"># Invert the digits
+</span>    <span class="n">inverted_str</span> <span class="o">=</span> <span class="sh">''</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="sh">'</span><span class="s">1</span><span class="sh">'</span> <span class="k">if</span> <span class="n">bit</span> <span class="o">==</span> <span class="sh">'</span><span class="s">0</span><span class="sh">'</span> <span class="k">else</span> <span class="sh">'</span><span class="s">0</span><span class="sh">'</span> <span class="k">for</span> <span class="n">bit</span> <span class="ow">in</span> <span class="n">binary_str</span><span class="p">)</span>
+    <span class="c1"># Convert to decimal and subtract 1 to get the magnitude
+</span>    <span class="n">signed_decimal</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="p">(</span><span class="nf">int</span><span class="p">(</span><span class="n">inverted_str</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="c1"># If the number is positive, just convert directly
+</span>    <span class="n">signed_decimal</span> <span class="o">=</span> <span class="nf">int</span><span class="p">(</span><span class="n">binary_str</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="nf">seven_segment</span><span class="p">(</span><span class="n">signed_decimal</span><span class="p">)</span>
+</code></pre></div></div> <div align="center"><img src="imgs/v2/35.png" alt="drawing" width="400" /></div> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">DATA_OFFSET</span> <span class="o">=</span> <span class="mh">0X0</span>
+<span class="n">DATA_0</span> <span class="o">=</span> <span class="mh">0xe</span>   <span class="c1">#-2*7
+</span><span class="n">DATA_1</span> <span class="o">=</span> <span class="mh">0X07</span>
+<span class="n">multiplican</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="n">DATA_OFFSET</span><span class="p">,</span><span class="n">DATA_0</span><span class="p">)</span>
+<span class="n">multiplier</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="n">DATA_OFFSET</span><span class="p">,</span><span class="n">DATA_1</span><span class="p">)</span>
+</code></pre></div></div> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">start_write</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="mh">0x0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div></div> <p>Then we need to press the button(L19) until you can see the LED(M14) is on which means the process is done. We need to press the button again and you can see the LED is off we can see the result below:</p> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Decimal value
+</span><span class="n">decimal_value</span> <span class="o">=</span> <span class="n">product</span><span class="p">.</span><span class="nf">read</span><span class="p">(</span><span class="mh">0x0</span><span class="p">)</span>
+
+<span class="c1"># Convert the decimal value to an 8-bit binary string
+</span><span class="n">binary_str</span> <span class="o">=</span> <span class="nf">format</span><span class="p">(</span><span class="n">decimal_value</span><span class="p">,</span> <span class="sh">'</span><span class="s">08b</span><span class="sh">'</span><span class="p">)</span>
+
+<span class="c1"># Convert to signed decimal
+</span><span class="k">if</span> <span class="n">binary_str</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="sh">'</span><span class="s">1</span><span class="sh">'</span><span class="p">:</span>  <span class="c1"># Check if the number is negative in two's complement
+</span>    <span class="c1"># Invert the digits
+</span>    <span class="n">inverted_str</span> <span class="o">=</span> <span class="sh">''</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="sh">'</span><span class="s">1</span><span class="sh">'</span> <span class="k">if</span> <span class="n">bit</span> <span class="o">==</span> <span class="sh">'</span><span class="s">0</span><span class="sh">'</span> <span class="k">else</span> <span class="sh">'</span><span class="s">0</span><span class="sh">'</span> <span class="k">for</span> <span class="n">bit</span> <span class="ow">in</span> <span class="n">binary_str</span><span class="p">)</span>
+    <span class="c1"># Convert to decimal and subtract 1 to get the magnitude
+</span>    <span class="n">signed_decimal</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="p">(</span><span class="nf">int</span><span class="p">(</span><span class="n">inverted_str</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="c1"># If the number is positive, just convert it directly
+</span>    <span class="n">signed_decimal</span> <span class="o">=</span> <span class="nf">int</span><span class="p">(</span><span class="n">binary_str</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="nf">seven_segment</span><span class="p">(</span><span class="n">signed_decimal</span><span class="p">)</span>
+</code></pre></div></div> <div align="center"><img src="imgs/v2/32_2.png" alt="drawing" width="400" /></div> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">DATA_OFFSET</span> <span class="o">=</span> <span class="mh">0X0</span>
+<span class="n">DATA_0</span> <span class="o">=</span> <span class="mh">0x04</span> <span class="c1">#4*-7
+</span><span class="n">DATA_1</span> <span class="o">=</span> <span class="mh">0X09</span>
+<span class="n">multiplican</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="n">DATA_OFFSET</span><span class="p">,</span><span class="n">DATA_0</span><span class="p">)</span>
+<span class="n">multiplier</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="n">DATA_OFFSET</span><span class="p">,</span><span class="n">DATA_1</span><span class="p">)</span>
+</code></pre></div></div> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">start_write</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="mh">0x0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div></div> <p>Then we need to press the button(L19) until you can see the LED(M14) is on which means the process is done. We need to press the button again and you can see the LED is off we can see the result below:</p> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Decimal value
+</span><span class="n">decimal_value</span> <span class="o">=</span> <span class="n">product</span><span class="p">.</span><span class="nf">read</span><span class="p">(</span><span class="mh">0x0</span><span class="p">)</span>
+
+<span class="c1"># Convert the decimal value to an 8-bit binary string
+</span><span class="n">binary_str</span> <span class="o">=</span> <span class="nf">format</span><span class="p">(</span><span class="n">decimal_value</span><span class="p">,</span> <span class="sh">'</span><span class="s">08b</span><span class="sh">'</span><span class="p">)</span>
+
+<span class="c1"># Convert to signed decimal
+</span><span class="k">if</span> <span class="n">binary_str</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="sh">'</span><span class="s">1</span><span class="sh">'</span><span class="p">:</span>  <span class="c1"># Check if the number is negative in two's complement
+</span>    <span class="c1"># Invert the digits
+</span>    <span class="n">inverted_str</span> <span class="o">=</span> <span class="sh">''</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="sh">'</span><span class="s">1</span><span class="sh">'</span> <span class="k">if</span> <span class="n">bit</span> <span class="o">==</span> <span class="sh">'</span><span class="s">0</span><span class="sh">'</span> <span class="k">else</span> <span class="sh">'</span><span class="s">0</span><span class="sh">'</span> <span class="k">for</span> <span class="n">bit</span> <span class="ow">in</span> <span class="n">binary_str</span><span class="p">)</span>
+    <span class="c1"># Convert to decimal and subtract 1 to get the magnitude
+</span>    <span class="n">signed_decimal</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="p">(</span><span class="nf">int</span><span class="p">(</span><span class="n">inverted_str</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="c1"># If the number is positive, just convert directly
+</span>    <span class="n">signed_decimal</span> <span class="o">=</span> <span class="nf">int</span><span class="p">(</span><span class="n">binary_str</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="nf">seven_segment</span><span class="p">(</span><span class="n">signed_decimal</span><span class="p">)</span>
+</code></pre></div></div> <div align="center"><img src="imgs/v2/33_2.png" alt="drawing" width="400" /></div> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">DATA_OFFSET</span> <span class="o">=</span> <span class="mh">0X0</span>
+<span class="n">DATA_0</span> <span class="o">=</span> <span class="mh">0x0a</span> <span class="c1">#-6*-5
+</span><span class="n">DATA_1</span> <span class="o">=</span> <span class="mh">0X0b</span>
+<span class="n">multiplican</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="n">DATA_OFFSET</span><span class="p">,</span><span class="n">DATA_0</span><span class="p">)</span>
+<span class="n">multiplier</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="n">DATA_OFFSET</span><span class="p">,</span><span class="n">DATA_1</span><span class="p">)</span>
+</code></pre></div></div> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">start_write</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="mh">0x0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div></div> <p>Then we need to press the button(L19) until you can see the LED(M14) is on which means the process is done. And we need to press the button again and you can see the LED is off and we can see the result below:</p> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">seven_segment</span><span class="p">(</span><span class="n">product</span><span class="p">.</span><span class="nf">read</span><span class="p">(</span><span class="mh">0x0</span><span class="p">))</span><span class="c1"># Decimal value
+</span><span class="n">decimal_value</span> <span class="o">=</span> <span class="n">product</span><span class="p">.</span><span class="nf">read</span><span class="p">(</span><span class="mh">0x0</span><span class="p">)</span>
+
+<span class="c1"># Convert the decimal value to an 8-bit binary string
+</span><span class="n">binary_str</span> <span class="o">=</span> <span class="nf">format</span><span class="p">(</span><span class="n">decimal_value</span><span class="p">,</span> <span class="sh">'</span><span class="s">08b</span><span class="sh">'</span><span class="p">)</span>
+
+<span class="c1"># Convert to signed decimal
+</span><span class="k">if</span> <span class="n">binary_str</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="sh">'</span><span class="s">1</span><span class="sh">'</span><span class="p">:</span>  <span class="c1"># Check if the number is negative in two's complement
+</span>    <span class="c1"># Invert the digits
+</span>    <span class="n">inverted_str</span> <span class="o">=</span> <span class="sh">''</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="sh">'</span><span class="s">1</span><span class="sh">'</span> <span class="k">if</span> <span class="n">bit</span> <span class="o">==</span> <span class="sh">'</span><span class="s">0</span><span class="sh">'</span> <span class="k">else</span> <span class="sh">'</span><span class="s">0</span><span class="sh">'</span> <span class="k">for</span> <span class="n">bit</span> <span class="ow">in</span> <span class="n">binary_str</span><span class="p">)</span>
+    <span class="c1"># Convert to decimal and subtract 1 to get the magnitude
+</span>    <span class="n">signed_decimal</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="p">(</span><span class="nf">int</span><span class="p">(</span><span class="n">inverted_str</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="c1"># If the number is positive, just convert it directly
+</span>    <span class="n">signed_decimal</span> <span class="o">=</span> <span class="nf">int</span><span class="p">(</span><span class="n">binary_str</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="nf">seven_segment</span><span class="p">(</span><span class="n">signed_decimal</span><span class="p">)</span>
+</code></pre></div></div> <div align="center"><img src="imgs/v2/35.png" alt="drawing" width="400" /></div> </main> </div> </div> <div class="search-overlay"></div> </div> </body> </html>

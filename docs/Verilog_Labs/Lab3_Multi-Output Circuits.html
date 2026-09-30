@@ -1,0 +1,623 @@
+<!DOCTYPE html> <html lang="en-US"> <head> <meta charset="UTF-8"> <meta http-equiv="X-UA-Compatible" content="IE=Edge"> <link rel="stylesheet" href="/ParallelProgrammingLabs/assets/css/just-the-docs-default.css"> <link rel="stylesheet" href="/ParallelProgrammingLabs/assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet"> <style id="jtd-nav-activation"> .site-nav > ul.nav-list:first-child > li > a, .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(3)) > a, .site-nav > ul.nav-list:first-child > li > ul > li > ul > li > a { background-image: none; } .site-nav > ul.nav-list:not(:first-child) a, .site-nav li.external a { background-image: none; } .site-nav > ul.nav-list:first-child > li:nth-child(3) > ul > li:nth-child(3) > a { font-weight: 600; text-decoration: none; }.site-nav > ul.nav-list:first-child > li:nth-child(3) > button svg, .site-nav > ul.nav-list:first-child > li:nth-child(3) > ul > li:nth-child(3) > button svg { transform: rotate(-90deg); }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(3) > ul.nav-list, .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(3) > ul.nav-list > li.nav-list-item:nth-child(3) > ul.nav-list { display: block; } </style> <script src="/ParallelProgrammingLabs/assets/js/vendor/lunr.min.js"></script> <script src="/ParallelProgrammingLabs/assets/js/just-the-docs.js"></script> <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- Begin Jekyll SEO tag v2.8.0 --> <title>Lab3 | FPGA/SoC/Verilog/HLS</title> <meta name="generator" content="Jekyll v4.3.3" /> <meta property="og:title" content="Lab3" /> <meta property="og:locale" content="en_US" /> <meta name="description" content="FPGA, SoC, Verilog, and HLS labs" /> <meta property="og:description" content="FPGA, SoC, Verilog, and HLS labs" /> <link rel="canonical" href="https://wei-nextlab.github.io/ParallelProgrammingLabs/docs/Verilog_Labs/Lab3_Multi-Output%20Circuits.html" /> <meta property="og:url" content="https://wei-nextlab.github.io/ParallelProgrammingLabs/docs/Verilog_Labs/Lab3_Multi-Output%20Circuits.html" /> <meta property="og:site_name" content="FPGA/SoC/Verilog/HLS" /> <meta property="og:type" content="website" /> <meta name="twitter:card" content="summary" /> <meta property="twitter:title" content="Lab3" /> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"WebPage","description":"FPGA, SoC, Verilog, and HLS labs","headline":"Lab3","url":"https://wei-nextlab.github.io/ParallelProgrammingLabs/docs/Verilog_Labs/Lab3_Multi-Output%20Circuits.html"}</script> <!-- End Jekyll SEO tag --> </head> <body> <a class="skip-to-main" href="#main-content">Skip to main content</a> <svg xmlns="http://www.w3.org/2000/svg" class="d-none"> <symbol id="svg-link" viewBox="0 0 24 24"> <title>Link</title> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"> <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path> </svg> </symbol> <symbol id="svg-menu" viewBox="0 0 24 24"> <title>Menu</title> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"> <line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line> </svg> </symbol> <symbol id="svg-arrow-right" viewBox="0 0 24 24"> <title>Expand</title> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"> <polyline points="9 18 15 12 9 6"></polyline> </svg> </symbol> <!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE --> <symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"> <title id="svg-external-link-title">(external link)</title> <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line> </symbol> <symbol id="svg-doc" viewBox="0 0 24 24"> <title>Document</title> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"> <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline> </svg> </symbol> <symbol id="svg-search" viewBox="0 0 24 24"> <title>Search</title> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"> <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line> </svg> </symbol> <!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md --> <symbol id="svg-copy" viewBox="0 0 16 16"> <title>Copy</title> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16"> <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/> <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/> </svg> </symbol> <symbol id="svg-copied" viewBox="0 0 16 16"> <title>Copied</title> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16"> <path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/> <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/> </svg> </symbol> </svg> <div class="side-bar"> <div class="site-header" role="banner"> <a href="/ParallelProgrammingLabs/" class="site-title lh-tight"> FPGA/SoC/Verilog/HLS </a> <button id="menu-button" class="site-button btn-reset" aria-label="Toggle menu" aria-pressed="false"> <svg viewBox="0 0 24 24" class="icon" aria-hidden="true"><use xlink:href="#svg-menu"></use></svg> </button> </div> <nav aria-label="Main" id="site-nav" class="site-nav"> <ul class="nav-list"><li class="nav-list-item"><a href="/ParallelProgrammingLabs/" class="nav-list-link">Home</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Preparation category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/ParallelProgrammingLabs/docs/Vitis_HLS_Tutor/" class="nav-list-link">Preparation</a><ul class="nav-list"><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Vitis_HLS_Tutor/Install_Vitis.html" class="nav-list-link">Install Vitis</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Vitis_HLS_Tutor/Create_Vitis_HLS_Prj.html" class="nav-list-link">Create Vitis HLS Project</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Vitis_HLS_Tutor/Generating_bitstream_in_Vivado.html" class="nav-list-link">Generating Bitstream in Vivado</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Vitis_HLS_Tutor/Deploying_the_Adder_on_FPGA.html" class="nav-list-link">Deploying the Adder on FPGA</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Verilog Labs (Basics) category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/" class="nav-list-link">Verilog Labs (Basics)</a><ul class="nav-list"><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/Lab1_Modeling_Concepts.html" class="nav-list-link">Lab1</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/Lab2_Addition.html" class="nav-list-link">Lab2</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/Lab3_Multi-Output%20Circuits.html" class="nav-list-link">Lab3</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/Lab4_Tasks,%20Functions,%20and%20Testbench%20.html" class="nav-list-link">Lab4</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/Lab5_Modeling%20Latches%20and%20Flip-flops%20.html" class="nav-list-link">Lab5</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/Lab6_Modeling%20Registers%20and%20Counters%20.html" class="nav-list-link">Lab6</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/Lab7_Behavioral%20Modeling%20and%20Timing%20Constraints.html" class="nav-list-link">Lab7</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/Lab8_Architectural%20Wizard%20and%20IP%20Catalog.html" class="nav-list-link">Lab8</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/Lab9_Counters,%20Timers%20and%20Real-Time%20Clock.html" class="nav-list-link">Lab9</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/Lab10_Finite%20State%20Machines%20.html" class="nav-list-link">Lab10</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/Lab11_Sequential%20System%20Design%20Using%20ASM%20Charts%20.html" class="nav-list-link">Lab11</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in FPGA/SoC Labs category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/ParallelProgrammingLabs/docs/Labs/" class="nav-list-link">FPGA/SoC Labs</a><ul class="nav-list"><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Labs/Lab1_led.html" class="nav-list-link">Lab1</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Labs/Lab2_uart.html" class="nav-list-link">Lab2</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Labs/Lab3_IO_Planning.html" class="nav-list-link">Lab3</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Labs/Lab4_ILA.html" class="nav-list-link">Lab4</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Labs/Lab5_IPI.html" class="nav-list-link">Lab5</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Labs/Lab6_DMA.html" class="nav-list-link">Lab6</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Labs/Lab7_Fibonacci_sp.html" class="nav-list-link">Lab7</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Labs/Lab8_State_Machines.html" class="nav-list-link">Lab8</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Labs/Lab9_Simple_Processor.html" class="nav-list-link">Lab9</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Labs/Lab10_Bit-pair%20Recoded%20Multiplier.html" class="nav-list-link">Lab10</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in HLS Labs category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/ParallelProgrammingLabs/docs/HLS_Labs/" class="nav-list-link">HLS Labs</a><ul class="nav-list"><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab1.html" class="nav-list-link">Lab1</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab2.html" class="nav-list-link">Lab2</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab3.html" class="nav-list-link">Lab3</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab4.html" class="nav-list-link">Lab4</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab5.html" class="nav-list-link">Lab5</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab6.html" class="nav-list-link">Lab6</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab7.html" class="nav-list-link">Lab7</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab8.html" class="nav-list-link">Lab8</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab9.html" class="nav-list-link">Lab9</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab10.html" class="nav-list-link">Lab10</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab11.html" class="nav-list-link">Lab11</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab12.html" class="nav-list-link">Lab12</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab13.html" class="nav-list-link">Lab13</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab14.html" class="nav-list-link">Lab14</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab15.html" class="nav-list-link">Lab15</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab16.html" class="nav-list-link">Lab16</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab17.html" class="nav-list-link">Lab17</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab18.html" class="nav-list-link">Lab18</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab19.html" class="nav-list-link">Lab19</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab20.html" class="nav-list-link">Lab20</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab21.html" class="nav-list-link">Lab21</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab22.html" class="nav-list-link">Lab22</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab23.html" class="nav-list-link">Lab23</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab24.html" class="nav-list-link">Lab24</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab25.html" class="nav-list-link">Lab25</a></li></ul></li></ul> </nav> <footer class="site-footer"> This site uses <a href="https://github.com/just-the-docs/just-the-docs">Just the Docs</a>, a documentation theme for Jekyll. </footer> </div> <div class="main" id="top"> <div id="main-header" class="main-header"> <div class="search" role="search"> <div class="search-input-wrap"> <input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search FPGA/SoC/Verilog/HLS" aria-label="Search FPGA/SoC/Verilog/HLS" autocomplete="off"> <label for="search-input" class="search-label"><svg viewBox="0 0 24 24" class="search-icon"><use xlink:href="#svg-search"></use></svg></label> </div> <div id="search-results" class="search-results"></div> </div> <nav aria-label="Auxiliary" class="aux-nav"> <ul class="aux-nav-list"> <li class="aux-nav-list-item"> <a href="https://github.com/wei-nextlab/ParallelProgrammingLabs" class="site-button" > GitHub Repository </a> </li> </ul> </nav> </div> <div class="main-content-wrap"> <nav aria-label="Breadcrumb" class="breadcrumb-nav"> <ol class="breadcrumb-nav-list"> <li class="breadcrumb-nav-list-item"><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/">Verilog Labs (Basics)</a></li> <li class="breadcrumb-nav-list-item"><span>Lab3</span></li> </ol> </nav> <div id="main-content" class="main-content"> <main> <h1 id="lab3_multi-output-circuits-encoders-decoders-and-memories"> <a href="#lab3_multi-output-circuits-encoders-decoders-and-memories" class="anchor-heading" aria-labelledby="lab3_multi-output-circuits-encoders-decoders-and-memories"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Lab3_Multi-Output Circuits: Encoders, Decoders, and Memories </h1> <h2 id="introduction"> <a href="#introduction" class="anchor-heading" aria-labelledby="introduction"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Introduction </h2> <p>Boolean expressions are used to output a Boolean function of a number of variables. Dataflow constructs like assign can be used to model such functions. Some circuits have multiple outputs and multiple inputs. In this lab, you will design encoders and decoders and read-only memories.</p> <h2 id="multi-output-decoder-circuits"> <a href="#multi-output-decoder-circuits" class="anchor-heading" aria-labelledby="multi-output-decoder-circuits"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Multi-output Decoder Circuits </h2> <p>Decoders are combinatorial circuits that have multiple outputs. They are widely used in memory chips to select one of the words addressed by the address input. For example, an 8-word memory will have a three-bit address input. The decoder will decode the 3-bit address and generate a select line for one of the eight words corresponding to the input address. The 3-to-8 decoder symbol and the truth table are shown below.</p> <div align="center"><img src="imgs/v1/2.png" alt="drawing" width="600" /></div> <p>Such circuits, also known as binary decoders, can be modeled using dataflow statements as only each output is true for a unique input combination.</p> <h3 id="part3-1-1"> <a href="#part3-1-1" class="anchor-heading" aria-labelledby="part3-1-1"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Part3-1-1 </h3> <p>Design a 3-to-8-line decoder. Use dataflow modeling constructs.</p> <p>Create and add the Verilog module, naming it decoder_3to8_dataflow.v, that defines the 3-to-8 line decoder with three-bit input x and 8-bit output y. Use dataflow modeling constructs.</p> <p><strong>lab3_1_1.v</strong></p> <div class="language-verilog highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1">// Define the module with a 3-bit input x and an 8-bit output y.</span>
+<span class="k">module</span> <span class="n">lab3_1_1</span><span class="p">(</span>
+    <span class="kt">input</span> <span class="p">[</span><span class="mi">2</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">x</span><span class="p">,</span>   <span class="c1">// 3-bit input used to select one of the eight outputs</span>
+    <span class="kt">output</span> <span class="p">[</span><span class="mi">7</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">y</span>   <span class="c1">// 8-bit output where only one bit is set to 1 based on input x</span>
+<span class="p">);</span>
+
+    <span class="c1">// Implement the 3-to-8 line decoder functionality using dataflow modeling.</span>
+    <span class="c1">// Each line of y is set to 1 only when x matches the corresponding binary value.</span>
+    <span class="c1">// Otherwise, the line is set to 0.</span>
+    <span class="k">assign</span> <span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">==</span> <span class="mb">3'b000</span><span class="p">)</span> <span class="o">?</span> <span class="mb">1'b1</span> <span class="o">:</span> <span class="mb">1'b0</span><span class="p">;</span> <span class="c1">// y[0] is high if x is 000</span>
+    <span class="k">assign</span> <span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">==</span> <span class="mb">3'b001</span><span class="p">)</span> <span class="o">?</span> <span class="mb">1'b1</span> <span class="o">:</span> <span class="mb">1'b0</span><span class="p">;</span> <span class="c1">// y[1] is high if x is 001</span>
+    <span class="k">assign</span> <span class="n">y</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">==</span> <span class="mb">3'b010</span><span class="p">)</span> <span class="o">?</span> <span class="mb">1'b1</span> <span class="o">:</span> <span class="mb">1'b0</span><span class="p">;</span> <span class="c1">// y[2] is high if x is 010</span>
+    <span class="k">assign</span> <span class="n">y</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">==</span> <span class="mb">3'b011</span><span class="p">)</span> <span class="o">?</span> <span class="mb">1'b1</span> <span class="o">:</span> <span class="mb">1'b0</span><span class="p">;</span> <span class="c1">// y[3] is high if x is 011</span>
+    <span class="k">assign</span> <span class="n">y</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">==</span> <span class="mb">3'b100</span><span class="p">)</span> <span class="o">?</span> <span class="mb">1'b1</span> <span class="o">:</span> <span class="mb">1'b0</span><span class="p">;</span> <span class="c1">// y[4] is high if x is 100</span>
+    <span class="k">assign</span> <span class="n">y</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">==</span> <span class="mb">3'b101</span><span class="p">)</span> <span class="o">?</span> <span class="mb">1'b1</span> <span class="o">:</span> <span class="mb">1'b0</span><span class="p">;</span> <span class="c1">// y[5] is high if x is 101</span>
+    <span class="k">assign</span> <span class="n">y</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">==</span> <span class="mb">3'b110</span><span class="p">)</span> <span class="o">?</span> <span class="mb">1'b1</span> <span class="o">:</span> <span class="mb">1'b0</span><span class="p">;</span> <span class="c1">// y[6] is high if x is 110</span>
+    <span class="k">assign</span> <span class="n">y</span><span class="p">[</span><span class="mi">7</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">==</span> <span class="mb">3'b111</span><span class="p">)</span> <span class="o">?</span> <span class="mb">1'b1</span> <span class="o">:</span> <span class="mb">1'b0</span><span class="p">;</span> <span class="c1">// y[7] is high if x is 111</span>
+
+<span class="k">endmodule</span>
+
+</code></pre></div></div> <p>Now we can see the <code class="language-plaintext highlighter-rouge">Schematic</code> under the RTL ANALYSIS part like below:</p> <div align="center"><img src="imgs/v1/1.png" alt="drawing" width="200" /></div> <p>Then we can run Simulation to check the code of the lab3_1_1 module.</p> <p><strong>decoder_3to8_dataflow_tb.v</strong></p> <div class="language-verilog highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Define the testbench module with no ports as it's a top-level entity</span>
+<span class="k">module</span> <span class="n">decoder_3to8_dataflow_tb</span><span class="p">();</span>
+    
+    <span class="c1">// Declare input signals as reg type to drive them with procedural assignments</span>
+    <span class="kt">reg</span> <span class="p">[</span><span class="mi">2</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">x</span><span class="p">;</span>
+    <span class="c1">// Declare output signals as wire since they will be driven by the instance of DUT (Device Under Test)</span>
+    <span class="kt">wire</span> <span class="p">[</span><span class="mi">7</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">y</span><span class="p">;</span>
+    <span class="c1">// Declare an integer for use in the for-loop</span>
+    <span class="kt">integer</span> <span class="n">k</span><span class="p">;</span>
+    
+    <span class="c1">// Instantiate the Device Under Test (DUT) with named port mapping</span>
+    <span class="n">lab3_1_1</span> <span class="n">DUT</span> <span class="p">(.</span><span class="n">x</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="p">.</span><span class="n">y</span><span class="p">(</span><span class="n">y</span><span class="p">));</span>   
+ 
+    <span class="c1">// Initial block to define the sequence of test cases</span>
+    <span class="k">initial</span> <span class="k">begin</span>
+      <span class="c1">// Initialize input</span>
+      <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">// Start with input 0</span>
+      
+      <span class="c1">// Loop through all possible inputs from 0 to 7</span>
+      <span class="k">for</span> <span class="p">(</span><span class="n">k</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="mi">8</span><span class="p">;</span> <span class="n">k</span> <span class="o">=</span> <span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">begin</span>
+		<span class="p">#</span><span class="mi">5</span> <span class="n">x</span> <span class="o">=</span> <span class="n">k</span><span class="p">;</span> <span class="c1">// Assign the value of k to x and wait for 5-time units</span>
+      <span class="k">end</span>
+      <span class="p">#</span><span class="mi">10</span><span class="p">;</span> <span class="c1">// Wait for 10 time units before ending the simulation</span>
+      
+      <span class="c1">// Optional: Add $finish to end the simulation explicitly.</span>
+      <span class="c1">// Some simulation environments automatically end when there are no more events,</span>
+      <span class="c1">// but others require $finish to terminate the simulation.</span>
+      <span class="p">$</span><span class="nb">finish</span><span class="p">;</span>
+    <span class="k">end</span>
+
+    <span class="c1">// Optional: Monitor changes in variables</span>
+    <span class="c1">// Display changes in input and output to observe the test results</span>
+    <span class="k">initial</span> <span class="k">begin</span>
+        <span class="p">$</span><span class="nb">monitor</span><span class="p">(</span><span class="s">"Time = %t, Input x = %b, Output y = %b"</span><span class="p">,</span> <span class="p">$</span><span class="kt">time</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span>
+    <span class="k">end</span>
+
+<span class="k">endmodule</span>
+
+</code></pre></div></div> <p>We can run Simulation to check the code by clicking the Run Simulation under the SIMULATION and choosing the first Run Behavioral Simulation.</p> <div align="center"><img src="imgs/v1/8.png" alt="drawing" width="800" /></div> <p>Then, we can click on the Run synthesis under the SYNTHESIS and Run implementation under the IMPLEMENTATION. We should add the appropriate board-related master XDC file to the project and edit it to include the related pins like the below:</p> <div align="center"><img src="imgs/v1/3.png" alt="drawing" width="800" /></div> <p>Because the board has four LEDs, so we can also use the RGB LED(LD5 and LD4).</p> <div align="center"><img src="imgs/v1/4.png" alt="drawing" width="600" /></div> <p>Click on the Generate Bitstream under the PROGRAM AND DEBUG, and when writing bitstream is complete, we can download the file to the board and verify the lab.</p> <div align="center"><img src="imgs/v4/1.jpg" alt="drawing" width="200" /></div> <div align="center"><img src="imgs/v4/2.jpg" alt="drawing" width="200" /></div> <h3 id="part3-1-2"> <a href="#part3-1-2" class="anchor-heading" aria-labelledby="part3-1-2"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Part3-1-2 </h3> <p>Design and implement a popular IC, 74138, functionality using dataflow modeling and the decoder you used in 1-1. The IC symbol and truth table are given below.</p> <div align="center"><img src="imgs/v1/5.png" alt="drawing" width="600" /></div> <p>X = don’t care</p> <p>Note that this is very similar to the one you had created in 1-1; it has additional control (Enable) signals G1, /G2A, and /G2B. These enable signals to simplify decoding in some systems.</p> <p>Create and add the Verilog module, named decoder_74138_dataflow, instantiating the model you had developed in 1-1. Add additional logic by using the dataflow modeling constructs to model the desired functionality.</p> <p><strong>lab3_1_2.v</strong></p> <div class="language-verilog highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">module</span> <span class="n">Lab3_1_2</span><span class="p">(</span>
+    <span class="kt">input</span> <span class="p">[</span><span class="mi">2</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">x</span><span class="p">,</span>        <span class="c1">// 3-bit input</span>
+    <span class="kt">input</span> <span class="n">G1</span><span class="p">,</span>             <span class="c1">// Active-high enable</span>
+    <span class="kt">input</span> <span class="n">G2A_n</span><span class="p">,</span> <span class="n">G2B_n</span><span class="p">,</span>   <span class="c1">// Active-low enables</span>
+    <span class="kt">output</span> <span class="p">[</span><span class="mi">7</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">y</span>        <span class="c1">// 8-bit output</span>
+<span class="p">);</span>
+
+    <span class="c1">// Internal signal for combined enable condition</span>
+    <span class="kt">wire</span> <span class="n">enable</span><span class="p">;</span>
+    <span class="kt">wire</span> <span class="p">[</span><span class="mi">7</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">y_data</span><span class="p">;</span>  
+    <span class="c1">// The decoder is enabled only if G1 is high and both G2A_n and G2B_n are low</span>
+    <span class="k">assign</span> <span class="n">enable</span> <span class="o">=</span> <span class="n">G1</span> <span class="o">&amp;</span> <span class="o">~</span><span class="n">G2A_n</span> <span class="o">&amp;</span> <span class="o">~</span><span class="n">G2B_n</span><span class="p">;</span>
+
+    <span class="c1">// Instantiate the basic 3-to-8 decoder, passing the enable condition</span>
+    <span class="c1">// The outputs are only asserted if the enable condition is true</span>
+    <span class="n">lab3_1_1</span> <span class="n">basic_decoder</span> <span class="p">(</span>
+        <span class="p">.</span><span class="n">x</span><span class="p">(</span><span class="n">x</span><span class="p">),</span>
+        <span class="p">.</span><span class="n">y</span><span class="p">(</span><span class="n">y_data</span><span class="p">)</span>
+    <span class="p">);</span>
+
+    <span class="c1">// Modify the output based on the enable condition using dataflow constructs</span>
+    <span class="c1">// If 'enable' is not asserted, all outputs should be low.</span>
+    <span class="k">assign</span> <span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">enable</span> <span class="o">&amp;</span> <span class="n">y_data</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+    <span class="k">assign</span> <span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">enable</span> <span class="o">&amp;</span> <span class="n">y_data</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+    <span class="k">assign</span> <span class="n">y</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">enable</span> <span class="o">&amp;</span> <span class="n">y_data</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+    <span class="k">assign</span> <span class="n">y</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">enable</span> <span class="o">&amp;</span> <span class="n">y_data</span><span class="p">[</span><span class="mi">3</span><span class="p">];</span>
+    <span class="k">assign</span> <span class="n">y</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="n">enable</span> <span class="o">&amp;</span> <span class="n">y_data</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+    <span class="k">assign</span> <span class="n">y</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">=</span> <span class="n">enable</span> <span class="o">&amp;</span> <span class="n">y_data</span><span class="p">[</span><span class="mi">5</span><span class="p">];</span>
+    <span class="k">assign</span> <span class="n">y</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span> <span class="o">=</span> <span class="n">enable</span> <span class="o">&amp;</span> <span class="n">y_data</span><span class="p">[</span><span class="mi">6</span><span class="p">];</span>
+    <span class="k">assign</span> <span class="n">y</span><span class="p">[</span><span class="mi">7</span><span class="p">]</span> <span class="o">=</span> <span class="n">enable</span> <span class="o">&amp;</span> <span class="n">y_data</span><span class="p">[</span><span class="mi">7</span><span class="p">];</span>
+
+<span class="k">endmodule</span>
+
+</code></pre></div></div> <p>Then, we can run Simulation to check the code of the lab3_1_2 module.</p> <p><strong>decoder_74138_dataflow_tb.v</strong></p> <div class="language-verilog highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Define the testbench module with no ports, as it's a top-level entity</span>
+<span class="k">module</span> <span class="n">decoder_74138_dataflow_tb</span><span class="p">();</span>
+    
+    <span class="c1">// Declare input signals as reg type to drive them with procedural assignments</span>
+    <span class="kt">reg</span> <span class="p">[</span><span class="mi">2</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">x</span><span class="p">;</span>        <span class="c1">// 3-bit address input</span>
+    <span class="kt">reg</span> <span class="n">g1</span><span class="p">,</span> <span class="n">g2a_n</span><span class="p">,</span> <span class="n">g2b_n</span><span class="p">;</span> <span class="c1">// Enable inputs for the decoder, g1 is active high, g2a_n and g2b_n are active low</span>
+    
+    <span class="c1">// Declare output signals as wire since they will be driven by the instance of DUT (Device Under Test)</span>
+    <span class="kt">wire</span> <span class="p">[</span><span class="mi">7</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">y</span><span class="p">;</span>      <span class="c1">// 8-bit output representing the decoded line</span>
+    
+    <span class="c1">// Declare an integer for use in the for-loop</span>
+    <span class="kt">integer</span> <span class="n">k</span><span class="p">;</span>
+    
+    <span class="c1">// Instantiate the Device Under Test (DUT) with the named port mapping</span>
+    <span class="n">Lab3_1_2</span> <span class="n">DUT</span> <span class="p">(.</span><span class="n">G1</span><span class="p">(</span><span class="n">g1</span><span class="p">),</span> <span class="p">.</span><span class="n">G2A_n</span><span class="p">(</span><span class="n">g2a_n</span><span class="p">),</span> <span class="p">.</span><span class="n">G2B_n</span><span class="p">(</span><span class="n">g2b_n</span><span class="p">),</span> <span class="p">.</span><span class="n">x</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="p">.</span><span class="n">y</span><span class="p">(</span><span class="n">y</span><span class="p">));</span>   
+ 
+    <span class="c1">// Initial block to define the sequence of test cases</span>
+    <span class="k">initial</span> <span class="k">begin</span>
+      <span class="c1">// Test all possible input combinations under different enable configurations</span>
+      <span class="c1">// Set initial conditions: Decoder disabled due to g2a_n and g2b_n being high</span>
+      <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">g1</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">g2a_n</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">g2b_n</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+      <span class="c1">// Iterate through all input combinations</span>
+      <span class="k">for</span> <span class="p">(</span><span class="n">k</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="mi">8</span><span class="p">;</span> <span class="n">k</span> <span class="o">=</span> <span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+		<span class="p">#</span><span class="mi">5</span> <span class="n">x</span> <span class="o">=</span> <span class="n">k</span><span class="p">;</span>  <span class="c1">// Change address input every 5 time units</span>
+      <span class="p">#</span><span class="mi">10</span><span class="p">;</span> <span class="c1">// Wait for 10 time units before changing enable conditions</span>
+      
+      <span class="c1">// Enable the decoder with G1 high and G2A_n low</span>
+      <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">g1</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">g2a_n</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">g2b_n</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+      <span class="k">for</span> <span class="p">(</span><span class="n">k</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="mi">8</span><span class="p">;</span> <span class="n">k</span> <span class="o">=</span> <span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+		<span class="p">#</span><span class="mi">5</span> <span class="n">x</span> <span class="o">=</span> <span class="n">k</span><span class="p">;</span>  
+      <span class="p">#</span><span class="mi">10</span><span class="p">;</span> <span class="c1">// Wait and switch to another enable condition</span>
+      
+      <span class="c1">// Enable the decoder with G1 low and G2B_n low</span>
+      <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">g1</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">g2a_n</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">g2b_n</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+      <span class="k">for</span> <span class="p">(</span><span class="n">k</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="mi">8</span><span class="p">;</span> <span class="n">k</span> <span class="o">=</span> <span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+		<span class="p">#</span><span class="mi">5</span> <span class="n">x</span> <span class="o">=</span> <span class="n">k</span><span class="p">;</span>  
+      <span class="p">#</span><span class="mi">10</span><span class="p">;</span>
+      
+      <span class="c1">// Fully enable the decoder with both G1 high and G2B_n low (G2A_n also low for typical 74138 behavior)</span>
+      <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">g1</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">g2a_n</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">g2b_n</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+      <span class="k">for</span> <span class="p">(</span><span class="n">k</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="mi">8</span><span class="p">;</span> <span class="n">k</span> <span class="o">=</span> <span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+		<span class="p">#</span><span class="mi">5</span> <span class="n">x</span> <span class="o">=</span> <span class="n">k</span><span class="p">;</span>  <span class="c1">// Test all combinations when fully enabled</span>
+      <span class="p">#</span><span class="mi">10</span><span class="p">;</span> <span class="c1">// Wait before ending simulation</span>
+      
+      <span class="c1">// End the simulation</span>
+      <span class="p">$</span><span class="nb">finish</span><span class="p">;</span>
+    <span class="k">end</span>
+
+    <span class="c1">// Optional: Monitor changes in variables</span>
+    <span class="c1">// This helps in debugging and observing the behavior of the decoder under different enabled signals</span>
+    <span class="k">initial</span> <span class="k">begin</span>
+        <span class="p">$</span><span class="nb">monitor</span><span class="p">(</span><span class="s">"Time = %t, Enable: G1=%b, G2A_n=%b, G2B_n=%b, Input x = %b, Output y = %b"</span><span class="p">,</span> <span class="p">$</span><span class="kt">time</span><span class="p">,</span> <span class="n">g1</span><span class="p">,</span> <span class="n">g2a_n</span><span class="p">,</span> <span class="n">g2b_n</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span>
+    <span class="k">end</span>
+
+<span class="k">endmodule</span>
+
+</code></pre></div></div> <p>We can run Simulation to check the code by clicking the Run Simulation under the SIMULATION and choosing the first Run Behavioral Simulation.</p> <div align="center"><img src="imgs/v1/9.png" alt="drawing" width="1000" /></div> <h2 id="multi-output-encoder-circuits"> <a href="#multi-output-encoder-circuits" class="anchor-heading" aria-labelledby="multi-output-encoder-circuits"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Multi-output Encoder Circuits </h2> <p>The Encoder circuit converts information from one format (code) to another for standardization, speed, secrecy, security, or saving space by shrinking size. In digital circuits, encoding information may reduce size and/or prioritize functions. Examples of widely used encoder circuits include priority encoders, Huffman encoders, etc.</p> <h3 id="part3-2-1"> <a href="#part3-2-1" class="anchor-heading" aria-labelledby="part3-2-1"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Part3-2-1 </h3> <p>Design an 8-to-3 priority encoder whose truth table is given below. Use behavioral modeling.</p> <div align="center"><img src="imgs/v1/6.png" alt="drawing" width="600" /></div> <p>Create and add the Verilog module with <em>v</em> and <em>en_in_n</em> input; <em>y</em>, <em>en_out</em>, and <em>gs</em> output. The <em>v</em> input will be 8-bit data inputs (labeled 0 to 7 in the table), <em>en_in_n</em> input will be one bit (E1), <em>y</em> output will be 3-bit (A2, A1, A0), <em>en_out</em> will be one bit output (GS), and <strong>en_out</strong> will be one bit output (E0).</p> <p><strong>lab3_2_1.v</strong></p> <div class="language-verilog highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">module</span> <span class="n">lab3_2_1</span><span class="p">(</span>
+    <span class="kt">input</span> <span class="p">[</span><span class="mi">7</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">v</span><span class="p">,</span>      <span class="c1">// 8-bit data inputs representing the binary code</span>
+    <span class="kt">input</span> <span class="n">en_in_n</span><span class="p">,</span>      <span class="c1">// Active low enable input indicating whether the encoder should operate</span>
+    <span class="kt">output</span> <span class="kt">reg</span> <span class="p">[</span><span class="mi">2</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">y</span><span class="p">,</span> <span class="c1">// 3-bit output representing the encoded value</span>
+    <span class="kt">output</span> <span class="kt">reg</span> <span class="n">en_out</span><span class="p">,</span>  <span class="c1">// Active low enable output indicating valid output (E0)</span>
+    <span class="kt">output</span> <span class="kt">reg</span> <span class="n">gs</span>       <span class="c1">// Group Select, active low when any input is active</span>
+<span class="p">);</span>
+
+    <span class="c1">// Combine enable signal and inputs into a single 9-bit vector for easier case handling</span>
+    <span class="kt">wire</span> <span class="p">[</span><span class="mi">8</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">inputs</span><span class="p">;</span>
+    <span class="k">assign</span> <span class="n">inputs</span> <span class="o">=</span> <span class="o">{</span><span class="n">en_in_n</span><span class="p">,</span> <span class="n">v</span><span class="o">}</span><span class="p">;</span> <span class="c1">// Combine enable input with data inputs for case evaluation</span>
+    
+    <span class="c1">// Behavioral block to determine the output based on the inputs</span>
+<span class="k">always</span><span class="o">@</span><span class="p">(</span><span class="o">*</span><span class="p">)</span>
+    <span class="k">begin</span>
+     <span class="k">case</span> <span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+          <span class="c1">// Check for encoder being disabled or no input active</span>
+            <span class="mb">9'b1xxxxxxxx</span><span class="o">:</span> <span class="c1">// If enable is high (active low logic), the encoder is disabled</span>
+                        <span class="k">begin</span>
+                            <span class="n">y</span> <span class="o">=</span> <span class="mb">3'b111</span><span class="p">;</span>
+                            <span class="n">en_out</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+                            <span class="n">gs</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+                        <span class="k">end</span>
+            <span class="mb">9'b011111111</span><span class="o">:</span>
+                        <span class="k">begin</span>
+                            <span class="n">y</span> <span class="o">=</span> <span class="mb">3'b111</span><span class="p">;</span>
+                            <span class="n">en_out</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+                            <span class="n">gs</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+                        <span class="k">end</span>
+            <span class="mb">9'b0xxxxxxx0</span><span class="o">:</span>
+                        <span class="k">begin</span>
+                            <span class="n">y</span> <span class="o">=</span> <span class="mb">3'b000</span><span class="p">;</span>
+                            <span class="n">en_out</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+                            <span class="n">gs</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+                        <span class="k">end</span>
+            <span class="mb">9'b0xxxxxx01</span><span class="o">:</span>
+                        <span class="k">begin</span>
+                            <span class="n">y</span> <span class="o">=</span> <span class="mb">3'b001</span><span class="p">;</span>
+                            <span class="n">en_out</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+                            <span class="n">gs</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+                        <span class="k">end</span>    
+            <span class="mb">9'b0xxxxx011</span><span class="o">:</span>
+                        <span class="k">begin</span>
+                            <span class="n">y</span> <span class="o">=</span> <span class="mb">3'b010</span><span class="p">;</span>
+                            <span class="n">en_out</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+                            <span class="n">gs</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+                        <span class="k">end</span>           
+            <span class="mb">9'b0xxxx0111</span><span class="o">:</span>
+                        <span class="k">begin</span>
+                            <span class="n">y</span> <span class="o">=</span> <span class="mb">3'b011</span><span class="p">;</span>
+                            <span class="n">en_out</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+                            <span class="n">gs</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+                        <span class="k">end</span>
+            <span class="mb">9'b0xxx01111</span><span class="o">:</span>
+                        <span class="k">begin</span>
+                            <span class="n">y</span> <span class="o">=</span> <span class="mb">3'b111</span><span class="p">;</span>
+                            <span class="n">en_out</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+                            <span class="n">gs</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+                        <span class="k">end</span>            
+            <span class="mb">9'b0xx011111</span><span class="o">:</span>
+                        <span class="k">begin</span>
+                            <span class="n">y</span> <span class="o">=</span> <span class="mb">3'b100</span><span class="p">;</span>
+                            <span class="n">en_out</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+                            <span class="n">gs</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+                        <span class="k">end</span>            
+            <span class="mb">9'b0xx011111</span><span class="o">:</span>
+                        <span class="k">begin</span>
+                            <span class="n">y</span> <span class="o">=</span> <span class="mb">3'b101</span><span class="p">;</span>
+                            <span class="n">en_out</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+                            <span class="n">gs</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+                        <span class="k">end</span>             
+            <span class="mb">9'b0x0111111</span><span class="o">:</span>
+                        <span class="k">begin</span>
+                            <span class="n">y</span> <span class="o">=</span> <span class="mb">3'b110</span><span class="p">;</span>
+                            <span class="n">en_out</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+                            <span class="n">gs</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+                        <span class="k">end</span>            
+            <span class="mb">9'b001111111</span><span class="o">:</span>
+                        <span class="k">begin</span>
+                            <span class="n">y</span> <span class="o">=</span> <span class="mb">3'b111</span><span class="p">;</span>
+                            <span class="n">en_out</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+                            <span class="n">gs</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+                        <span class="k">end</span>             
+             <span class="nl">default:</span>  <span class="k">begin</span>
+                            <span class="n">y</span> <span class="o">=</span> <span class="mb">3'b000</span><span class="p">;</span>
+                            <span class="n">en_out</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+                            <span class="n">gs</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+                        <span class="k">end</span>              
+        <span class="k">endcase</span>
+    
+    <span class="k">end</span>
+<span class="k">endmodule</span>
+
+</code></pre></div></div> <h2 id="read-only-memories"> <a href="#read-only-memories" class="anchor-heading" aria-labelledby="read-only-memories"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Read-Only Memories </h2> <p>Read-only memories (ROM) consist of interconnected arrays to store an array of binary information. Once the binary information is stored, it can be read at any time but cannot be altered. Large ROMs are typically used to store programs and/or data that will not change by the other circuitry in the system. Small ROMs can be used to implement combinatorial circuits. A ROM uses a decoder, similar to one designed in 1-1 earlier, to address a particular location.</p> <p>A ROM will have m address input pins and n information output pins to store 2^m words information, each word being n bit in length. The content is accessed by placing an address, and the content of the corresponding word is read at the output pins.</p> <p>In Verilog HDL, memories can be defined as a two-dimensional array using <strong>reg</strong> data type, as illustrated below:</p> <div class="language-verilog highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">reg</span> <span class="p">[</span><span class="mi">3</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">MY_ROM</span> <span class="p">[</span><span class="mi">15</span><span class="o">:</span><span class="mi">0</span><span class="p">];</span> 
+
+</code></pre></div></div> <p>where <strong>reg</strong> is data type, MY_ROM is a 16x4 memory with 16 locations each location being 4-bit wide. If the memory is to be modeled as read-only then two things must happen: (i) memory should only be read and not written into, and (ii) memory should somehow be initialized with the desired content. Verilog HDL provides a system task, called <strong>$readmemb</strong>, to initialize memory with content. Following is an example of the definition and usage of 4x2 ROM.</p> <div class="language-verilog highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">module</span> <span class="n">ROM_4x2</span> <span class="p">(</span><span class="n">ROM_data</span><span class="p">,</span> <span class="n">ROM_addr</span><span class="p">);</span>
+ <span class="kt">output</span> <span class="p">[</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">ROM_data</span><span class="p">;</span>
+ <span class="kt">input</span> <span class="p">[</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">ROM_addr</span><span class="p">;</span>
+ <span class="kt">reg</span> <span class="p">[</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">ROM</span> <span class="p">[</span><span class="mi">3</span><span class="o">:</span><span class="mi">0</span><span class="p">];</span> <span class="c1">// defining 4x2 ROM</span>
+ <span class="k">assign</span> <span class="n">ROM_data</span> <span class="o">=</span> <span class="n">ROM</span><span class="p">[</span><span class="n">ROM_addr</span><span class="p">];</span> <span class="c1">// reading ROM content at the ROM_addr address</span>
+
+ <span class="k">initial</span> <span class="p">$</span><span class="nb">readmemb</span> <span class="p">(</span><span class="s">"ROM_data.txt"</span><span class="p">,</span> <span class="n">ROM</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span> <span class="c1">// load ROM content from ROM_data.txt file</span>
+<span class="c1">//please correct the absolute path to the ROW_data.txt file, the above is mine and will not work for yours</span>
+
+<span class="k">endmodule</span> 
+</code></pre></div></div> <p>The ROM_data.txt file, for this example, should be present in the same directory where the model is defined (since no directory path is given), and may have 8 or less lines such as:</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> 10
+ 01
+ 11
+ 00 
+</code></pre></div></div> <p>Note that if the number of lines is less than the size of the ROM, the unspecified locations will be initialized with 0s. Also, note that there is another system task available, called $readmembh, which allows the data file to be written using hexadecimal symbols.</p> <p>For adding text files: Select “Add sources” from the Project Navigator &gt; Add or create Design sources &gt; Add files In the Add source file window, select “File of type” as “All files”.</p> <p>For the example, we can also run a simulation to verify.</p> <p><strong>tb.v</strong></p> <div class="language-verilog highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Define the testbench module with no ports as it's a top-level entity</span>
+<span class="k">module</span> <span class="n">ROM_4x2_tb</span><span class="p">;</span>
+
+   <span class="c1">//  Declare the ROM address and data lines as wires and regs appropriately</span>
+    <span class="kt">reg</span> <span class="p">[</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">ROM_addr</span><span class="p">;</span>          <span class="c1">// Address lines for the ROM as input</span>
+    <span class="kt">wire</span> <span class="p">[</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">ROM_data</span><span class="p">;</span>         <span class="c1">// Data lines from the ROM as output</span>
+
+    <span class="c1">// Instantiate the Device Under Test (DUT) with the named port mapping</span>
+    <span class="n">ROM_4x2</span> <span class="n">DUT</span><span class="p">(</span>
+        <span class="p">.</span><span class="n">ROM_data</span><span class="p">(</span><span class="n">ROM_data</span><span class="p">),</span> 
+        <span class="p">.</span><span class="n">ROM_addr</span><span class="p">(</span><span class="n">ROM_addr</span><span class="p">)</span>
+    <span class="p">);</span>
+
+    <span class="c1">// Initial block to define the sequence of test cases</span>
+    <span class="k">initial</span> <span class="k">begin</span>
+        <span class="c1">// Initialize ROM address</span>
+        <span class="n">ROM_addr</span> <span class="o">=</span> <span class="mi">2'd0</span><span class="p">;</span> 
+        <span class="p">#</span><span class="mi">10</span><span class="p">;</span> <span class="c1">// Wait for ten time units</span>
+        
+        <span class="c1">// Apply different addresses and observe the data</span>
+        <span class="n">ROM_addr</span> <span class="o">=</span> <span class="mi">2'd1</span><span class="p">;</span> 
+        <span class="p">#</span><span class="mi">10</span><span class="p">;</span> <span class="c1">// Change address every 10 time units to simulate reading different ROM locations</span>
+        
+        <span class="n">ROM_addr</span> <span class="o">=</span> <span class="mi">2'd2</span><span class="p">;</span>
+        <span class="p">#</span><span class="mi">10</span><span class="p">;</span>
+        
+        <span class="n">ROM_addr</span> <span class="o">=</span> <span class="mi">2'd3</span><span class="p">;</span>
+        <span class="p">#</span><span class="mi">10</span><span class="p">;</span> <span class="c1">// Wait after the last address to observe the last set of data</span>
+        
+        <span class="c1">// Add more cases if necessary</span>
+        
+        <span class="c1">// End of simulation</span>
+<span class="c1">//        $finish;</span>
+    <span class="k">end</span>
+
+    <span class="c1">// Optional: Monitor changes in variables</span>
+    <span class="k">initial</span> <span class="k">begin</span>
+        <span class="p">$</span><span class="nb">monitor</span><span class="p">(</span><span class="s">"Time = %t, Address = %b, Data = %b"</span><span class="p">,</span> <span class="p">$</span><span class="kt">time</span><span class="p">,</span> <span class="n">ROM_addr</span><span class="p">,</span> <span class="n">ROM_data</span><span class="p">);</span>
+    <span class="k">end</span>
+
+<span class="k">endmodule</span>
+</code></pre></div></div> <p>The result is shown below:</p> <div align="center"><img src="imgs/v1/10.png" alt="drawing" width="1000" /></div> <h3 id="part3-3-1"> <a href="#part3-3-1" class="anchor-heading" aria-labelledby="part3-3-1"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Part3-3-1 </h3> <p>Design a 2-bit comparator that compares two 2-bit numbers and asserts outputs indicating whether the decimal equivalent of word A is less than, greater than, or equal to that of word B. You will model ROM and use the $readmemb task.</p> <p>Create and add the Verilog module with two inputs (a, b) and three outputs (lt, gt, and eq) using ROM and $readmemb system task.</p> <p><strong>lab3_3_1.v</strong></p> <div class="language-verilog highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">module</span> <span class="n">lab3_3_1</span><span class="p">(</span>
+    <span class="kt">input</span> <span class="p">[</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">a</span><span class="p">,</span> <span class="c1">// 2-bit input a</span>
+    <span class="kt">input</span> <span class="p">[</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">b</span><span class="p">,</span> <span class="c1">// 2-bit input b</span>
+    <span class="kt">output</span> <span class="kt">reg</span> <span class="n">Lt</span><span class="p">,</span> <span class="c1">// a &lt; b</span>
+    <span class="kt">output</span> <span class="kt">reg</span> <span class="n">Eq</span><span class="p">,</span> <span class="c1">// a == b</span>
+    <span class="kt">output</span> <span class="kt">reg</span> <span class="n">Gt</span>  <span class="c1">// a &gt; b</span>
+<span class="p">);</span>
+
+    <span class="kt">reg</span> <span class="p">[</span><span class="mi">2</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">ROM</span><span class="p">[</span><span class="mi">15</span><span class="o">:</span><span class="mi">0</span><span class="p">];</span> <span class="c1">// Define a ROM with enough space</span>
+    <span class="kt">wire</span> <span class="p">[</span><span class="mi">3</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">addr</span><span class="p">;</span> <span class="c1">// Combined address from A and B</span>
+
+    <span class="k">assign</span> <span class="n">addr</span> <span class="o">=</span> <span class="o">{</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="o">}</span><span class="p">;</span> <span class="c1">// Combine A and B to form ROM address</span>
+
+   <span class="k">initial</span> <span class="k">begin</span>
+        <span class="p">$</span><span class="nb">readmemb</span><span class="p">(</span><span class="s">"C:/all/Verilog_labs/lab3/project_2/ROM_data.txt"</span><span class="p">,</span> <span class="n">ROM</span><span class="p">);</span> <span class="c1">// Load ROM content from file</span>
+<span class="c1">// please correct the absolute path to the ROW_data.txt file, the above is mine and will not work for yours</span>
+    <span class="k">end</span>
+
+    <span class="k">always</span> <span class="o">@</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="k">begin</span>
+        <span class="k">case</span> <span class="p">(</span><span class="n">ROM</span><span class="p">[</span><span class="n">addr</span><span class="p">])</span>
+            <span class="mb">3'b001</span><span class="o">:</span> <span class="k">begin</span> <span class="c1">// a == b</span>
+                <span class="n">Lt</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+                <span class="n">Eq</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+                <span class="n">Gt</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+            <span class="k">end</span>
+            <span class="mb">3'b010</span><span class="o">:</span> <span class="k">begin</span> <span class="c1">// a &gt; b</span>
+                <span class="n">Lt</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+                <span class="n">Eq</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+                <span class="n">Gt</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+            <span class="k">end</span>
+            <span class="mb">3'b100</span><span class="o">:</span> <span class="k">begin</span> <span class="c1">// a &lt; b</span>
+                <span class="n">Lt</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+                <span class="n">Eq</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+                <span class="n">Gt</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+            <span class="k">end</span>
+            <span class="nl">default:</span> <span class="k">begin</span> <span class="c1">// Default case for safety</span>
+                <span class="n">Lt</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+                <span class="n">Eq</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+                <span class="n">Gt</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+            <span class="k">end</span>
+        <span class="k">endcase</span>
+    <span class="k">end</span>
+
+<span class="k">endmodule</span>
+
+
+
+</code></pre></div></div> <p>Create and add a text file that describes the design output.</p> <div align="center"><img src="imgs/v1/7.png" alt="drawing" width="800" /></div> <p>a and b are concatenated to form a 4-bit address (addr), which is used to access a specific location in the ROM like below:</p> <p><strong>ROM_data.txt</strong></p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>001
+100
+100
+100
+010
+001
+100
+100
+010
+010
+001
+100
+010
+010
+010
+001
+
+</code></pre></div></div> <p>Create the logic in a document and save it as a .txt file. Then click on Add Sources under the Flow Navigator. Select the Add or create design sources and click next. Click the green plus button and add the file. Add the .txt file and click finish.</p> <p>We can run Simulation to check the code by clicking the Run Simulation under SIMULATION and choosing the first Run Behavioral Simulation.</p> <p><strong>ROM_comparator_tb.v</strong></p> <div class="language-verilog highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Testbench for the ROM-based 2-bit comparator</span>
+<span class="k">module</span> <span class="n">ROM_comparator_tb</span><span class="p">;</span>
+
+    <span class="c1">// Testbench signals</span>
+    <span class="kt">reg</span> <span class="p">[</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">;</span>      <span class="c1">// Inputs to the comparator (2-bit each)</span>
+    <span class="kt">wire</span> <span class="n">Lt</span><span class="p">,</span> <span class="n">Eq</span><span class="p">,</span> <span class="n">Gt</span><span class="p">;</span>     <span class="c1">// Outputs from the comparator: Less than, Equal, Greater than</span>
+
+    <span class="c1">// Instantiate the Device Under Test (DUT)</span>
+    <span class="n">lab3_3_1</span> <span class="n">DUT</span><span class="p">(</span>
+        <span class="p">.</span><span class="n">a</span><span class="p">(</span><span class="n">a</span><span class="p">),</span>           <span class="c1">// Connect input 'a' to the DUT</span>
+        <span class="p">.</span><span class="n">b</span><span class="p">(</span><span class="n">b</span><span class="p">),</span>           <span class="c1">// Connect input 'b' to the DUT</span>
+        <span class="p">.</span><span class="n">Lt</span><span class="p">(</span><span class="n">Lt</span><span class="p">),</span>         <span class="c1">// Connect 'Lt' output from the DUT</span>
+        <span class="p">.</span><span class="n">Eq</span><span class="p">(</span><span class="n">Eq</span><span class="p">),</span>         <span class="c1">// Connect 'Eq' output from the DUT</span>
+        <span class="p">.</span><span class="n">Gt</span><span class="p">(</span><span class="n">Gt</span><span class="p">)</span>          <span class="c1">// Connect 'Gt' output from the DUT</span>
+    <span class="p">);</span>
+
+    <span class="kt">integer</span> <span class="n">i</span><span class="p">;</span>  <span class="c1">// Loop counter variable</span>
+
+    <span class="c1">// Test sequence</span>
+    <span class="k">initial</span> <span class="k">begin</span>
+        <span class="c1">// Display header</span>
+        <span class="p">$</span><span class="nb">display</span><span class="p">(</span><span class="s">"Time: %t | a: %b, b: %b | Lt: %b, Eq: %b, Gt: %b"</span><span class="p">,</span> 
+                 <span class="p">$</span><span class="kt">time</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">Lt</span><span class="p">,</span> <span class="n">Eq</span><span class="p">,</span> <span class="n">Gt</span><span class="p">);</span>
+
+        <span class="c1">// Loop to test all possible combinations of inputs 'a' and 'b'</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">16</span><span class="p">;</span> <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">begin</span> 
+            <span class="p">#</span><span class="mi">5</span><span class="p">;</span>               <span class="c1">// Small delay to stabilize input changes</span>
+            <span class="o">{</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="o">}</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>       <span class="c1">// Assign 'i' value to combined inputs 'a' and 'b'</span>
+            <span class="p">#</span><span class="mi">5</span><span class="p">;</span>               <span class="c1">// Wait for the combinational logic to produce output</span>
+        <span class="k">end</span>
+
+        <span class="c1">// Stop the simulation after all combinations have been tested</span>
+        <span class="p">#</span><span class="mi">20</span> <span class="p">$</span><span class="nb">stop</span><span class="p">;</span>
+    <span class="k">end</span>
+</code></pre></div></div> <p>The simulation result is shown below:</p> <div align="center"><img src="imgs/v1/11.png" alt="drawing" width="900" /></div> <p>If we want to implement it on the board, we need to change the code and add one another IP like below：</p> <div align="center"><img src="imgs/v1/14.png" alt="drawing" width="900" /></div> <p>Double-click on and have a setting like the below:</p> <div align="center"><img src="imgs/v1/15.png" alt="drawing" width="900" /></div> <div align="center"><img src="imgs/v1/16.png" alt="drawing" width="900" /></div> <div align="center"><img src="imgs/v1/17.png" alt="drawing" width="900" /></div> <div align="center"><img src="imgs/v1/18.png" alt="drawing" width="900" /></div> <p>And then we can find the IP instantiation template below:</p> <div align="center"><img src="imgs/v1/19.png" alt="drawing" width="900" /></div> <p><strong>lab3_3_1_board.v</strong></p> <div class="language-verilog highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// This module simulates a comparison between two 2-bit numbers using a ROM</span>
+<span class="k">module</span> <span class="n">lab3_3_1</span><span class="p">(</span>
+    <span class="kt">input</span> <span class="n">clk</span><span class="p">,</span>           <span class="c1">// Clock input for synchronous operations</span>
+    <span class="kt">input</span> <span class="p">[</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">a</span><span class="p">,</span>       <span class="c1">// First 2-bit input for comparison</span>
+    <span class="kt">input</span> <span class="p">[</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">b</span><span class="p">,</span>       <span class="c1">// Second 2-bit input for comparison</span>
+    <span class="kt">output</span> <span class="kt">reg</span> <span class="n">Lt</span><span class="p">,</span>       <span class="c1">// Output flag, set if 'a' is less than 'b'</span>
+    <span class="kt">output</span> <span class="kt">reg</span> <span class="n">Eq</span><span class="p">,</span>       <span class="c1">// Output flag, set if 'a' equals 'b'</span>
+    <span class="kt">output</span> <span class="kt">reg</span> <span class="n">Gt</span>        <span class="c1">// Output flag, set if 'a' is greater than 'b'</span>
+<span class="p">);</span>
+
+    <span class="c1">// Combined address for ROM: concatenates inputs 'a' and 'b'</span>
+    <span class="kt">wire</span> <span class="p">[</span><span class="mi">3</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">addr_reg</span><span class="p">;</span> <span class="c1">// Combines 'a' and 'b' to form the ROM address</span>
+
+    <span class="c1">// Output from ROM, stores comparison results based on 'a' and 'b'</span>
+    <span class="kt">wire</span> <span class="p">[</span><span class="mi">2</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">douta</span><span class="p">;</span>    <span class="c1">// Data output from ROM based on address 'addr_reg'</span>
+
+    <span class="c1">// Instance of ROM block</span>
+    <span class="n">rom_data</span> <span class="n">rom</span> <span class="p">(</span>
+      <span class="p">.</span><span class="n">clka</span><span class="p">(</span><span class="n">clk</span><span class="p">),</span>        <span class="c1">// Provides the system clock to the ROM</span>
+      <span class="p">.</span><span class="n">addra</span><span class="p">(</span><span class="n">addr_reg</span><span class="p">),</span>  <span class="c1">// Supplies the address to ROM</span>
+      <span class="p">.</span><span class="n">douta</span><span class="p">(</span><span class="n">douta</span><span class="p">)</span>      <span class="c1">// Retrieves the comparison result from ROM</span>
+    <span class="p">);</span>
+
+    <span class="c1">// Assign block to combine 'a' and 'b' into a single address</span>
+    <span class="c1">// This part was initially inside an always block, but for a combinational approach, we use 'assign'</span>
+    <span class="k">assign</span> <span class="n">addr_reg</span> <span class="o">=</span> <span class="o">{</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="o">}</span><span class="p">;</span> <span class="c1">// Combines 'a' and 'b' to form the address without waiting for the clock edge</span>
+
+    <span class="c1">// Combinational logic to set comparison flags based on ROM's output</span>
+    <span class="c1">// This block decides which of the flags (Lt, Eq, Gt) should be set based on the value of 'douta' from the ROM</span>
+    <span class="k">always</span> <span class="o">@</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="k">begin</span> <span class="c1">// Triggered on any change of 'douta'</span>
+        <span class="k">case</span> <span class="p">(</span><span class="n">douta</span><span class="p">)</span>
+            <span class="mb">3'b001</span><span class="o">:</span> <span class="k">begin</span> <span class="c1">// ROM output for 'a == b'</span>
+                <span class="n">Lt</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+                <span class="n">Eq</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+                <span class="n">Gt</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+            <span class="k">end</span>
+            <span class="mb">3'b010</span><span class="o">:</span> <span class="k">begin</span> <span class="c1">// ROM output for 'a &lt; b'</span>
+                <span class="n">Lt</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+                <span class="n">Eq</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+                <span class="n">Gt</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+            <span class="k">end</span>
+            <span class="mb">3'b100</span><span class="o">:</span> <span class="k">begin</span> <span class="c1">// ROM output for 'a &gt; b'</span>
+                <span class="n">Lt</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+                <span class="n">Eq</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+                <span class="n">Gt</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+            <span class="k">end</span>
+            <span class="nl">default:</span> <span class="k">begin</span> <span class="c1">// Safety default case to handle unexpected ROM outputs</span>
+                <span class="n">Lt</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+                <span class="n">Eq</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+                <span class="n">Gt</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+            <span class="k">end</span>
+        <span class="k">endcase</span>
+    <span class="k">end</span>
+    
+<span class="k">endmodule</span>
+
+</code></pre></div></div> <p><strong>ROM_data.coe</strong></p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>memory_initialization_radix=2;  
+memory_initialization_vector=
+001,
+100,
+100,
+100,
+010,
+001,
+100,
+100,
+010,
+010,
+001,
+100,
+010,
+010,
+010,
+001;
+
+</code></pre></div></div> <p><strong>tb.v</strong></p> <div class="language-verilog highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1">// Testbench for lab3_3_1: Compares two 2-bit numbers and sets output flags</span>
+<span class="k">module</span> <span class="n">lab3_3_1_tb</span><span class="p">;</span>
+
+    <span class="c1">// Define testbench-specific signals</span>
+    <span class="kt">reg</span> <span class="n">clk</span><span class="p">;</span>             <span class="c1">// Clock signal used for synchronizing the DUT</span>
+    <span class="kt">reg</span> <span class="p">[</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">;</span>      <span class="c1">// 2-bit inputs to be compared by the DUT</span>
+    <span class="kt">wire</span> <span class="n">Lt</span><span class="p">,</span> <span class="n">Eq</span><span class="p">,</span> <span class="n">Gt</span><span class="p">;</span>     <span class="c1">// Outputs from the DUT representing comparison results</span>
+
+    <span class="c1">// Instantiate the Device Under Test (DUT)</span>
+    <span class="n">lab3_3_1</span> <span class="n">DUT</span><span class="p">(</span>
+        <span class="p">.</span><span class="n">clk</span><span class="p">(</span><span class="n">clk</span><span class="p">),</span>       <span class="c1">// Connect the testbench clock to the DUT clock</span>
+        <span class="p">.</span><span class="n">a</span><span class="p">(</span><span class="n">a</span><span class="p">),</span>           <span class="c1">// Connect 'a' input of the testbench to the DUT</span>
+        <span class="p">.</span><span class="n">b</span><span class="p">(</span><span class="n">b</span><span class="p">),</span>           <span class="c1">// Connect 'b' input of the testbench to the DUT</span>
+        <span class="p">.</span><span class="n">Lt</span><span class="p">(</span><span class="n">Lt</span><span class="p">),</span>         <span class="c1">// Connect 'Lt' output of the DUT to the testbench</span>
+        <span class="p">.</span><span class="n">Eq</span><span class="p">(</span><span class="n">Eq</span><span class="p">),</span>         <span class="c1">// Connect 'Eq' output of the DUT to the testbench</span>
+        <span class="p">.</span><span class="n">Gt</span><span class="p">(</span><span class="n">Gt</span><span class="p">)</span>          <span class="c1">// Connect 'Gt' output of the DUT to the testbench</span>
+    <span class="p">);</span>
+
+    <span class="c1">// Clock generation process</span>
+    <span class="k">initial</span> <span class="k">begin</span>
+        <span class="n">clk</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>                     <span class="c1">// Initialize the clock signal</span>
+        <span class="k">forever</span> <span class="p">#</span><span class="mi">5</span> <span class="n">clk</span> <span class="o">=</span> <span class="o">~</span><span class="n">clk</span><span class="p">;</span>       <span class="c1">// Toggle the clock every 5-time units to generate a periodic signal</span>
+    <span class="k">end</span>
+
+    <span class="c1">// Test sequence process</span>
+    <span class="k">initial</span> <span class="k">begin</span>
+        <span class="c1">// Delay to ensure the DUT is properly initialized before starting the tests</span>
+        <span class="p">#</span><span class="mi">5</span><span class="p">;</span> <span class="c1">// Initial delay to synchronize with clock</span>
+
+        <span class="c1">// Loop through all possible combinations of 'a' and 'b'</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">16</span><span class="p">;</span> <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">begin</span>
+            <span class="o">{</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="o">}</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>  <span class="c1">// Assign new values to 'a' and 'b'</span>
+            <span class="p">#</span><span class="mi">10</span><span class="p">;</span>         <span class="c1">// Wait for one clock cycle between assignments to allow DUT to process</span>
+        <span class="k">end</span>
+    <span class="k">end</span>
+
+    <span class="c1">// Monitoring process: Prints the values of inputs and outputs at every simulation step</span>
+    <span class="k">initial</span> <span class="k">begin</span>
+        <span class="p">$</span><span class="nb">monitor</span><span class="p">(</span><span class="s">"Time: %t | a: %b, b: %b | Lt: %b, Eq: %b, Gt: %b"</span><span class="p">,</span>
+                 <span class="p">$</span><span class="kt">time</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">Lt</span><span class="p">,</span> <span class="n">Eq</span><span class="p">,</span> <span class="n">Gt</span><span class="p">);</span> <span class="c1">// Print the time and current signal values</span>
+    <span class="k">end</span>
+
+<span class="k">endmodule</span>
+
+</code></pre></div></div> <p>We can also run the simulation and see the result below:</p> <div align="center"><img src="imgs/v1/13.png" alt="drawing" width="900" /></div> <p>Then we can click on the Run synthesis under the SYNTHESIS and Run implementation under the IMPLEMENTATION. We should add the appropriate board-related master XDC file to the project and edit it to include the related pins like the below:</p> <div align="center"><img src="imgs/v1/12.png" alt="drawing" width="1200" /></div> <p>Generate the bitstream and program device like <a href="https://uri-nextlab.github.io/ParallelProgrammingLabs/docs/Verilog_Labs/Lab1_Modeling_Concepts.html">Lab1</a>.</p> <p>Then you can press the button on the board, and you can see the LED is on like below:</p> <div align="center"><img src="imgs/v1/20.jpg" alt="drawing" width="200" /></div> <div align="center"><img src="imgs/v1/21.jpg" alt="drawing" width="200" /></div> <div align="center"><img src="imgs/v1/22.jpg" alt="drawing" width="200" /></div> <h3 id="part3-3-2"> <a href="#part3-3-2" class="anchor-heading" aria-labelledby="part3-3-2"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Part3-3-2 </h3> <p>Implement a 2-bit by 2-bit multiplier using a ROM. Output the product in binary on four LEDs.</p> <p>Create and add the Verilog module with two 2-bit inputs (a, b), and a 4-bit product output using ROM and $readmemb system task.</p> <p><strong>lab3_3_2.v</strong></p> <div class="language-verilog highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">module</span> <span class="n">lab3_3_2</span><span class="p">(</span>
+    <span class="kt">input</span> <span class="p">[</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">a</span><span class="p">,</span>
+    <span class="kt">input</span> <span class="p">[</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">b</span><span class="p">,</span>
+    <span class="kt">output</span> <span class="p">[</span><span class="mi">3</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">product</span>
+<span class="p">);</span>
+
+    <span class="c1">// Calculate the address for ROM based on inputs 'a' and 'b'</span>
+    <span class="kt">wire</span> <span class="p">[</span><span class="mi">3</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">address</span><span class="p">;</span>
+    <span class="k">assign</span> <span class="n">address</span> <span class="o">=</span> <span class="o">{</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="o">}</span><span class="p">;</span>
+
+    <span class="c1">// ROM for storing pre-computed products, 16x4 bits</span>
+    <span class="kt">reg</span> <span class="p">[</span><span class="mi">3</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">ROM</span><span class="p">[</span><span class="mi">15</span><span class="o">:</span><span class="mi">0</span><span class="p">];</span>
+
+    <span class="c1">// Initialize ROM with pre-computed products using $readmemb system task</span>
+    <span class="k">initial</span> <span class="k">begin</span>
+	<span class="p">$</span><span class="nb">readmemb</span><span class="p">(</span><span class="s">"C:/all/Verilog_labs/lab3/project_2/ROM_data.txt"</span><span class="p">,</span> <span class="n">ROM</span><span class="p">);</span> <span class="c1">// Load ROM content from file</span>
+<span class="c1">// please correct the absolute path to the ROW_data.txt file, the above is mine and will not work for yours</span>
+   <span class="k">end</span>
+   <span class="k">assign</span> <span class="n">product</span> <span class="o">=</span> <span class="n">ROM</span><span class="p">[</span><span class="n">address</span><span class="p">];</span>
+    <span class="c1">// Retrieve product from ROM based on the current address</span>
+  
+<span class="k">endmodule</span>
+
+</code></pre></div></div> <p><strong>ROM_data.txt</strong></p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0000 
+0000 
+0000
+0000 
+0000 
+0001 
+0010 
+0011
+0000 
+0010 
+0100 
+0110 
+0000 
+0011 
+0110 
+1001
+
+</code></pre></div></div> <p><strong>tb_2.v</strong></p> <div class="language-verilog highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Testbench for 2-bit multiplier using ROM</span>
+<span class="k">module</span> <span class="n">tb_2</span><span class="p">;</span>
+
+    <span class="c1">// Define testbench-specific signals</span>
+    <span class="kt">reg</span> <span class="p">[</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">;</span>      <span class="c1">// Inputs to the multiplier</span>
+    <span class="kt">wire</span> <span class="p">[</span><span class="mi">3</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">product</span><span class="p">;</span>  <span class="c1">// Output from the multiplier (4-bit product)</span>
+
+    <span class="c1">// Instantiate the Device Under Test (DUT)</span>
+    <span class="n">lab3_3_2</span> <span class="n">DUT</span><span class="p">(</span>
+        <span class="p">.</span><span class="n">a</span><span class="p">(</span><span class="n">a</span><span class="p">),</span>           <span class="c1">// Map testbench input 'a' to DUT input 'a'</span>
+        <span class="p">.</span><span class="n">b</span><span class="p">(</span><span class="n">b</span><span class="p">),</span>           <span class="c1">// Map testbench input 'b' to DUT input 'b'</span>
+        <span class="p">.</span><span class="n">product</span><span class="p">(</span><span class="n">product</span><span class="p">)</span> <span class="c1">// Map DUT output 'product' to testbench wire 'product'</span>
+    <span class="p">);</span>
+
+    <span class="c1">// Test sequence for checking all possible combinations of inputs</span>
+    <span class="k">initial</span> <span class="k">begin</span>
+        <span class="c1">// Initialize inputs to zero</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="mb">2'b00</span><span class="p">;</span> <span class="n">b</span> <span class="o">=</span> <span class="mb">2'b00</span><span class="p">;</span>
+        <span class="p">#</span><span class="mi">10</span><span class="p">;</span> <span class="c1">// Wait for 10 time units between input changes for the DUT to process</span>
+
+        <span class="c1">// Iterate through all possible combinations of 'a' and 'b'</span>
+        <span class="c1">// The following code blocks manually set every possible combination of inputs</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="mb">2'b00</span><span class="p">;</span> <span class="n">b</span> <span class="o">=</span> <span class="mb">2'b01</span><span class="p">;</span> <span class="p">#</span><span class="mi">10</span><span class="p">;</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="mb">2'b00</span><span class="p">;</span> <span class="n">b</span> <span class="o">=</span> <span class="mb">2'b10</span><span class="p">;</span> <span class="p">#</span><span class="mi">10</span><span class="p">;</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="mb">2'b00</span><span class="p">;</span> <span class="n">b</span> <span class="o">=</span> <span class="mb">2'b11</span><span class="p">;</span> <span class="p">#</span><span class="mi">10</span><span class="p">;</span>
+
+        <span class="n">a</span> <span class="o">=</span> <span class="mb">2'b01</span><span class="p">;</span> <span class="n">b</span> <span class="o">=</span> <span class="mb">2'b00</span><span class="p">;</span> <span class="p">#</span><span class="mi">10</span><span class="p">;</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="mb">2'b01</span><span class="p">;</span> <span class="n">b</span> <span class="o">=</span> <span class="mb">2'b01</span><span class="p">;</span> <span class="p">#</span><span class="mi">10</span><span class="p">;</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="mb">2'b01</span><span class="p">;</span> <span class="n">b</span> <span class="o">=</span> <span class="mb">2'b10</span><span class="p">;</span> <span class="p">#</span><span class="mi">10</span><span class="p">;</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="mb">2'b01</span><span class="p">;</span> <span class="n">b</span> <span class="o">=</span> <span class="mb">2'b11</span><span class="p">;</span> <span class="p">#</span><span class="mi">10</span><span class="p">;</span>
+
+        <span class="n">a</span> <span class="o">=</span> <span class="mb">2'b10</span><span class="p">;</span> <span class="n">b</span> <span class="o">=</span> <span class="mb">2'b00</span><span class="p">;</span> <span class="p">#</span><span class="mi">10</span><span class="p">;</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="mb">2'b10</span><span class="p">;</span> <span class="n">b</span> <span class="o">=</span> <span class="mb">2'b01</span><span class="p">;</span> <span class="p">#</span><span class="mi">10</span><span class="p">;</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="mb">2'b10</span><span class="p">;</span> <span class="n">b</span> <span class="o">=</span> <span class="mb">2'b10</span><span class="p">;</span> <span class="p">#</span><span class="mi">10</span><span class="p">;</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="mb">2'b10</span><span class="p">;</span> <span class="n">b</span> <span class="o">=</span> <span class="mb">2'b11</span><span class="p">;</span> <span class="p">#</span><span class="mi">10</span><span class="p">;</span>
+
+        <span class="n">a</span> <span class="o">=</span> <span class="mb">2'b11</span><span class="p">;</span> <span class="n">b</span> <span class="o">=</span> <span class="mb">2'b00</span><span class="p">;</span> <span class="p">#</span><span class="mi">10</span><span class="p">;</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="mb">2'b11</span><span class="p">;</span> <span class="n">b</span> <span class="o">=</span> <span class="mb">2'b01</span><span class="p">;</span> <span class="p">#</span><span class="mi">10</span><span class="p">;</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="mb">2'b11</span><span class="p">;</span> <span class="n">b</span> <span class="o">=</span> <span class="mb">2'b10</span><span class="p">;</span> <span class="p">#</span><span class="mi">10</span><span class="p">;</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="mb">2'b11</span><span class="p">;</span> <span class="n">b</span> <span class="o">=</span> <span class="mb">2'b11</span><span class="p">;</span> <span class="p">#</span><span class="mi">10</span><span class="p">;</span>
+
+        <span class="c1">// Note: The $finish command can be uncommented to end the simulation after the last test case.</span>
+        <span class="c1">// $finish;</span>
+    <span class="k">end</span>
+
+    <span class="c1">// Monitoring process for changes in important signals</span>
+    <span class="c1">// This prints the values of 'a', 'b', and 'product' at every time step where they change</span>
+    <span class="k">initial</span> <span class="k">begin</span>
+        <span class="p">$</span><span class="nb">monitor</span><span class="p">(</span><span class="s">"Time = %t: a = %b, b = %b, Product = %b"</span><span class="p">,</span> <span class="p">$</span><span class="kt">time</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">product</span><span class="p">);</span>
+    <span class="k">end</span>
+
+    <span class="c1">// Additional: Reading and displaying ROM data for debugging purposes</span>
+    <span class="c1">// This block is not directly related to testing the DUT but can be useful for verifying ROM contents</span>
+    <span class="kt">reg</span> <span class="p">[</span><span class="mi">3</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">RAM</span> <span class="p">[</span><span class="mi">0</span><span class="o">:</span><span class="mi">15</span><span class="p">];</span> <span class="c1">// Temporary storage to display ROM contents</span>
+    <span class="k">initial</span> <span class="p">$</span><span class="nb">readmemb</span><span class="p">(</span><span class="s">"ROM_data.txt"</span><span class="p">,</span> <span class="n">RAM</span><span class="p">);</span> <span class="c1">// Read contents of the ROM data file into RAM</span>
+    <span class="kt">integer</span> <span class="n">i</span><span class="p">;</span>
+    <span class="k">initial</span> <span class="k">begin</span>
+        <span class="p">$</span><span class="nb">display</span><span class="p">(</span><span class="s">"ROM data:"</span><span class="p">);</span> <span class="c1">// Display header for ROM data section</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">16</span><span class="p">;</span> <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">begin</span>
+            <span class="p">$</span><span class="nb">display</span><span class="p">(</span><span class="s">"%d: %h"</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">RAM</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span> <span class="c1">// Display each line of ROM data with its index</span>
+        <span class="k">end</span>
+    <span class="k">end</span>
+
+<span class="k">endmodule</span>
+
+</code></pre></div></div> <p>We can also run the simulation and see the result below:</p> <div align="center"><img src="imgs/v1/20.png" alt="drawing" width="900" /></div> <p>Add the appropriate board-related master XDC file to the project and edit it to include the related pins, assigning a to btn3-btn2, b to btn1-btn0, and product to LED3-LED0, you can refer to the <code class="language-plaintext highlighter-rouge">Part-3-3-1</code></p> <h2 id="conclusion"> <a href="#conclusion" class="anchor-heading" aria-labelledby="conclusion"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Conclusion </h2> <p>In this lab, you learned how to model multiple output circuits such as decoders, encoders, and ROM. You also learned how to use a system task $readmemb to initialize ROM memory. There are more system tasks that the language supports and you will learn some of them in the next lab.</p> </main> </div> </div> <div class="search-overlay"></div> </div> </body> </html>

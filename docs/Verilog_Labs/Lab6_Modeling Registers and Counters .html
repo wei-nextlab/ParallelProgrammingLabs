@@ -1,0 +1,591 @@
+<!DOCTYPE html> <html lang="en-US"> <head> <meta charset="UTF-8"> <meta http-equiv="X-UA-Compatible" content="IE=Edge"> <link rel="stylesheet" href="/ParallelProgrammingLabs/assets/css/just-the-docs-default.css"> <link rel="stylesheet" href="/ParallelProgrammingLabs/assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet"> <style id="jtd-nav-activation"> .site-nav > ul.nav-list:first-child > li > a, .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(6)) > a, .site-nav > ul.nav-list:first-child > li > ul > li > ul > li > a { background-image: none; } .site-nav > ul.nav-list:not(:first-child) a, .site-nav li.external a { background-image: none; } .site-nav > ul.nav-list:first-child > li:nth-child(3) > ul > li:nth-child(6) > a { font-weight: 600; text-decoration: none; }.site-nav > ul.nav-list:first-child > li:nth-child(3) > button svg, .site-nav > ul.nav-list:first-child > li:nth-child(3) > ul > li:nth-child(6) > button svg { transform: rotate(-90deg); }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(3) > ul.nav-list, .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(3) > ul.nav-list > li.nav-list-item:nth-child(6) > ul.nav-list { display: block; } </style> <script src="/ParallelProgrammingLabs/assets/js/vendor/lunr.min.js"></script> <script src="/ParallelProgrammingLabs/assets/js/just-the-docs.js"></script> <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- Begin Jekyll SEO tag v2.8.0 --> <title>Lab6 | FPGA/SoC/Verilog/HLS</title> <meta name="generator" content="Jekyll v4.3.3" /> <meta property="og:title" content="Lab6" /> <meta property="og:locale" content="en_US" /> <meta name="description" content="FPGA, SoC, Verilog, and HLS labs" /> <meta property="og:description" content="FPGA, SoC, Verilog, and HLS labs" /> <link rel="canonical" href="https://wei-nextlab.github.io/ParallelProgrammingLabs/docs/Verilog_Labs/Lab6_Modeling%20Registers%20and%20Counters%20.html" /> <meta property="og:url" content="https://wei-nextlab.github.io/ParallelProgrammingLabs/docs/Verilog_Labs/Lab6_Modeling%20Registers%20and%20Counters%20.html" /> <meta property="og:site_name" content="FPGA/SoC/Verilog/HLS" /> <meta property="og:type" content="website" /> <meta name="twitter:card" content="summary" /> <meta property="twitter:title" content="Lab6" /> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"WebPage","description":"FPGA, SoC, Verilog, and HLS labs","headline":"Lab6","url":"https://wei-nextlab.github.io/ParallelProgrammingLabs/docs/Verilog_Labs/Lab6_Modeling%20Registers%20and%20Counters%20.html"}</script> <!-- End Jekyll SEO tag --> </head> <body> <a class="skip-to-main" href="#main-content">Skip to main content</a> <svg xmlns="http://www.w3.org/2000/svg" class="d-none"> <symbol id="svg-link" viewBox="0 0 24 24"> <title>Link</title> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"> <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path> </svg> </symbol> <symbol id="svg-menu" viewBox="0 0 24 24"> <title>Menu</title> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"> <line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line> </svg> </symbol> <symbol id="svg-arrow-right" viewBox="0 0 24 24"> <title>Expand</title> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"> <polyline points="9 18 15 12 9 6"></polyline> </svg> </symbol> <!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE --> <symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"> <title id="svg-external-link-title">(external link)</title> <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line> </symbol> <symbol id="svg-doc" viewBox="0 0 24 24"> <title>Document</title> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"> <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline> </svg> </symbol> <symbol id="svg-search" viewBox="0 0 24 24"> <title>Search</title> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"> <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line> </svg> </symbol> <!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md --> <symbol id="svg-copy" viewBox="0 0 16 16"> <title>Copy</title> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16"> <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/> <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/> </svg> </symbol> <symbol id="svg-copied" viewBox="0 0 16 16"> <title>Copied</title> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16"> <path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/> <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/> </svg> </symbol> </svg> <div class="side-bar"> <div class="site-header" role="banner"> <a href="/ParallelProgrammingLabs/" class="site-title lh-tight"> FPGA/SoC/Verilog/HLS </a> <button id="menu-button" class="site-button btn-reset" aria-label="Toggle menu" aria-pressed="false"> <svg viewBox="0 0 24 24" class="icon" aria-hidden="true"><use xlink:href="#svg-menu"></use></svg> </button> </div> <nav aria-label="Main" id="site-nav" class="site-nav"> <ul class="nav-list"><li class="nav-list-item"><a href="/ParallelProgrammingLabs/" class="nav-list-link">Home</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Preparation category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/ParallelProgrammingLabs/docs/Vitis_HLS_Tutor/" class="nav-list-link">Preparation</a><ul class="nav-list"><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Vitis_HLS_Tutor/Install_Vitis.html" class="nav-list-link">Install Vitis</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Vitis_HLS_Tutor/Create_Vitis_HLS_Prj.html" class="nav-list-link">Create Vitis HLS Project</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Vitis_HLS_Tutor/Generating_bitstream_in_Vivado.html" class="nav-list-link">Generating Bitstream in Vivado</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Vitis_HLS_Tutor/Deploying_the_Adder_on_FPGA.html" class="nav-list-link">Deploying the Adder on FPGA</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Verilog Labs (Basics) category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/" class="nav-list-link">Verilog Labs (Basics)</a><ul class="nav-list"><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/Lab1_Modeling_Concepts.html" class="nav-list-link">Lab1</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/Lab2_Addition.html" class="nav-list-link">Lab2</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/Lab3_Multi-Output%20Circuits.html" class="nav-list-link">Lab3</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/Lab4_Tasks,%20Functions,%20and%20Testbench%20.html" class="nav-list-link">Lab4</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/Lab5_Modeling%20Latches%20and%20Flip-flops%20.html" class="nav-list-link">Lab5</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/Lab6_Modeling%20Registers%20and%20Counters%20.html" class="nav-list-link">Lab6</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/Lab7_Behavioral%20Modeling%20and%20Timing%20Constraints.html" class="nav-list-link">Lab7</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/Lab8_Architectural%20Wizard%20and%20IP%20Catalog.html" class="nav-list-link">Lab8</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/Lab9_Counters,%20Timers%20and%20Real-Time%20Clock.html" class="nav-list-link">Lab9</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/Lab10_Finite%20State%20Machines%20.html" class="nav-list-link">Lab10</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/Lab11_Sequential%20System%20Design%20Using%20ASM%20Charts%20.html" class="nav-list-link">Lab11</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in FPGA/SoC Labs category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/ParallelProgrammingLabs/docs/Labs/" class="nav-list-link">FPGA/SoC Labs</a><ul class="nav-list"><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Labs/Lab1_led.html" class="nav-list-link">Lab1</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Labs/Lab2_uart.html" class="nav-list-link">Lab2</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Labs/Lab3_IO_Planning.html" class="nav-list-link">Lab3</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Labs/Lab4_ILA.html" class="nav-list-link">Lab4</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Labs/Lab5_IPI.html" class="nav-list-link">Lab5</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Labs/Lab6_DMA.html" class="nav-list-link">Lab6</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Labs/Lab7_Fibonacci_sp.html" class="nav-list-link">Lab7</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Labs/Lab8_State_Machines.html" class="nav-list-link">Lab8</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Labs/Lab9_Simple_Processor.html" class="nav-list-link">Lab9</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Labs/Lab10_Bit-pair%20Recoded%20Multiplier.html" class="nav-list-link">Lab10</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in HLS Labs category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/ParallelProgrammingLabs/docs/HLS_Labs/" class="nav-list-link">HLS Labs</a><ul class="nav-list"><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab1.html" class="nav-list-link">Lab1</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab2.html" class="nav-list-link">Lab2</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab3.html" class="nav-list-link">Lab3</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab4.html" class="nav-list-link">Lab4</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab5.html" class="nav-list-link">Lab5</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab6.html" class="nav-list-link">Lab6</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab7.html" class="nav-list-link">Lab7</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab8.html" class="nav-list-link">Lab8</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab9.html" class="nav-list-link">Lab9</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab10.html" class="nav-list-link">Lab10</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab11.html" class="nav-list-link">Lab11</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab12.html" class="nav-list-link">Lab12</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab13.html" class="nav-list-link">Lab13</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab14.html" class="nav-list-link">Lab14</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab15.html" class="nav-list-link">Lab15</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab16.html" class="nav-list-link">Lab16</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab17.html" class="nav-list-link">Lab17</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab18.html" class="nav-list-link">Lab18</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab19.html" class="nav-list-link">Lab19</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab20.html" class="nav-list-link">Lab20</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab21.html" class="nav-list-link">Lab21</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab22.html" class="nav-list-link">Lab22</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab23.html" class="nav-list-link">Lab23</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab24.html" class="nav-list-link">Lab24</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab25.html" class="nav-list-link">Lab25</a></li></ul></li></ul> </nav> <footer class="site-footer"> This site uses <a href="https://github.com/just-the-docs/just-the-docs">Just the Docs</a>, a documentation theme for Jekyll. </footer> </div> <div class="main" id="top"> <div id="main-header" class="main-header"> <div class="search" role="search"> <div class="search-input-wrap"> <input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search FPGA/SoC/Verilog/HLS" aria-label="Search FPGA/SoC/Verilog/HLS" autocomplete="off"> <label for="search-input" class="search-label"><svg viewBox="0 0 24 24" class="search-icon"><use xlink:href="#svg-search"></use></svg></label> </div> <div id="search-results" class="search-results"></div> </div> <nav aria-label="Auxiliary" class="aux-nav"> <ul class="aux-nav-list"> <li class="aux-nav-list-item"> <a href="https://github.com/wei-nextlab/ParallelProgrammingLabs" class="site-button" > GitHub Repository </a> </li> </ul> </nav> </div> <div class="main-content-wrap"> <nav aria-label="Breadcrumb" class="breadcrumb-nav"> <ol class="breadcrumb-nav-list"> <li class="breadcrumb-nav-list-item"><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/">Verilog Labs (Basics)</a></li> <li class="breadcrumb-nav-list-item"><span>Lab6</span></li> </ol> </nav> <div id="main-content" class="main-content"> <main> <h1 id="lab6_modeling-registers-and-counters"> <a href="#lab6_modeling-registers-and-counters" class="anchor-heading" aria-labelledby="lab6_modeling-registers-and-counters"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Lab6_Modeling Registers and Counters </h1> <h2 id="introduction"> <a href="#introduction" class="anchor-heading" aria-labelledby="introduction"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Introduction </h2> <p>When several flip-flops are grouped, with a common clock to hold related information, the resulting circuit is called a register. Just like flip-flops, registers may also have other control signals. You will understand the behavior of a register with additional control signals. Counters are widely used in sequential circuits. In this lab, you will model registers and counters in several ways.</p> <h2 id="registers"> <a href="#registers" class="anchor-heading" aria-labelledby="registers"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Registers </h2> <p>In a computer system, related information is often stored simultaneously. A <strong>register</strong> stores bits of information so that systems can write to or read out all the bits simultaneously. Examples of registers include data, address, control, and status. Simple registers will have separate data input and output pins but clocked with the same clock source. A simple register model is shown below.</p> <div class="language-verilog highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">module</span> <span class="n">Register</span> <span class="p">(</span><span class="kt">input</span> <span class="p">[</span><span class="mi">3</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">D</span><span class="p">,</span> <span class="kt">input</span> <span class="n">Clk</span><span class="p">,</span> <span class="kt">output</span> <span class="kt">reg</span> <span class="p">[</span><span class="mi">3</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">Q</span><span class="p">);</span>
+ <span class="k">always</span> <span class="o">@</span><span class="p">(</span><span class="kt">posedge</span> <span class="n">Clk</span><span class="p">)</span>
+ <span class="n">Q</span> <span class="o">&lt;=</span> <span class="n">D</span><span class="p">;</span>
+<span class="k">endmodule</span> 
+</code></pre></div></div> <p>Notice that this is similar to a simple D Flip-flop with multiple data ports.</p> <p>The simple register will work where the information needs to be registered every clock cycle. However, there are situations where the registered content should be updated only when a certain condition occurs. For example, a status register in a computer system gets updated only when certain instructions are executed. In such a case, a register clocking should be controlled using a control signal. Such registers will have a clock-enabled pin. A model of such a register is given below.</p> <div class="language-verilog highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">module</span> <span class="n">Register_with_synch_load_behavior</span><span class="p">(</span><span class="kt">input</span> <span class="p">[</span><span class="mi">3</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">D</span><span class="p">,</span> <span class="kt">input</span> <span class="n">Clk</span><span class="p">,</span> <span class="kt">input</span>
+<span class="n">load</span><span class="p">,</span> <span class="kt">output</span> <span class="kt">reg</span> <span class="p">[</span><span class="mi">3</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">Q</span><span class="p">);</span>
+ <span class="k">always</span> <span class="o">@</span><span class="p">(</span><span class="kt">posedge</span> <span class="n">Clk</span><span class="p">)</span>
+ <span class="k">if</span> <span class="p">(</span><span class="n">load</span><span class="p">)</span>
+ <span class="n">Q</span> <span class="o">&lt;=</span> <span class="n">D</span><span class="p">;</span>
+<span class="k">endmodule</span> 
+</code></pre></div></div> <p>Another desired behavior of registers is to reset the content when a certain condition occurs. A simple model of a register with synchronous reset and load (reset has a higher priority overload) is shown below</p> <div class="language-verilog highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">module</span> <span class="n">Register_with_synch_reset_load_behavior</span><span class="p">(</span><span class="kt">input</span> <span class="p">[</span><span class="mi">3</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">D</span><span class="p">,</span> <span class="kt">input</span> <span class="n">Clk</span><span class="p">,</span>
+<span class="kt">input</span> <span class="n">reset</span><span class="p">,</span> <span class="kt">input</span> <span class="n">load</span><span class="p">,</span> <span class="kt">output</span> <span class="kt">reg</span> <span class="p">[</span><span class="mi">3</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">Q</span><span class="p">);</span>
+ <span class="k">always</span> <span class="o">@</span><span class="p">(</span><span class="kt">posedge</span> <span class="n">Clk</span><span class="p">)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">reset</span><span class="p">)</span>
+    <span class="k">begin</span>
+    <span class="n">Q</span> <span class="o">&lt;=</span> <span class="mb">4'b0</span><span class="p">;</span>
+    <span class="k">end</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">load</span><span class="p">)</span>
+    <span class="k">begin</span>
+    <span class="n">Q</span> <span class="o">&lt;=</span> <span class="n">D</span><span class="p">;</span>
+    <span class="k">end</span>
+<span class="k">endmodule</span> 
+</code></pre></div></div> <h3 id="part6-1-1"> <a href="#part6-1-1" class="anchor-heading" aria-labelledby="part6-1-1"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Part6-1-1 </h3> <p>Model a 4-bit register with synchronous reset and load using the abovementioned model. Develop a testbench and simulate the design. Assign Clk, D input, reset, load, and output Q.</p> <p><strong>lab6_1_1.v</strong></p> <div class="language-verilog highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">module</span> <span class="n">Register_with_synch_reset_load_behavior</span><span class="p">(</span>
+    <span class="kt">input</span> <span class="p">[</span><span class="mi">3</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">D</span><span class="p">,</span> <span class="kt">input</span> <span class="n">Clk</span><span class="p">,</span>
+    <span class="kt">input</span> <span class="n">reset</span><span class="p">,</span> <span class="kt">input</span> <span class="n">load</span><span class="p">,</span> <span class="kt">output</span> <span class="kt">reg</span> <span class="p">[</span><span class="mi">3</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">Q</span><span class="p">);</span>
+     <span class="k">always</span> <span class="o">@</span><span class="p">(</span><span class="kt">posedge</span> <span class="n">Clk</span><span class="p">)</span>
+     <span class="k">if</span> <span class="p">(</span><span class="n">reset</span><span class="p">)</span>
+     <span class="k">begin</span>
+     <span class="n">Q</span> <span class="o">&lt;=</span> <span class="mb">4'b0</span><span class="p">;</span>
+     <span class="k">end</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">load</span><span class="p">)</span>
+     <span class="k">begin</span>
+     <span class="n">Q</span> <span class="o">&lt;=</span> <span class="n">D</span><span class="p">;</span>
+     <span class="k">end</span>
+<span class="k">endmodule</span> 
+
+</code></pre></div></div> <ul> <li>View the schematic of the synthesized design</li> </ul> <div align="center"><img src="imgs/v2/1.png" alt="drawing" width="600" /></div> <ul> <li>Develop a testbench to test (see waveform above), perform behavioral simulation for 100ns, and validate the design.</li> </ul> <p><strong>tb.v</strong></p> <div class="language-verilog highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">module</span> <span class="n">tb</span><span class="p">();</span>
+
+<span class="kt">reg</span> <span class="n">clk</span><span class="p">;</span>
+<span class="kt">reg</span> <span class="p">[</span><span class="mi">3</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">D</span><span class="p">;</span>
+<span class="kt">reg</span> <span class="n">reset</span><span class="p">;</span>
+<span class="kt">reg</span> <span class="n">load</span><span class="p">;</span>
+<span class="kt">wire</span> <span class="p">[</span><span class="mi">3</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">Q</span><span class="p">;</span>
+
+<span class="n">Register_with_synch_reset_load_behavior</span> <span class="n">test</span><span class="p">(</span>
+    <span class="p">.</span><span class="n">Clk</span><span class="p">(</span><span class="n">clk</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">D</span><span class="p">(</span><span class="n">D</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">reset</span><span class="p">(</span><span class="n">reset</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">load</span><span class="p">(</span><span class="n">load</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">Q</span><span class="p">(</span><span class="n">Q</span><span class="p">)</span>
+    <span class="p">);</span>
+
+<span class="k">initial</span> <span class="k">begin</span>
+    <span class="n">clk</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">reset</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">load</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">D</span> <span class="o">&lt;=</span> <span class="mi">4'd0</span><span class="p">;</span>
+    <span class="p">#</span><span class="mi">10</span><span class="p">;</span>
+    <span class="n">D</span> <span class="o">&lt;=</span> <span class="mb">4'b0101</span><span class="p">;</span>
+    <span class="p">#</span><span class="mi">60</span><span class="p">;</span>
+    <span class="n">load</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">#</span><span class="mi">40</span><span class="p">;</span>
+    <span class="n">D</span> <span class="o">&lt;=</span> <span class="mb">4'b1001</span><span class="p">;</span>
+    <span class="n">load</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="p">#</span><span class="mi">40</span><span class="p">;</span>
+    <span class="n">load</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">#</span><span class="mi">30</span><span class="p">;</span>
+    <span class="n">load</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="p">#</span><span class="mi">10</span><span class="p">;</span>
+    <span class="n">reset</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">;</span>
+  
+<span class="k">end</span>
+
+<span class="k">always</span> <span class="p">#</span><span class="mi">10</span> <span class="n">clk</span> <span class="o">=</span> <span class="o">~</span><span class="n">clk</span><span class="p">;</span>
+
+<span class="k">endmodule</span>
+
+</code></pre></div></div> <p>We can run Simulation to check the code by clicking the Run Simulation under the SIMULATION and choose the first Run Behavioral Simulation.</p> <div align="center"><img src="imgs/v2/2.png" alt="drawing" width="600" /></div> <h3 id="part6-1-2"> <a href="#part6-1-2" class="anchor-heading" aria-labelledby="part6-1-2"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Part6-1-2 </h3> <p>In some situations, it is necessary to set the register to a pre-defined value. For such a case, another control signal, called set, is used. Typically, in such registers, reset will have a higher priority over set, and set will have a higher priority over load control signal.</p> <p>Model a 4-bit register with synchronous reset, set, and load signals. Assign Clk, D input, reset, set, load, and output Q.</p> <p><strong>lab6_1_2.v</strong></p> <div class="language-verilog highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">module</span> <span class="n">four_bit_register</span><span class="p">(</span>
+    <span class="kt">input</span> <span class="kt">wire</span> <span class="n">Clk</span><span class="p">,</span>
+    <span class="kt">input</span> <span class="kt">wire</span> <span class="p">[</span><span class="mi">3</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">D</span><span class="p">,</span>
+    <span class="kt">input</span> <span class="kt">wire</span> <span class="n">reset</span><span class="p">,</span>
+    <span class="kt">input</span> <span class="kt">wire</span> <span class="n">set</span><span class="p">,</span>
+    <span class="kt">input</span> <span class="kt">wire</span> <span class="n">load</span><span class="p">,</span>
+    <span class="kt">output</span> <span class="kt">reg</span> <span class="p">[</span><span class="mi">3</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">Q</span>
+<span class="p">);</span>
+
+<span class="c1">// Synchronous reset, set, and load</span>
+<span class="k">always</span> <span class="o">@</span><span class="p">(</span><span class="kt">posedge</span> <span class="n">Clk</span><span class="p">)</span> <span class="k">begin</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">reset</span><span class="p">)</span> <span class="k">begin</span>
+        <span class="c1">// Synchronous reset</span>
+        <span class="n">Q</span> <span class="o">&lt;=</span> <span class="mb">4'b0000</span><span class="p">;</span>
+    <span class="k">end</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">set</span><span class="p">)</span> <span class="k">begin</span>
+        <span class="c1">// Synchronous set</span>
+        <span class="n">Q</span> <span class="o">&lt;=</span> <span class="mb">4'b1111</span><span class="p">;</span>
+    <span class="k">end</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">load</span><span class="p">)</span> <span class="k">begin</span>
+        <span class="c1">// Load data into the register</span>
+        <span class="n">Q</span> <span class="o">&lt;=</span> <span class="n">D</span><span class="p">;</span>
+    <span class="k">end</span>
+    <span class="c1">// No 'else' statement needed, as we don't want to change the state in any other case</span>
+<span class="k">end</span>
+
+<span class="k">endmodule</span>
+
+</code></pre></div></div> <ul> <li>view the schematic of the synthesized design</li> </ul> <div align="center"><img src="imgs/v2/3.png" alt="drawing" width="600" /></div> <ul> <li>Develop a testbench to test (see waveform above), perform behavioral simulation for 100ns, and validate the design.</li> </ul> <p><strong>tb.v</strong></p> <div class="language-verilog highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">module</span> <span class="n">tb_four_bit_register</span><span class="p">;</span>
+
+<span class="c1">// Testbench signals</span>
+<span class="kt">reg</span> <span class="n">tb_Clk</span><span class="p">;</span>
+<span class="kt">reg</span> <span class="p">[</span><span class="mi">3</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">tb_D</span><span class="p">;</span>
+<span class="kt">reg</span> <span class="n">tb_reset</span><span class="p">;</span>
+<span class="kt">reg</span> <span class="n">tb_set</span><span class="p">;</span>
+<span class="kt">reg</span> <span class="n">tb_load</span><span class="p">;</span>
+<span class="kt">wire</span> <span class="p">[</span><span class="mi">3</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">tb_Q</span><span class="p">;</span>
+
+<span class="c1">// Instantiate the 4-bit register</span>
+<span class="n">four_bit_register</span> <span class="n">uut</span><span class="p">(</span>
+    <span class="p">.</span><span class="n">Clk</span><span class="p">(</span><span class="n">tb_Clk</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">D</span><span class="p">(</span><span class="n">tb_D</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">reset</span><span class="p">(</span><span class="n">tb_reset</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">set</span><span class="p">(</span><span class="n">tb_set</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">load</span><span class="p">(</span><span class="n">tb_load</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">Q</span><span class="p">(</span><span class="n">tb_Q</span><span class="p">)</span>
+<span class="p">);</span>
+
+<span class="c1">// Generate the clock signal</span>
+<span class="k">initial</span> <span class="k">begin</span>
+    <span class="n">tb_Clk</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">forever</span> <span class="p">#</span><span class="mi">10</span> <span class="n">tb_Clk</span> <span class="o">=</span> <span class="o">~</span><span class="n">tb_Clk</span><span class="p">;</span> <span class="c1">// Toggle the clock every 10 time units</span>
+<span class="k">end</span>
+
+<span class="c1">// Test sequence</span>
+<span class="k">initial</span> <span class="k">begin</span>
+    <span class="c1">// Initialize Inputs</span>
+    <span class="n">tb_D</span> <span class="o">=</span> <span class="mb">4'b1010</span><span class="p">;</span>
+    <span class="n">tb_reset</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">tb_set</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">tb_load</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="c1">// Apply test vectors</span>
+    <span class="p">#</span><span class="mi">15</span><span class="p">;</span> <span class="n">tb_reset</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="c1">// Reset the register</span>
+    <span class="p">#</span><span class="mi">20</span><span class="p">;</span> <span class="n">tb_reset</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">tb_set</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="c1">// Set the register</span>
+    <span class="p">#</span><span class="mi">20</span><span class="p">;</span> <span class="n">tb_set</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">tb_load</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="c1">// Load data into the register</span>
+    <span class="p">#</span><span class="mi">20</span><span class="p">;</span> <span class="n">tb_load</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">// Hold the data</span>
+    <span class="p">#</span><span class="mi">20</span><span class="p">;</span> <span class="p">$</span><span class="nb">finish</span><span class="p">;</span> <span class="c1">// End the simulation</span>
+<span class="k">end</span>
+
+<span class="c1">// Monitoring changes</span>
+<span class="k">initial</span> <span class="k">begin</span>
+    <span class="p">$</span><span class="nb">monitor</span><span class="p">(</span><span class="s">"Time=%t | Clk=%b, D=%b, Reset=%b, Set=%b, Load=%b | Q=%b"</span><span class="p">,</span>
+             <span class="p">$</span><span class="kt">time</span><span class="p">,</span> <span class="n">tb_Clk</span><span class="p">,</span> <span class="n">tb_D</span><span class="p">,</span> <span class="n">tb_reset</span><span class="p">,</span> <span class="n">tb_set</span><span class="p">,</span> <span class="n">tb_load</span><span class="p">,</span> <span class="n">tb_Q</span><span class="p">);</span>
+<span class="k">end</span>
+
+<span class="k">endmodule</span>
+
+</code></pre></div></div> <p>We can run a Simulation to check the code by clicking the Run Simulation under the SIMULATION and choosing the first Run Behavioral Simulation.</p> <div align="center"><img src="imgs/v2/4.png" alt="drawing" width="600" /></div> <h3 id="part6-1-3"> <a href="#part6-1-3" class="anchor-heading" aria-labelledby="part6-1-3"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Part6-1-3 </h3> <p>The above registers are categorized as parallel registers. There are other kinds of registers called shift registers. A shift register is where binary data can be stored and then shifted left or right when the control signal is asserted. Shift registers can be sub-categorized into parallel load serial out, serial load parallel out, or serial load serial-out shift registers. They may or may not have reset signals.</p> <p>In Xilinx FPGA, LUT can be used as a serial shift register with one-bit input and one-bit output using one LUT as SRL32 provides efficient design (instead of cascading up to 32 flip-flops), provided the code is written properly. It may or may not have enabled a signal. When the enable signal is asserted, the internal content is shifted by a one-bit position and a new bit value is shifted. Here is a model for a simple one-bit serial shift in and shift out register without enabling signal. It is modeled to shift for 32 cycles before the shifted bit is brought out. This model can be used to implement a delay line.</p> <div class="language-verilog highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">module</span> <span class="n">simple_one_bit_serial_shift_register_behavior</span><span class="p">(</span><span class="kt">input</span> <span class="n">Clk</span><span class="p">,</span> <span class="kt">input</span>
+<span class="n">ShiftIn</span><span class="p">,</span> <span class="kt">output</span> <span class="n">ShiftOut</span><span class="p">);</span>
+ <span class="kt">reg</span> <span class="p">[</span><span class="mi">31</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">shift_reg</span><span class="p">;</span>
+ <span class="k">always</span> <span class="o">@</span><span class="p">(</span><span class="kt">posedge</span> <span class="n">Clk</span><span class="p">)</span>
+    <span class="n">shift_reg</span> <span class="o">&lt;=</span> <span class="o">{</span><span class="n">shift_reg</span><span class="p">[</span><span class="mi">30</span><span class="o">:</span><span class="mi">0</span><span class="p">],</span> <span class="n">ShiftIn</span><span class="o">}</span><span class="p">;</span>
+
+ <span class="k">assign</span> <span class="n">ShiftOut</span> <span class="o">=</span> <span class="n">shift_reg</span><span class="p">[</span><span class="mi">31</span><span class="p">];</span>
+<span class="k">endmodule</span> 
+</code></pre></div></div> <p>The above model can be modified if we want to implement a delay line of less than 32 clocks. Here is the model for the delay line of 3 clocks.</p> <div class="language-verilog highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">module</span> <span class="n">delay_line3_behavior</span><span class="p">(</span><span class="kt">input</span> <span class="n">Clk</span><span class="p">,</span> <span class="kt">input</span> <span class="n">ShiftIn</span><span class="p">,</span> <span class="kt">output</span> <span class="n">ShiftOut</span><span class="p">);</span>
+ <span class="kt">reg</span> <span class="p">[</span><span class="mi">2</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">shift_reg</span><span class="p">;</span>
+ <span class="k">always</span> <span class="o">@</span><span class="p">(</span><span class="kt">posedge</span> <span class="n">Clk</span><span class="p">)</span>
+ <span class="n">shift_reg</span> <span class="o">&lt;=</span> <span class="o">{</span><span class="n">shift_reg</span><span class="p">[</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">],</span> <span class="n">ShiftIn</span><span class="o">}</span><span class="p">;</span>
+ <span class="k">assign</span> <span class="n">ShiftOut</span> <span class="o">=</span> <span class="n">shift_reg</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+<span class="k">endmodule</span> 
+</code></pre></div></div> <p>Model a 1-bit delay line shift register using the above code. Develop a testbench and simulate the design using the stimuli provided below. Assign Clk, ShiftIn, and output ShiftOut. Verify the design in hardware.</p> <p><strong>lab6_1_3.v</strong></p> <div class="language-verilog highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">module</span> <span class="n">delay_line3_behavior</span><span class="p">(</span><span class="kt">input</span> <span class="n">Clk</span><span class="p">,</span> <span class="kt">input</span> <span class="n">ShiftIn</span><span class="p">,</span> <span class="kt">output</span> <span class="n">ShiftOut</span><span class="p">);</span>
+ <span class="kt">reg</span> <span class="p">[</span><span class="mi">2</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">shift_reg</span><span class="p">;</span>
+ <span class="k">always</span> <span class="o">@</span><span class="p">(</span><span class="kt">posedge</span> <span class="n">Clk</span><span class="p">)</span>
+ <span class="n">shift_reg</span> <span class="o">&lt;=</span> <span class="o">{</span><span class="n">shift_reg</span><span class="p">[</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">],</span> <span class="n">ShiftIn</span><span class="o">}</span><span class="p">;</span>
+ <span class="k">assign</span> <span class="n">ShiftOut</span> <span class="o">=</span> <span class="n">shift_reg</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+<span class="k">endmodule</span> 
+
+</code></pre></div></div> <ul> <li>View the schematic of the synthesized design</li> </ul> <div align="center"><img src="imgs/v2/5.png" alt="drawing" width="600" /></div> <ul> <li>Develop a testbench to test (see waveform above), perform behavioral simulation for 100ns, and validate the design.</li> </ul> <p><strong>tb.v</strong></p> <div class="language-verilog highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">module</span> <span class="n">tb</span><span class="p">();</span>
+<span class="c1">// Testbench signals</span>
+<span class="kt">reg</span> <span class="n">tb_Clk</span><span class="p">;</span>
+<span class="kt">reg</span> <span class="n">ShiftIn</span><span class="p">;</span>
+<span class="kt">wire</span>  <span class="n">ShiftOut</span><span class="p">;</span>
+
+<span class="c1">// Instantiate the 4-bit register</span>
+<span class="n">delay_line3_behavior</span> <span class="n">uut</span><span class="p">(</span>
+    <span class="p">.</span><span class="n">Clk</span><span class="p">(</span><span class="n">tb_Clk</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">ShiftIn</span><span class="p">(</span><span class="n">ShiftIn</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">ShiftOut</span><span class="p">(</span><span class="n">ShiftOut</span><span class="p">)</span>
+<span class="p">);</span>
+
+<span class="c1">// Generate the clock signal</span>
+<span class="k">initial</span> <span class="k">begin</span>
+    <span class="n">tb_Clk</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">forever</span> <span class="p">#</span><span class="mi">10</span> <span class="n">tb_Clk</span> <span class="o">=</span> <span class="o">~</span><span class="n">tb_Clk</span><span class="p">;</span> <span class="c1">// Toggle the clock every 10 time units</span>
+<span class="k">end</span>
+
+<span class="c1">// Test sequence</span>
+<span class="k">initial</span> <span class="k">begin</span>
+    <span class="c1">// Initialize Inputs</span>
+    <span class="n">ShiftIn</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="c1">// Apply test vectors</span>
+    <span class="p">#</span><span class="mi">10</span><span class="p">;</span> <span class="n">ShiftIn</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="c1">// Reset the register</span>
+    <span class="p">#</span><span class="mi">40</span><span class="p">;</span> <span class="n">ShiftIn</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="p">#</span><span class="mi">20</span><span class="p">;</span> <span class="n">ShiftIn</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">#</span><span class="mi">40</span><span class="p">;</span> <span class="n">ShiftIn</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">// Hold the data</span>
+    <span class="p">#</span><span class="mi">50</span><span class="p">;</span> <span class="p">$</span><span class="nb">finish</span><span class="p">;</span> <span class="c1">// End the simulation</span>
+<span class="k">end</span>
+
+
+
+<span class="k">endmodule</span>
+</code></pre></div></div> <p>We can run a Simulation to check the code by clicking the Run Simulation under the SIMULATION and choosing the first Run Behavioral Simulation.</p> <div align="center"><img src="imgs/v2/6.png" alt="drawing" width="600" /></div> <h3 id="part6-1-4"> <a href="#part6-1-4" class="anchor-heading" aria-labelledby="part6-1-4"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Part6-1-4 </h3> <p>The following code models a four-bit parallel in shift left register with load and shift enable signal.</p> <div class="language-verilog highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">module</span> <span class="n">Parallel_in_serial_out_load_enable_behavior</span><span class="p">(</span><span class="kt">input</span> <span class="n">Clk</span><span class="p">,</span> <span class="kt">input</span> <span class="n">ShiftIn</span><span class="p">,</span>
+<span class="kt">input</span> <span class="p">[</span><span class="mi">3</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">ParallelIn</span><span class="p">,</span> <span class="kt">input</span> <span class="n">load</span><span class="p">,</span> <span class="kt">input</span> <span class="n">ShiftEn</span><span class="p">,</span> <span class="kt">output</span> <span class="n">ShiftOut</span><span class="p">,</span> <span class="kt">output</span>
+<span class="p">[</span><span class="mi">3</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">RegContent</span><span class="p">);</span>
+ <span class="kt">reg</span> <span class="p">[</span><span class="mi">3</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">shift_reg</span><span class="p">;</span>
+<span class="k">always</span> <span class="o">@</span><span class="p">(</span><span class="kt">posedge</span> <span class="n">Clk</span><span class="p">)</span>
+ <span class="k">if</span><span class="p">(</span><span class="n">load</span><span class="p">)</span>
+ <span class="n">shift_reg</span> <span class="o">&lt;=</span> <span class="n">ParallelIn</span><span class="p">;</span>
+ <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">ShiftEn</span><span class="p">)</span>
+ <span class="n">shift_reg</span> <span class="o">&lt;=</span> <span class="o">{</span><span class="n">shift_reg</span><span class="p">[</span><span class="mi">2</span><span class="o">:</span><span class="mi">0</span><span class="p">],</span> <span class="n">ShiftIn</span><span class="o">}</span><span class="p">;</span>
+ <span class="k">assign</span> <span class="n">ShiftOut</span> <span class="o">=</span> <span class="n">shift_reg</span><span class="p">[</span><span class="mi">3</span><span class="p">];</span>
+ <span class="k">assign</span> <span class="n">RegContent</span> <span class="o">=</span> <span class="n">shift_reg</span><span class="p">;</span>
+<span class="k">endmodule</span> 
+</code></pre></div></div> <p>Model a 4-bit parallel in the left shift register using the above code. Develop a testbench and simulate the design using the stimuli provided below.</p> <div align="center"><img src="imgs/v2/7.png" alt="drawing" width="600" /></div> <p><strong>lab6_1_4.v</strong></p> <div class="language-verilog highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">module</span> <span class="n">Parallel_in_serial_out_load_enable_behavior</span><span class="p">(</span><span class="kt">input</span> <span class="n">Clk</span><span class="p">,</span> <span class="kt">input</span> <span class="n">ShiftIn</span><span class="p">,</span>
+<span class="kt">input</span> <span class="p">[</span><span class="mi">3</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">ParallelIn</span><span class="p">,</span> <span class="kt">input</span> <span class="n">load</span><span class="p">,</span> <span class="kt">input</span> <span class="n">ShiftEn</span><span class="p">,</span> <span class="kt">output</span> <span class="n">ShiftOut</span><span class="p">,</span> <span class="kt">output</span>
+<span class="p">[</span><span class="mi">3</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">RegContent</span><span class="p">);</span>
+ <span class="kt">reg</span> <span class="p">[</span><span class="mi">3</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">shift_reg</span><span class="p">;</span>
+<span class="k">always</span> <span class="o">@</span><span class="p">(</span><span class="kt">posedge</span> <span class="n">Clk</span><span class="p">)</span>
+ <span class="k">if</span><span class="p">(</span><span class="n">load</span><span class="p">)</span>
+ <span class="n">shift_reg</span> <span class="o">&lt;=</span> <span class="n">ParallelIn</span><span class="p">;</span>
+ <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">ShiftEn</span><span class="p">)</span>
+ <span class="n">shift_reg</span> <span class="o">&lt;=</span> <span class="o">{</span><span class="n">shift_reg</span><span class="p">[</span><span class="mi">2</span><span class="o">:</span><span class="mi">0</span><span class="p">],</span> <span class="n">ShiftIn</span><span class="o">}</span><span class="p">;</span>
+ <span class="k">assign</span> <span class="n">ShiftOut</span> <span class="o">=</span> <span class="n">shift_reg</span><span class="p">[</span><span class="mi">3</span><span class="p">];</span>
+ <span class="k">assign</span> <span class="n">RegContent</span> <span class="o">=</span> <span class="n">shift_reg</span><span class="p">;</span>
+<span class="k">endmodule</span> 
+</code></pre></div></div> <ul> <li>View the schematic of the synthesized design</li> </ul> <div align="center"><img src="imgs/v2/8.png" alt="drawing" width="600" /></div> <ul> <li>Develop a testbench to test (see waveform above), perform behavioral simulation for 100ns, and validate the design.</li> </ul> <p><strong>tb.v</strong></p> <div class="language-verilog highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">module</span> <span class="n">tb</span><span class="p">;</span>
+<span class="c1">// Testbench signals</span>
+<span class="kt">reg</span> <span class="n">tb_Clk</span><span class="p">;</span>
+<span class="kt">reg</span> <span class="n">ShiftIn</span><span class="p">;</span>
+<span class="kt">reg</span> <span class="n">load</span><span class="p">;</span>
+<span class="kt">reg</span> <span class="p">[</span><span class="mi">3</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">ParallelIn</span><span class="p">;</span>
+<span class="kt">reg</span> <span class="n">ShiftEn</span><span class="p">;</span>
+<span class="kt">wire</span>  <span class="n">ShiftOut</span><span class="p">;</span>
+<span class="kt">wire</span>  <span class="p">[</span><span class="mi">3</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">RegContent</span><span class="p">;</span>
+<span class="c1">// Instantiate the 4-bit register</span>
+<span class="n">Parallel_in_serial_out_load_enable_behavior</span> <span class="n">uut</span><span class="p">(</span>
+    <span class="p">.</span><span class="n">Clk</span><span class="p">(</span><span class="n">tb_Clk</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">ShiftIn</span><span class="p">(</span><span class="n">ShiftIn</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">ParallelIn</span><span class="p">(</span><span class="n">ParallelIn</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">load</span><span class="p">(</span><span class="n">load</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">ShiftEn</span><span class="p">(</span><span class="n">ShiftEn</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">RegContent</span><span class="p">(</span><span class="n">RegContent</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">ShiftOut</span><span class="p">(</span><span class="n">ShiftOut</span><span class="p">)</span>
+<span class="p">);</span>
+
+<span class="c1">// Generate the clock signal</span>
+<span class="k">initial</span> <span class="k">begin</span>
+    <span class="n">tb_Clk</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">forever</span> <span class="p">#</span><span class="mi">10</span> <span class="n">tb_Clk</span> <span class="o">=</span> <span class="o">~</span><span class="n">tb_Clk</span><span class="p">;</span> <span class="c1">// Toggle the clock every 10 time units</span>
+<span class="k">end</span>
+
+<span class="c1">// Test sequence</span>
+<span class="k">initial</span> <span class="k">begin</span>
+    <span class="c1">// Initialize Inputs</span>
+    <span class="n">ShiftIn</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="n">ParallelIn</span> <span class="o">=</span> <span class="mi">4'd0</span><span class="p">;</span>
+    <span class="n">load</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    
+    <span class="p">#</span><span class="mi">20</span> <span class="n">ParallelIn</span> <span class="o">=</span> <span class="mb">4'b0101</span><span class="p">;</span>
+    <span class="c1">// Apply test vectors</span>
+    <span class="p">#</span><span class="mi">40</span><span class="p">;</span> <span class="n">load</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="c1">// Reset the register</span>
+    <span class="p">#</span><span class="mi">20</span><span class="p">;</span> <span class="n">load</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="p">#</span><span class="mi">20</span><span class="p">;</span> <span class="n">ShiftEn</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  
+    <span class="p">#</span><span class="mi">80</span><span class="p">;</span> <span class="n">ParallelIn</span> <span class="o">=</span> <span class="mb">4'b1001</span><span class="p">;</span>
+    <span class="p">#</span><span class="mi">20</span><span class="p">;</span> <span class="n">load</span> <span class="o">=</span><span class="mi">1</span><span class="p">;</span>
+    <span class="p">#</span><span class="mi">20</span><span class="p">;</span> <span class="n">load</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="p">#</span><span class="mi">50</span><span class="p">;</span> <span class="p">$</span><span class="nb">finish</span><span class="p">;</span> <span class="c1">// End the simulation</span>
+<span class="k">end</span>
+
+
+
+<span class="k">endmodule</span>
+</code></pre></div></div> <p>We can run a Simulation to check the code by clicking the Run Simulation under the SIMULATION and choosing the first Run Behavioral Simulation.</p> <div align="center"><img src="imgs/v2/9.png" alt="drawing" width="600" /></div> <h3 id="part6_1_5"> <a href="#part6_1_5" class="anchor-heading" aria-labelledby="part6_1_5"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Part6_1_5 </h3> <p>Write a model for a 4-bit serial in parallel out shift register. Develop a testbench and simulate the design. Assign Clk, ShiftEn, ShiftIn, ParallelOut, and ShiftOut.</p> <p><strong>lab6_1_5.v</strong></p> <div class="language-verilog highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">module</span> <span class="n">sipo_shift_register</span><span class="p">(</span>
+    <span class="kt">input</span> <span class="n">clk</span><span class="p">,</span>
+    <span class="kt">input</span> <span class="n">shiftEn</span><span class="p">,</span>
+    <span class="kt">input</span> <span class="n">shiftIn</span><span class="p">,</span>
+    <span class="kt">output</span> <span class="kt">reg</span> <span class="p">[</span><span class="mi">3</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">parallelOut</span><span class="p">,</span>
+    <span class="kt">output</span> <span class="n">shiftOut</span>
+<span class="p">);</span>
+    
+    <span class="c1">// ShiftOut is the last bit of parallelOut</span>
+    <span class="k">assign</span> <span class="n">shiftOut</span> <span class="o">=</span> <span class="n">parallelOut</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+    
+    <span class="k">always</span> <span class="o">@</span><span class="p">(</span><span class="kt">posedge</span> <span class="n">clk</span><span class="p">)</span> <span class="k">begin</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">shiftEn</span><span class="p">)</span> <span class="k">begin</span>
+            <span class="c1">// Shift the register and insert the new bit</span>
+            <span class="n">parallelOut</span> <span class="o">&lt;=</span> <span class="o">{</span><span class="n">shiftIn</span><span class="p">,</span> <span class="n">parallelOut</span><span class="p">[</span><span class="mi">3</span><span class="o">:</span><span class="mi">1</span><span class="p">]</span><span class="o">}</span><span class="p">;</span>
+        <span class="k">end</span>
+    <span class="k">end</span>
+<span class="k">endmodule</span>
+
+</code></pre></div></div> <ul> <li>View the schematic of the synthesized design</li> </ul> <div align="center"><img src="imgs/v2/10.png" alt="drawing" width="600" /></div> <ul> <li>Develop a testbench to test (see waveform above), perform behavioral simulation for 100ns, and validate the design.</li> </ul> <p><strong>tb.v</strong></p> <div class="language-verilog highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">module</span> <span class="n">tb</span><span class="p">;</span>
+
+<span class="c1">// Testbench signals</span>
+<span class="kt">reg</span> <span class="n">tb_Clk</span><span class="p">;</span>
+<span class="kt">reg</span> <span class="n">shiftEn</span><span class="p">;</span>
+<span class="kt">reg</span> <span class="n">shiftIn</span><span class="p">;</span>
+
+<span class="kt">wire</span> <span class="n">shiftOut</span><span class="p">;</span>
+<span class="kt">wire</span>  <span class="p">[</span><span class="mi">3</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">parallelOut</span><span class="p">;</span>
+<span class="c1">// Instantiate the 4-bit register</span>
+<span class="n">sip_shift_register</span> <span class="n">uut</span><span class="p">(</span>
+    <span class="p">.</span><span class="n">clk</span><span class="p">(</span><span class="n">tb_Clk</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">shiftEn</span><span class="p">(</span><span class="n">shiftEn</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">shiftIn</span><span class="p">(</span><span class="n">shiftIn</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">parallelOut</span><span class="p">(</span><span class="n">parallelOut</span><span class="p">),</span>
+    <span class="p">.</span><span class="n">shiftOut</span><span class="p">(</span><span class="n">shiftOut</span><span class="p">)</span>
+<span class="p">);</span>
+
+<span class="c1">// Generate the clock signal</span>
+<span class="k">initial</span> <span class="k">begin</span>
+    <span class="n">tb_Clk</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">forever</span> <span class="p">#</span><span class="mi">10</span> <span class="n">tb_Clk</span> <span class="o">=</span> <span class="o">~</span><span class="n">tb_Clk</span><span class="p">;</span> <span class="c1">// Toggle the clock every 10 time units</span>
+<span class="k">end</span>
+
+<span class="c1">// Test sequence</span>
+<span class="k">initial</span> <span class="k">begin</span>
+    <span class="c1">// Initialize Inputs</span>
+    <span class="n">shiftEn</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">shiftIn</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    
+    <span class="p">#</span><span class="mi">40</span><span class="p">;</span> <span class="n">shiftEn</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">#</span><span class="mi">40</span><span class="p">;</span> <span class="n">shiftEn</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="p">#</span><span class="mi">40</span><span class="p">;</span> <span class="n">shiftEn</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">#</span><span class="mi">40</span><span class="p">;</span> <span class="n">shiftEn</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="p">#</span><span class="mi">40</span><span class="p">;</span> <span class="n">shiftEn</span> <span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+    <span class="n">shiftIn</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="p">#</span><span class="mi">40</span><span class="p">;</span><span class="n">shiftEn</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">#</span><span class="mi">40</span><span class="p">;</span> <span class="n">shiftEn</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="p">#</span><span class="mi">40</span><span class="p">;</span> <span class="n">shiftEn</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">#</span><span class="mi">40</span><span class="p">;</span> <span class="n">shiftEn</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="p">#</span><span class="mi">50</span><span class="p">;</span> <span class="p">$</span><span class="nb">finish</span><span class="p">;</span> <span class="c1">// End the simulation</span>
+<span class="k">end</span>
+
+
+
+<span class="k">endmodule</span>
+
+</code></pre></div></div> <p>We can run a Simulation to check the code by clicking the Run Simulation under the SIMULATION and choosing the first Run Behavioral Simulation.</p> <div align="center"><img src="imgs/v2/12.png" alt="drawing" width="800" /></div> <h2 id="counters"> <a href="#counters" class="anchor-heading" aria-labelledby="counters"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Counters </h2> <p>Counters can be asynchronous or synchronous. Asynchronous counters count the number of events solely using an event signal. On the other hand, synchronous counters use a common clock signal so that when several flip-flops must change state, the state changes occur simultaneously.</p> <p>A binary counter is a simple counter that counts values up when an enable signal is asserted and will reset when the reset control signal is asserted. Of course, a clear signal will have a higher priority over the enabled signal. The following diagram shows such a counter. Clear is an asynchronous negative logic signal, whereas Enable is the synchronous positive logic signal.</p> <div align="center"><img src="imgs/v2/13.png" alt="drawing" width="600" /></div> <h3 id="part6-2-1"> <a href="#part6-2-1" class="anchor-heading" aria-labelledby="part6-2-1"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Part6-2-1 </h3> <p>Design an 8-bit counter using T flip-flops, extending the above structure to 8-bits. Your design needs to be hierarchical, using a T flip-flop in behavioral modeling, and the rest should be either in dataflow or gate-level modeling. Develop a testbench and validate the design. Assign Clock input, Clear_n, Enable, and Q.</p> <p><strong>lab6_2_1.v</strong></p> <div class="language-verilog highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">module</span> <span class="n">t_flip_flop</span><span class="p">(</span>
+    <span class="kt">input</span> <span class="n">clk</span><span class="p">,</span>
+    <span class="kt">input</span> <span class="n">T</span><span class="p">,</span>
+    <span class="kt">input</span> <span class="n">clrn</span><span class="p">,</span>
+    <span class="kt">output</span> <span class="kt">reg</span> <span class="n">Q</span>
+<span class="p">);</span>
+    <span class="k">always</span> <span class="o">@</span><span class="p">(</span><span class="kt">posedge</span> <span class="n">clk</span> <span class="kt">or</span> <span class="kt">negedge</span>  <span class="n">clrn</span><span class="p">)</span> <span class="k">begin</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">clrn</span><span class="p">)</span> <span class="n">Q</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">T</span><span class="p">)</span> <span class="n">Q</span> <span class="o">&lt;=</span> <span class="o">~</span><span class="n">Q</span><span class="p">;</span>
+    <span class="k">end</span>
+<span class="k">endmodule</span>
+
+
+
+<span class="k">module</span> <span class="n">t_counter_8bit</span><span class="p">(</span>
+    <span class="kt">input</span> <span class="n">clk</span><span class="p">,</span>
+    <span class="kt">input</span> <span class="n">enable</span><span class="p">,</span>
+    <span class="kt">input</span> <span class="n">clrn</span><span class="p">,</span>
+    <span class="kt">output</span> <span class="p">[</span><span class="mi">7</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">Q</span>
+<span class="p">);</span>
+    <span class="kt">wire</span> <span class="p">[</span><span class="mi">7</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">T</span><span class="p">;</span> <span class="c1">// Toggle signal for each flip-flop</span>
+
+    <span class="c1">// Generate toggle signals based on enable and previous Q outputs</span>
+    <span class="c1">// Here, we assume a simple enable logic for demonstration</span>
+    <span class="k">assign</span> <span class="n">T</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">enable</span><span class="p">;</span> <span class="c1">// LSB toggles on every clock when enabled</span>
+    <span class="k">genvar</span> <span class="n">i</span><span class="p">;</span>
+    <span class="k">generate</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">8</span><span class="p">;</span> <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">begin</span> <span class="o">:</span> <span class="n">gen_toggle</span>
+            <span class="k">assign</span> <span class="n">T</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">enable</span> <span class="o">&amp;</span> <span class="n">Q</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">];</span> <span class="c1">// Next bit toggles when all lower bits are high</span>
+        <span class="k">end</span>
+    <span class="k">endgenerate</span>
+
+    <span class="c1">// Instantiate 8 T flip-flops</span>
+    <span class="k">genvar</span> <span class="n">j</span><span class="p">;</span>
+    <span class="k">generate</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="mi">8</span><span class="p">;</span> <span class="n">j</span> <span class="o">=</span> <span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">begin</span> <span class="o">:</span> <span class="n">gen_tff</span>
+            <span class="n">t_flip_flop</span> <span class="n">tff</span><span class="p">(</span>
+                <span class="p">.</span><span class="n">clk</span><span class="p">(</span><span class="n">clk</span><span class="p">),</span>
+                <span class="p">.</span><span class="n">T</span><span class="p">(</span><span class="n">T</span><span class="p">[</span><span class="n">j</span><span class="p">]),</span>
+                <span class="p">.</span><span class="n">clrn</span><span class="p">(</span><span class="n">clrn</span><span class="p">),</span>
+                <span class="p">.</span><span class="n">Q</span><span class="p">(</span><span class="n">Q</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+            <span class="p">);</span>
+        <span class="k">end</span>
+    <span class="k">endgenerate</span>
+<span class="k">endmodule</span>
+</code></pre></div></div> <ul> <li>View the schematic of the synthesized design</li> </ul> <div align="center"><img src="imgs/v2/15.png" alt="drawing" width="400" /></div> <ul> <li>Develop a testbench to test (see waveform above), perform behavioral simulation for 100ns, and validate the design.</li> </ul> <p><strong>tb.v</strong></p> <div class="language-verilog highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">module</span> <span class="n">tb_t_counter_8bit</span><span class="p">;</span>
+    <span class="kt">reg</span> <span class="n">clk</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kt">reg</span> <span class="n">enable</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="kt">reg</span> <span class="n">clrn</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kt">wire</span> <span class="p">[</span><span class="mi">7</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">Q</span><span class="p">;</span>
+
+    <span class="n">t_counter_8bit</span> <span class="n">counter</span><span class="p">(</span>
+        <span class="p">.</span><span class="n">clk</span><span class="p">(</span><span class="n">clk</span><span class="p">),</span>
+        <span class="p">.</span><span class="n">enable</span><span class="p">(</span><span class="n">enable</span><span class="p">),</span>
+        <span class="p">.</span><span class="n">clrn</span><span class="p">(</span><span class="n">clrn</span><span class="p">),</span>
+        <span class="p">.</span><span class="n">Q</span><span class="p">(</span><span class="n">Q</span><span class="p">)</span>
+    <span class="p">);</span>
+
+    <span class="c1">// Clock generation</span>
+    <span class="k">always</span> <span class="p">#</span><span class="mi">5</span> <span class="n">clk</span> <span class="o">=</span> <span class="o">~</span><span class="n">clk</span><span class="p">;</span>
+
+    <span class="k">initial</span> <span class="k">begin</span>
+        <span class="c1">// Test clear functionality</span>
+        <span class="n">enable</span> <span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+   
+        <span class="p">#</span><span class="mi">20</span>
+        <span class="n">enable</span> <span class="o">=</span><span class="mi">1</span><span class="p">;</span>
+        <span class="p">#</span><span class="mi">20</span> <span class="n">clrn</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="c1">// Observe counting</span>
+        <span class="p">#</span><span class="mi">60</span><span class="p">;</span>
+
+        <span class="c1">// Test pause functionality</span>
+        <span class="n">enable</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="p">#</span><span class="mi">50</span><span class="p">;</span>
+
+        <span class="c1">// Resume counting</span>
+        <span class="n">enable</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="p">#</span><span class="mi">100</span><span class="p">;</span>
+
+        <span class="p">$</span><span class="nb">finish</span><span class="p">;</span>
+    <span class="k">end</span>
+
+<span class="k">endmodule</span>
+
+</code></pre></div></div> <p>We can run a Simulation to check the code by clicking the Run Simulation under the SIMULATION and choosing the first Run Behavioral Simulation.</p> <div align="center"><img src="imgs/v2/14.png" alt="drawing" width="600" /></div> <h3 id="part6-2-2"> <a href="#part6-2-2" class="anchor-heading" aria-labelledby="part6-2-2"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Part6-2-2 </h3> <p>Counters can also be implemented using D flip-flops since a T flip-flop can be constructed using a D flip-flop as shown below。</p> <div align="center"><img src="imgs/v2/16.png" alt="drawing" width="300" /></div> <p>Modify the 8-bit counter using D flip-flops. The design should be hierarchical, defining D flip-flop in behavioral modeling, creating T flip-flop from the D flip-flop, implementing additional functionality using dataflow modeling. Assign Clock input, Clear_n, Enable, and Q. Implement the design and verify the functionality of the hardware.</p> <p><strong>lab6_2_2.v</strong></p> <div class="language-verilog highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//D Flip-Flop Module (Behavioral Modeling)</span>
+<span class="k">module</span> <span class="n">d_flip_flop</span><span class="p">(</span>
+    <span class="kt">input</span> <span class="n">clk</span><span class="p">,</span>
+    <span class="kt">input</span> <span class="n">D</span><span class="p">,</span>
+    <span class="kt">input</span> <span class="n">clr</span><span class="p">,</span>
+    <span class="kt">output</span> <span class="kt">reg</span> <span class="n">Q</span>
+<span class="p">);</span>
+    <span class="k">always</span> <span class="o">@</span><span class="p">(</span><span class="kt">posedge</span> <span class="n">clk</span> <span class="kt">or</span> <span class="kt">posedge</span> <span class="n">clr</span><span class="p">)</span> <span class="k">begin</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">clr</span><span class="p">)</span> <span class="n">Q</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="k">else</span> <span class="n">Q</span> <span class="o">&lt;=</span> <span class="n">D</span><span class="p">;</span>
+    <span class="k">end</span>
+<span class="k">endmodule</span>
+
+<span class="c1">//T Flip-Flop Using D Flip-Flop</span>
+
+<span class="k">module</span> <span class="n">t_flip_flop_from_d</span><span class="p">(</span>
+    <span class="kt">input</span> <span class="n">clk</span><span class="p">,</span>
+    <span class="kt">input</span> <span class="n">T</span><span class="p">,</span>
+    <span class="kt">input</span> <span class="n">clr</span><span class="p">,</span>
+    <span class="kt">output</span> <span class="n">Q</span>
+<span class="p">);</span>
+    <span class="kt">wire</span> <span class="n">D</span><span class="p">;</span>
+
+    <span class="k">assign</span> <span class="n">D</span> <span class="o">=</span> <span class="n">Q</span> <span class="o">^</span> <span class="n">T</span><span class="p">;</span> <span class="c1">// Toggling logic</span>
+
+    <span class="n">d_flip_flop</span> <span class="n">dff</span><span class="p">(</span>
+        <span class="p">.</span><span class="n">clk</span><span class="p">(</span><span class="n">clk</span><span class="p">),</span>
+        <span class="p">.</span><span class="n">D</span><span class="p">(</span><span class="n">D</span><span class="p">),</span>
+        <span class="p">.</span><span class="n">clr</span><span class="p">(</span><span class="n">clr</span><span class="p">),</span>
+        <span class="p">.</span><span class="n">Q</span><span class="p">(</span><span class="n">Q</span><span class="p">)</span>
+    <span class="p">);</span>
+<span class="k">endmodule</span>
+
+<span class="c1">//8-bit Counter Using T Flip-Flops Created from D Flip-Flops</span>
+
+<span class="k">module</span> <span class="n">counter_8bit_from_t</span><span class="p">(</span>
+    <span class="kt">input</span> <span class="n">clk</span><span class="p">,</span>
+    <span class="kt">input</span> <span class="n">enable</span><span class="p">,</span>
+    <span class="kt">input</span> <span class="n">clr</span><span class="p">,</span>
+    <span class="kt">output</span> <span class="p">[</span><span class="mi">7</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">Q</span>
+<span class="p">);</span>
+    <span class="kt">wire</span> <span class="p">[</span><span class="mi">7</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">T</span><span class="p">;</span> <span class="c1">// Generate toggle signals</span>
+
+    <span class="k">assign</span> <span class="n">T</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">enable</span><span class="p">;</span> <span class="c1">// LSB toggles when enabled</span>
+    <span class="k">genvar</span> <span class="n">i</span><span class="p">;</span>
+    <span class="k">generate</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">8</span><span class="p">;</span> <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">begin</span> <span class="o">:</span> <span class="n">gen_T_signals</span>
+            <span class="k">assign</span> <span class="n">T</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">enable</span> <span class="o">&amp;</span> <span class="o">&amp;</span><span class="n">Q</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">];</span> <span class="c1">// Conditional toggle logic for hierarchical counter</span>
+        <span class="k">end</span>
+    <span class="k">endgenerate</span>
+
+    <span class="c1">// Instantiate T flip-flops</span>
+    <span class="k">genvar</span> <span class="n">j</span><span class="p">;</span>
+    <span class="k">generate</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="mi">8</span><span class="p">;</span> <span class="n">j</span> <span class="o">=</span> <span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">begin</span> <span class="o">:</span> <span class="n">gen_tff</span>
+            <span class="n">t_flip_flop_from_d</span> <span class="n">tff</span><span class="p">(</span>
+                <span class="p">.</span><span class="n">clk</span><span class="p">(</span><span class="n">clk</span><span class="p">),</span>
+                <span class="p">.</span><span class="n">T</span><span class="p">(</span><span class="n">T</span><span class="p">[</span><span class="n">j</span><span class="p">]),</span>
+                <span class="p">.</span><span class="n">clr</span><span class="p">(</span><span class="n">clr</span><span class="p">),</span>
+                <span class="p">.</span><span class="n">Q</span><span class="p">(</span><span class="n">Q</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+            <span class="p">);</span>
+        <span class="k">end</span>
+    <span class="k">endgenerate</span>
+<span class="k">endmodule</span>
+
+
+
+</code></pre></div></div> <ul> <li>View the schematic of the synthesized design</li> </ul> <div align="center"><img src="imgs/v2/17.png" alt="drawing" width="600" /></div> <h3 id="part6-2-3"> <a href="#part6-2-3" class="anchor-heading" aria-labelledby="part6-2-3"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Part6-2-3 </h3> <p>Other types of binary counters include (i) up, (ii) down, and (iii) up-down. Each one of them may have count enabled and reset as control signals. There may be a situation where you may want to start the count up/down from some non-zero value and stop when some other desired value is reached. Here is an example of a 4-bit counter which starts with a value of 10 and counts down to 0. When the count value 0 is reached, it will re-initialize the count to 10. At any time, if the enable signal is negated, the counter pauses counting until the signal is asserted back. It assumes that the load signal is asserted to load the predefined value before counting has begun.</p> <div class="language-verilog highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">reg</span> <span class="p">[</span><span class="mi">3</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">count</span><span class="p">;</span>
+ <span class="kt">wire</span> <span class="n">cnt_done</span><span class="p">;</span>
+ <span class="k">assign</span> <span class="n">cnt_done</span> <span class="o">=</span> <span class="o">~|</span> <span class="n">count</span><span class="p">;</span>
+ <span class="k">assign</span> <span class="n">Q</span> <span class="o">=</span> <span class="n">count</span><span class="p">;</span>
+ <span class="k">always</span> <span class="o">@</span><span class="p">(</span><span class="kt">posedge</span> <span class="n">Clock</span><span class="p">)</span>
+ <span class="k">if</span> <span class="p">(</span><span class="n">Clear</span><span class="p">)</span>
+ <span class="n">count</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">;</span>
+ <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">Enable</span><span class="p">)</span>
+ <span class="k">if</span> <span class="p">(</span><span class="n">Load</span> <span class="o">|</span> <span class="n">cnt_done</span><span class="p">)</span>
+ <span class="n">count</span> <span class="o">&lt;=</span> <span class="mb">4'b1010</span><span class="p">;</span> <span class="c1">// decimal 10</span>
+ <span class="k">else</span>
+ <span class="n">count</span> <span class="o">&lt;=</span> <span class="n">count</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> 
+
+</code></pre></div></div> <p>Model a 4-bit down-counter with synchronous load, enable, and clear as given in the code above. Develop a testbench (similar to the waveform below) and verify the design works. Assign Clock input, Clear, Enable, Load, and Q.</p> <div align="center"><img src="imgs/v2/18.png" alt="drawing" width="600" /></div> <p><strong>lab6_2_3.v</strong></p> <div class="language-verilog highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Define a 4-bit down-counter module with Clock, Enable, Clear, and Load signals</span>
+<span class="k">module</span> <span class="n">down_counter_4_bit</span> <span class="p">(</span>
+    <span class="kt">input</span> <span class="n">clk</span><span class="p">,</span> <span class="c1">// Clock input for synchronous operation</span>
+    <span class="kt">input</span> <span class="n">enable</span><span class="p">,</span> <span class="c1">// Enable signal to allow the counter to count</span>
+    <span class="kt">input</span> <span class="n">clear</span><span class="p">,</span> <span class="c1">// Clear signal to reset the counter to 0</span>
+    <span class="kt">input</span> <span class="n">load</span><span class="p">,</span> <span class="c1">// Load signal to preload the counter with a specific value (in this case, decimal 10)</span>
+    <span class="kt">output</span> <span class="p">[</span><span class="mi">3</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">Q</span> <span class="c1">// 4-bit output to represent the current count value</span>
+<span class="p">);</span>
+    <span class="kt">reg</span> <span class="p">[</span><span class="mi">3</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">count</span><span class="p">;</span> <span class="c1">// Internal 4-bit register to hold the current count</span>
+    <span class="kt">wire</span> <span class="n">cnt_done</span><span class="p">;</span> <span class="c1">// Signal to indicate when the counter has reached 0</span>
+
+    <span class="c1">// Determine if the counter has reached 0 using a NOR reduction operator</span>
+    <span class="c1">// This will be true when all bits of 'count' are 0</span>
+    <span class="k">assign</span> <span class="n">cnt_done</span> <span class="o">=</span> <span class="o">~|</span> <span class="n">count</span><span class="p">;</span>
+
+    <span class="c1">// Output the current value of the count register</span>
+    <span class="k">assign</span> <span class="n">Q</span> <span class="o">=</span> <span class="n">count</span><span class="p">;</span>
+
+    <span class="c1">// Synchronous logic block, sensitive to the positive edge of the clock</span>
+    <span class="k">always</span> <span class="o">@</span><span class="p">(</span><span class="kt">posedge</span> <span class="n">clk</span><span class="p">)</span> <span class="k">begin</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">clear</span><span class="p">)</span> <span class="k">begin</span>
+            <span class="n">count</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">// If clear is asserted, reset the count to 0</span>
+        <span class="k">end</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">enable</span><span class="p">)</span> <span class="k">begin</span> <span class="c1">// Proceed if the counter is enabled</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">load</span> <span class="o">|</span> <span class="n">cnt_done</span><span class="p">)</span> <span class="k">begin</span>
+                <span class="n">count</span> <span class="o">&lt;=</span> <span class="mb">4'b1010</span><span class="p">;</span> <span class="c1">// If the load is asserted or count has reached 0, preload count with 10 (4'b1010)</span>
+            <span class="k">end</span> <span class="k">else</span> <span class="k">begin</span>
+                <span class="n">count</span> <span class="o">&lt;=</span> <span class="n">count</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="c1">// If not loading and not done, decrement the count by 1</span>
+            <span class="k">end</span>
+        <span class="k">end</span>
+    <span class="k">end</span>
+<span class="k">endmodule</span>
+
+</code></pre></div></div> <ul> <li>view the schematic of the synthesized design</li> </ul> <div align="center"><img src="imgs/v2/19.png" alt="drawing" width="900" /></div> <ul> <li>Develop a testbench to test (see waveform above), perform behavioral simulation for 100ns, and validate the design.</li> </ul> <p><strong>tb.v</strong></p> <div class="language-verilog highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">module</span> <span class="n">tb_t_counter_4bit</span><span class="p">;</span>
+    <span class="kt">reg</span> <span class="n">clk</span><span class="p">;</span>
+    <span class="kt">reg</span> <span class="n">enable</span><span class="p">;</span>
+    <span class="kt">reg</span> <span class="n">clear</span><span class="p">;</span>
+    <span class="kt">reg</span> <span class="n">load</span> <span class="p">;</span>
+    <span class="kt">wire</span> <span class="p">[</span><span class="mi">3</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">Q</span><span class="p">;</span>
+
+    <span class="n">down_counter_4_bit</span> <span class="n">counter</span><span class="p">(</span>
+        <span class="p">.</span><span class="n">clk</span><span class="p">(</span><span class="n">clk</span><span class="p">),</span>
+        <span class="p">.</span><span class="n">enable</span><span class="p">(</span><span class="n">enable</span><span class="p">),</span>
+        <span class="p">.</span><span class="n">clear</span><span class="p">(</span><span class="n">clear</span><span class="p">),</span>
+        <span class="p">.</span><span class="n">load</span><span class="p">(</span><span class="n">load</span><span class="p">),</span>
+        <span class="p">.</span><span class="n">Q</span><span class="p">(</span><span class="n">Q</span><span class="p">)</span>
+    <span class="p">);</span>
+
+    <span class="c1">// Clock generation</span>
+    <span class="k">always</span> <span class="p">#</span><span class="mi">5</span> <span class="n">clk</span> <span class="o">=</span> <span class="o">~</span><span class="n">clk</span><span class="p">;</span>
+
+    <span class="k">initial</span> <span class="k">begin</span>
+        <span class="c1">// Test clear functionality</span>
+        <span class="n">clk</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="n">enable</span> <span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+        <span class="n">clear</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="n">load</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="p">#</span><span class="mi">20</span>
+        <span class="n">enable</span> <span class="o">=</span><span class="mi">1</span><span class="p">;</span>
+        
+        <span class="p">#</span><span class="mi">20</span> <span class="n">clear</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="p">#</span><span class="mi">20</span> <span class="n">clear</span> <span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+        <span class="c1">// Observe counting</span>
+        <span class="p">#</span><span class="mi">20</span> <span class="n">load</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+        <span class="p">#</span><span class="mi">10</span> <span class="n">load</span> <span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+
+        <span class="p">#</span><span class="mi">50</span><span class="p">;</span>
+
+        <span class="c1">// Resume counting</span>
+        <span class="n">enable</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        
+        <span class="p">#</span><span class="mi">40</span> <span class="n">enable</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="p">#</span><span class="mi">100</span><span class="p">;</span>
+
+        <span class="p">$</span><span class="nb">finish</span><span class="p">;</span>
+    <span class="k">end</span>
+
+<span class="k">endmodule</span>
+</code></pre></div></div> <p>We can run Simulation to check the code by clicking the Run Simulation under the SIMULATION and choose the first Run Behavioral Simulation.</p> <div align="center"><img src="imgs/v2/20.png" alt="drawing" width="600" /></div> <h2 id="conclusion"> <a href="#conclusion" class="anchor-heading" aria-labelledby="conclusion"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Conclusion </h2> <p>In this lab, you learned how various kinds of registers and counters work. You modeled and verified the functionality of these components. These components are widely used in a processor system design.</p> </main> </div> </div> <div class="search-overlay"></div> </div> </body> </html>

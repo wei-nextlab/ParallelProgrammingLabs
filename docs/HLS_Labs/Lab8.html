@@ -1,0 +1,662 @@
+<!DOCTYPE html> <html lang="en-US"> <head> <meta charset="UTF-8"> <meta http-equiv="X-UA-Compatible" content="IE=Edge"> <link rel="stylesheet" href="/ParallelProgrammingLabs/assets/css/just-the-docs-default.css"> <link rel="stylesheet" href="/ParallelProgrammingLabs/assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet"> <style id="jtd-nav-activation"> .site-nav > ul.nav-list:first-child > li > a, .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(8)) > a, .site-nav > ul.nav-list:first-child > li > ul > li > ul > li > a { background-image: none; } .site-nav > ul.nav-list:not(:first-child) a, .site-nav li.external a { background-image: none; } .site-nav > ul.nav-list:first-child > li:nth-child(5) > ul > li:nth-child(8) > a { font-weight: 600; text-decoration: none; }.site-nav > ul.nav-list:first-child > li:nth-child(5) > button svg, .site-nav > ul.nav-list:first-child > li:nth-child(5) > ul > li:nth-child(8) > button svg { transform: rotate(-90deg); }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(5) > ul.nav-list, .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(5) > ul.nav-list > li.nav-list-item:nth-child(8) > ul.nav-list { display: block; } </style> <script src="/ParallelProgrammingLabs/assets/js/vendor/lunr.min.js"></script> <script src="/ParallelProgrammingLabs/assets/js/just-the-docs.js"></script> <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- Begin Jekyll SEO tag v2.8.0 --> <title>Lab8 | FPGA/SoC/Verilog/HLS</title> <meta name="generator" content="Jekyll v4.3.3" /> <meta property="og:title" content="Lab8" /> <meta property="og:locale" content="en_US" /> <meta name="description" content="FPGA, SoC, Verilog, and HLS labs" /> <meta property="og:description" content="FPGA, SoC, Verilog, and HLS labs" /> <link rel="canonical" href="https://wei-nextlab.github.io/ParallelProgrammingLabs/docs/HLS_Labs/Lab8.html" /> <meta property="og:url" content="https://wei-nextlab.github.io/ParallelProgrammingLabs/docs/HLS_Labs/Lab8.html" /> <meta property="og:site_name" content="FPGA/SoC/Verilog/HLS" /> <meta property="og:type" content="website" /> <meta name="twitter:card" content="summary" /> <meta property="twitter:title" content="Lab8" /> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"WebPage","description":"FPGA, SoC, Verilog, and HLS labs","headline":"Lab8","url":"https://wei-nextlab.github.io/ParallelProgrammingLabs/docs/HLS_Labs/Lab8.html"}</script> <!-- End Jekyll SEO tag --> </head> <body> <a class="skip-to-main" href="#main-content">Skip to main content</a> <svg xmlns="http://www.w3.org/2000/svg" class="d-none"> <symbol id="svg-link" viewBox="0 0 24 24"> <title>Link</title> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"> <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path> </svg> </symbol> <symbol id="svg-menu" viewBox="0 0 24 24"> <title>Menu</title> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"> <line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line> </svg> </symbol> <symbol id="svg-arrow-right" viewBox="0 0 24 24"> <title>Expand</title> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"> <polyline points="9 18 15 12 9 6"></polyline> </svg> </symbol> <!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE --> <symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"> <title id="svg-external-link-title">(external link)</title> <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line> </symbol> <symbol id="svg-doc" viewBox="0 0 24 24"> <title>Document</title> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"> <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline> </svg> </symbol> <symbol id="svg-search" viewBox="0 0 24 24"> <title>Search</title> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"> <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line> </svg> </symbol> <!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md --> <symbol id="svg-copy" viewBox="0 0 16 16"> <title>Copy</title> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16"> <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/> <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/> </svg> </symbol> <symbol id="svg-copied" viewBox="0 0 16 16"> <title>Copied</title> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16"> <path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/> <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/> </svg> </symbol> </svg> <div class="side-bar"> <div class="site-header" role="banner"> <a href="/ParallelProgrammingLabs/" class="site-title lh-tight"> FPGA/SoC/Verilog/HLS </a> <button id="menu-button" class="site-button btn-reset" aria-label="Toggle menu" aria-pressed="false"> <svg viewBox="0 0 24 24" class="icon" aria-hidden="true"><use xlink:href="#svg-menu"></use></svg> </button> </div> <nav aria-label="Main" id="site-nav" class="site-nav"> <ul class="nav-list"><li class="nav-list-item"><a href="/ParallelProgrammingLabs/" class="nav-list-link">Home</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Preparation category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/ParallelProgrammingLabs/docs/Vitis_HLS_Tutor/" class="nav-list-link">Preparation</a><ul class="nav-list"><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Vitis_HLS_Tutor/Install_Vitis.html" class="nav-list-link">Install Vitis</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Vitis_HLS_Tutor/Create_Vitis_HLS_Prj.html" class="nav-list-link">Create Vitis HLS Project</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Vitis_HLS_Tutor/Generating_bitstream_in_Vivado.html" class="nav-list-link">Generating Bitstream in Vivado</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Vitis_HLS_Tutor/Deploying_the_Adder_on_FPGA.html" class="nav-list-link">Deploying the Adder on FPGA</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Verilog Labs (Basics) category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/" class="nav-list-link">Verilog Labs (Basics)</a><ul class="nav-list"><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/Lab1_Modeling_Concepts.html" class="nav-list-link">Lab1</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/Lab2_Addition.html" class="nav-list-link">Lab2</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/Lab3_Multi-Output%20Circuits.html" class="nav-list-link">Lab3</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/Lab4_Tasks,%20Functions,%20and%20Testbench%20.html" class="nav-list-link">Lab4</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/Lab5_Modeling%20Latches%20and%20Flip-flops%20.html" class="nav-list-link">Lab5</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/Lab6_Modeling%20Registers%20and%20Counters%20.html" class="nav-list-link">Lab6</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/Lab7_Behavioral%20Modeling%20and%20Timing%20Constraints.html" class="nav-list-link">Lab7</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/Lab8_Architectural%20Wizard%20and%20IP%20Catalog.html" class="nav-list-link">Lab8</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/Lab9_Counters,%20Timers%20and%20Real-Time%20Clock.html" class="nav-list-link">Lab9</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/Lab10_Finite%20State%20Machines%20.html" class="nav-list-link">Lab10</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/Lab11_Sequential%20System%20Design%20Using%20ASM%20Charts%20.html" class="nav-list-link">Lab11</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in FPGA/SoC Labs category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/ParallelProgrammingLabs/docs/Labs/" class="nav-list-link">FPGA/SoC Labs</a><ul class="nav-list"><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Labs/Lab1_led.html" class="nav-list-link">Lab1</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Labs/Lab2_uart.html" class="nav-list-link">Lab2</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Labs/Lab3_IO_Planning.html" class="nav-list-link">Lab3</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Labs/Lab4_ILA.html" class="nav-list-link">Lab4</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Labs/Lab5_IPI.html" class="nav-list-link">Lab5</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Labs/Lab6_DMA.html" class="nav-list-link">Lab6</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Labs/Lab7_Fibonacci_sp.html" class="nav-list-link">Lab7</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Labs/Lab8_State_Machines.html" class="nav-list-link">Lab8</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Labs/Lab9_Simple_Processor.html" class="nav-list-link">Lab9</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Labs/Lab10_Bit-pair%20Recoded%20Multiplier.html" class="nav-list-link">Lab10</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in HLS Labs category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/ParallelProgrammingLabs/docs/HLS_Labs/" class="nav-list-link">HLS Labs</a><ul class="nav-list"><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab1.html" class="nav-list-link">Lab1</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab2.html" class="nav-list-link">Lab2</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab3.html" class="nav-list-link">Lab3</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab4.html" class="nav-list-link">Lab4</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab5.html" class="nav-list-link">Lab5</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab6.html" class="nav-list-link">Lab6</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab7.html" class="nav-list-link">Lab7</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab8.html" class="nav-list-link">Lab8</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab9.html" class="nav-list-link">Lab9</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab10.html" class="nav-list-link">Lab10</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab11.html" class="nav-list-link">Lab11</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab12.html" class="nav-list-link">Lab12</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab13.html" class="nav-list-link">Lab13</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab14.html" class="nav-list-link">Lab14</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab15.html" class="nav-list-link">Lab15</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab16.html" class="nav-list-link">Lab16</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab17.html" class="nav-list-link">Lab17</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab18.html" class="nav-list-link">Lab18</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab19.html" class="nav-list-link">Lab19</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab20.html" class="nav-list-link">Lab20</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab21.html" class="nav-list-link">Lab21</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab22.html" class="nav-list-link">Lab22</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab23.html" class="nav-list-link">Lab23</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab24.html" class="nav-list-link">Lab24</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab25.html" class="nav-list-link">Lab25</a></li></ul></li></ul> </nav> <footer class="site-footer"> This site uses <a href="https://github.com/just-the-docs/just-the-docs">Just the Docs</a>, a documentation theme for Jekyll. </footer> </div> <div class="main" id="top"> <div id="main-header" class="main-header"> <div class="search" role="search"> <div class="search-input-wrap"> <input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search FPGA/SoC/Verilog/HLS" aria-label="Search FPGA/SoC/Verilog/HLS" autocomplete="off"> <label for="search-input" class="search-label"><svg viewBox="0 0 24 24" class="search-icon"><use xlink:href="#svg-search"></use></svg></label> </div> <div id="search-results" class="search-results"></div> </div> <nav aria-label="Auxiliary" class="aux-nav"> <ul class="aux-nav-list"> <li class="aux-nav-list-item"> <a href="https://github.com/wei-nextlab/ParallelProgrammingLabs" class="site-button" > GitHub Repository </a> </li> </ul> </nav> </div> <div class="main-content-wrap"> <nav aria-label="Breadcrumb" class="breadcrumb-nav"> <ol class="breadcrumb-nav-list"> <li class="breadcrumb-nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/">HLS Labs</a></li> <li class="breadcrumb-nav-list-item"><span>Lab8</span></li> </ol> </nav> <div id="main-content" class="main-content"> <main> <h1 id="lab8-interface_memory_1"> <a href="#lab8-interface_memory_1" class="anchor-heading" aria-labelledby="lab8-interface_memory_1"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Lab8 Interface_Memory_1 </h1> <script type="text/x-mathjax-config"> MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], displayMath: [ ['$$','$$'], ["\\[","\\]"] ], processEscapes: false, } }); </script> <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"> </script> <h2 id="introduction"> <a href="#introduction" class="anchor-heading" aria-labelledby="introduction"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Introduction </h2> <p>A Vitis accelerated system includes a global memory subsystem that is used to share data between the kernels and the host application. Global memory available on the host system, outside of the AMD device, provides very large amounts of storage space but at the cost of longer access time compared to local memory on the AMD device. One of the measurements of the performance of a system/application is throughput, which is defined as the number of bytes transferred in a given time frame. Therefore, inefficient data transfers from/to the global memory will have a long memory access time which can adversely affect system performance and kernel execution time. Development of accelerated applications in Vitis HLS should include two phases: kernel development, and improving system performance. Improving system performance involves implementing an efficient load and store design that can improve the kernel execution time. <a href="https://docs.xilinx.com/r/en-US/ug1399-vitis-hls/Optimizing-AXI-System-Performance">Ref</a></p> <h3 id="burst_rw"> <a href="#burst_rw" class="anchor-heading" aria-labelledby="burst_rw"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> burst_rw </h3> <p>Bursting is an optimization that tries to intelligently aggregate your memory accesses to the DDR to maximize the throughput bandwidth and/or minimize the latency. Bursting is one of many possible optimizations to the kernel. Bursting typically gives you a 4-5x improvement while other optimizations, like access widening or ensuring there are no dependencies through the DDR memory, can provide even bigger performance improvements. Typically, bursting is useful when you have contention on the DDR ports from multiple competing kernels.</p> <p>The burst feature of the AXI4 protocol improves the throughput of the load-store functions by reading/writing chunks of data to or from the global memory in a single request. The larger the size of the data, the higher the throughput. This metric is calculated as follows ((#of bytes transferred)* (kernel frequency)/(Time)). The maximum kernel interface bitwidth is 512 bits, and if the kernel is compiled to run at 300 MHz then it can theoretically achieve (512* 300 MHz)/1 sec = ~17 GBps for a DDR memory.</p> <div align="center"><img src="Images/8_1.png" alt="drawing" width="800" /></div> <p>The preceding figure shows how the AXI protocol works. The HLS kernel sends out a read request for a burst of length 8 and then sends a write request burst of length 8. The read latency is defined as the time taken between the sending of the read request burst to when the data from the first read request in the burst is received by the kernel. Similarly, the write latency is defined as the time taken between when data for the last write in the write burst is sent and the time the write acknowledgment is received by the kernel. Read requests are usually sent at the first available opportunity while write requests get queued until the data for each write in the burst becomes available.</p> <p>Vitis HLS performs automatic burst optimization, which intelligently aggregates the memory accesses inside the loops/functions from the user code and performs read/write to the global memory of a particular size. These read/writes are converted into a read request, write request, and write response to the global memory. Depending on the memory access pattern Vitis HLS automatically inserts these read and write requests either outside the loop bound or inside the loop body. Depending on the placement of these requests, Vitis HLS defines two types of burst requests: sequential burst and pipelined burst. <a href="https://docs.xilinx.com/r/en-US/ug1399-vitis-hls/AXI-Burst-Transfers">Ref</a></p> <p>Bursting is about aggregating successive memory access requests. Here are the set of preconditions that these successive accesses must meet for the bursting optimization to launch successfully:</p> <ul> <li> <p>Must be all reads, or all writes – bursting reads and writes is not possible.</p> </li> <li> <p>Must be a monotonically increasing order of access (both in terms of the memory location being accessed as well as in time). You cannot access a memory location that is in between two previously accessed memory locations.</p> </li> <li> <p>Must be consecutive in memory – one next to another with no gaps or overlap and in forward order.</p> </li> <li> <p>The number of read/write accesses (or burst length) must be determinable before the request is sent out. This means that even if the burst length is computed at runtime, it must be computed before the read/write request is sent out.</p> </li> <li> <p>If bundling two arrays to the same M-AXI port, bursting will be done only for one array, at most, in each direction at any given time.</p> </li> <li> <p>If same direction accesses on the same channel of the same bundle in the same region, there will be no burst for all these accesses.</p> </li> <li> <p>There must be no dependency issues from the time a burst request is initiated and finished.</p> </li> </ul> <p>This is simple example of using AXI4-master interface for burst read and write in Vitis HLS.</p> <p><strong>vadd.h</strong></p> <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#define DATA_SIZE 32
+#define INCR_VALUE 10
+</span><span class="c1">// define internal buffer max size</span>
+<span class="cp">#define BURSTBUFFERSIZE 16
+</span>
+<span class="kt">void</span> <span class="nf">vadd</span><span class="p">(</span><span class="kt">int</span><span class="o">*</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">size</span><span class="p">,</span> <span class="kt">int</span> <span class="n">inc_value</span><span class="p">);</span>
+
+</code></pre></div></div> <p><strong>vadd.cpp</strong></p> <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;string.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">"vadd.h"</span><span class="cp">
+</span>
+<span class="c1">// TRIPCOUNT identifiers</span>
+<span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">c_size_min</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">c_size_max</span> <span class="o">=</span> <span class="n">BURSTBUFFERSIZE</span><span class="p">;</span>
+<span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">c_chunk_sz</span> <span class="o">=</span> <span class="n">DATA_SIZE</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">vadd</span><span class="p">(</span><span class="kt">int</span><span class="o">*</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">size</span><span class="p">,</span> <span class="kt">int</span> <span class="n">inc_value</span><span class="p">)</span> <span class="p">{</span>
+<span class="c1">// Map pointer a to AXI4-master interface for global memory access</span>
+<span class="cp">#pragma HLS INTERFACE m_axi port = a offset = slave bundle = gmem max_read_burst_length = 16 max_write_burst_length = 16 depth = 32
+</span><span class="c1">// We also need to map a and return to a bundled axilite slave interface</span>
+<span class="cp">#pragma HLS INTERFACE s_axilite port = a
+#pragma HLS INTERFACE s_axilite port = size
+#pragma HLS INTERFACE s_axilite port = inc_value
+#pragma HLS INTERFACE s_axilite port = return
+</span>
+    <span class="kt">int</span> <span class="n">burstbuffer</span><span class="p">[</span><span class="n">BURSTBUFFERSIZE</span><span class="p">];</span>
+    <span class="kt">int</span> <span class="n">chunk_size</span> <span class="o">=</span> <span class="n">BURSTBUFFERSIZE</span><span class="p">;</span>
+<span class="nl">read_buf:</span>
+    <span class="c1">// Per iteration of this loop perform BURSTBUFFERSIZE vector addition</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">size</span><span class="p">;</span> <span class="n">i</span> <span class="o">+=</span> <span class="n">BURSTBUFFERSIZE</span><span class="p">)</span> <span class="p">{</span>
+<span class="cp">#pragma HLS LOOP_TRIPCOUNT min = c_size_min* c_size_min max = c_chunk_sz * c_chunk_sz / (c_size_max * c_size_max)
+</span>       <span class="c1">//16</span>
+        <span class="c1">// boundary checks</span>
+        <span class="c1">// burst read</span>
+        <span class="c1">// Auto-pipeline is going to apply pipeline to these loops</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">chunk_size</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+<span class="c1">// As the outer loop is not a perfect loop</span>
+<span class="cp">#pragma HLS loop_flatten off
+#pragma HLS LOOP_TRIPCOUNT min = c_size_min max = c_size_max
+</span>            <span class="n">burstbuffer</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="n">j</span><span class="p">];</span>
+<span class="c1">//            printf("buffer[%d] is %d\r\n",j,burstbuffer[j]);</span>
+        <span class="p">}</span>
+
+    <span class="c1">// calculate and write results to global memory, the sequential write in a for</span>
+    <span class="c1">// loop can be inferred to a memory burst access</span>
+    <span class="n">calc_write</span><span class="o">:</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">chunk_size</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+<span class="cp">#pragma HLS LOOP_TRIPCOUNT min = c_size_max max = c_chunk_sz
+</span>            <span class="n">burstbuffer</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">burstbuffer</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="n">inc_value</span><span class="p">;</span>
+            <span class="n">a</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">burstbuffer</span><span class="p">[</span><span class="n">j</span><span class="p">];</span>
+<span class="c1">//            printf("a[%d] is %d\r\n",i+j,a[i+j]);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div> <p>The synthesis report is shown below. The II will not be 1 for this burst read and write process.</p> <div align="center"><img src="Images/8_6.png" alt="drawing" width="800" /></div> <p>After the cosimulation, we can see the Wave Viewer as shown below. The type of the <code class="language-plaintext highlighter-rouge">a</code> is inout, so we can see that the write process is after the read process for the <code class="language-plaintext highlighter-rouge">maxi</code> interface.</p> <div align="center"><img src="Images/8_2.png" alt="drawing" width="400" /></div> <p><strong>vadd_test.cpp</strong></p> <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+#include</span> <span class="cpf">"vadd.h"</span><span class="cp">
+</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+
+    <span class="kt">int</span> <span class="n">size</span> <span class="o">=</span> <span class="n">DATA_SIZE</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">inc_value</span> <span class="o">=</span> <span class="n">INCR_VALUE</span><span class="p">;</span>
+    <span class="c1">// Allocate Memory in Host Memory</span>
+    <span class="kt">size_t</span> <span class="n">vector_size_bytes</span> <span class="o">=</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="o">*</span> <span class="n">size</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">source_in</span><span class="p">(</span><span class="n">size</span><span class="p">);</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">source_out</span><span class="p">(</span><span class="n">size</span><span class="p">);</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">source_sw_results</span><span class="p">(</span><span class="n">size</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="n">source</span><span class="p">[</span><span class="n">size</span><span class="p">];</span>
+    <span class="c1">// Create the test data and Software Result</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">size</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">source_in</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>
+        <span class="n">source_sw_results</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="n">inc_value</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">vadd</span><span class="p">(</span><span class="n">source</span><span class="p">,</span><span class="n">size</span><span class="p">,</span> <span class="n">inc_value</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div> <h4 id="create-the-vivado-project"> <a href="#create-the-vivado-project" class="anchor-heading" aria-labelledby="create-the-vivado-project"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Create the Vivado project </h4> <p>The configure block design can use reference materials <a href="https://uri-nextlab.github.io/ParallelProgrammingLabs/docs/HLS_Labs/Lab1.html">here</a>. And we need to choose the number of the DMA according to the number of the interface.</p> <div align="center"><img src="Images/8_5.png" alt="drawing" width="800" /></div> <h4 id="run-synthesis--implementation-and-generate-bitstream"> <a href="#run-synthesis--implementation-and-generate-bitstream" class="anchor-heading" aria-labelledby="run-synthesis--implementation-and-generate-bitstream"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Run synthesis, Implementation, and generate bitstream </h4> <p>It may show some errors about I/O Ports, please fix them.</p> <h4 id="download-the-bitstream-file-to-pynq"> <a href="#download-the-bitstream-file-to-pynq" class="anchor-heading" aria-labelledby="download-the-bitstream-file-to-pynq"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Download the bitstream file to PYNQ </h4> <div align="center"><img src="Images/8_16.png" alt="drawing" width="1000" /></div> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">import</span> <span class="n">pynq</span>
+<span class="kn">from</span> <span class="n">pynq</span> <span class="kn">import</span> <span class="n">MMIO</span>
+</code></pre></div></div> <h4 id="allocate-dma-memory-address-size"> <a href="#allocate-dma-memory-address-size" class="anchor-heading" aria-labelledby="allocate-dma-memory-address-size"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Allocate DMA memory address size </h4> <p>The first step is to allocate the buffer. pynq allocate will be used to allocate the buffer, and NumPy will be used to specify the type of the buffer.</p> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="n">overlay</span> <span class="o">=</span> <span class="n">pynq</span><span class="p">.</span><span class="nc">Overlay</span><span class="p">(</span><span class="sh">'</span><span class="s">design_1.bit</span><span class="sh">'</span><span class="p">)</span>
+
+<span class="n">top_ip</span> <span class="o">=</span> <span class="n">overlay</span><span class="p">.</span><span class="n">vadd_0</span>
+<span class="n">top_ip</span><span class="p">.</span><span class="n">signature</span>
+
+<span class="n">a_buffer</span> <span class="o">=</span> <span class="n">pynq</span><span class="p">.</span><span class="nf">allocate</span><span class="p">((</span><span class="mi">32</span><span class="p">),</span> <span class="n">np</span><span class="p">.</span><span class="n">int32</span><span class="p">)</span>
+<span class="c1"># initialize input
+</span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range </span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">32</span><span class="p">):</span>
+    <span class="n">a_buffer</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span>
+</code></pre></div></div> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">aptr</span> <span class="o">=</span> <span class="n">a_buffer</span><span class="p">.</span><span class="n">physical_address</span>
+
+<span class="n">top_ip</span><span class="p">.</span><span class="n">register_map</span>
+</code></pre></div></div> <div align="center"><img src="Images/8_3.png" alt="drawing" width="1000" /></div> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">top_ip</span><span class="p">.</span><span class="n">register_map</span><span class="p">.</span><span class="n">size</span><span class="o">=</span><span class="mi">32</span>
+<span class="n">top_ip</span><span class="p">.</span><span class="n">register_map</span><span class="p">.</span><span class="n">inc_value</span><span class="o">=</span><span class="mi">10</span>
+<span class="c1"># specify the address
+# These addresses can be found in the generated .v file: vadd_control_s_axi.v
+</span><span class="n">top_ip</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="mh">0x10</span><span class="p">,</span> <span class="n">aptr</span><span class="p">)</span>
+<span class="c1"># start the HLS kernel
+</span><span class="n">top_ip</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="mh">0x00</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+</code></pre></div></div> <p>We will see:</p> <div align="center"><img src="Images/8_4.png" alt="drawing" width="400" /></div> <h3 id="cache"> <a href="#cache" class="anchor-heading" aria-labelledby="cache"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> cache </h3> <p>In FPGA, non-burst accesses to the DDR memory are very expensive and can impact the overall performance of the design. Hence, it is important to devise a scheme that reduces the time needed to access the necessary information. An efficient solution is to re-write the code or use manual burst, but if that does not work then another solution might be to use a cache memory.</p> <p>Cache provides a temporary storage area in the M_AXI adapter so the design can more quickly retrieve data. The effectiveness of the cache mechanism is measured in a hit/miss ratio and it is based on a property of computer programs called locality of reference, or the tendency of a program to access the same set of memory locations repetitively over a short period of time. It suggests that when a particular memory block is accessed, it is likely to be accessed again in the near future, along with memory located in close proximity. For instance, when executing consecutive instructions in memory, the next set of instructions to be accessed will most likely be within a contiguous block of data nearby.</p> <p><strong>Syntax</strong></p> <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#pragma HLS cache port=&lt;name&gt; lines=&lt;value&gt; depth=&lt;value&gt;
+</span>
+</code></pre></div></div> <p>Where:</p> <ul> <li> <p><code class="language-plaintext highlighter-rouge">port=&lt;name&gt;</code>: Specifies the port to add cache to.</p> </li> <li> <p><code class="language-plaintext highlighter-rouge">lines=&lt;value&gt;</code>: Indicates the number of cache lines. The number of lines can be specified as 1, which indicates a single cache line, or a value greater than 1 expressed as a power of 2, indicating multiple cache lines. This is an optional value and defaults to 1 if not specified.</p> </li> <li> <p><code class="language-plaintext highlighter-rouge">depth=&lt;value&gt;</code>: Specifies the size of each line in words. The depth must be specified as a power of 2, and indicates the size in words of the pointer datatype for each line. This is an optional value, and defaults to the max burst length if not specified. The max burst length defaults to 16, but can be globally <code class="language-plaintext highlighter-rouge">specified by the syn.interface.m_axi_max_read_burst_length</code> command as described in Interface Configuration, or by the <code class="language-plaintext highlighter-rouge">syn.directive.interface</code> command for specific interfaces.</p> </li> </ul> <p>Limitations</p> <p>The CACHE directive or pragma has the following limitations:</p> <ul> <li> <p>Cache is only supported for read-only port</p> </li> <li> <p>The cache is implemented as a Single port, Single-way cache.</p> </li> <li> <p>Cache is not supported for multiple ports connected to the same bundle</p> </li> </ul> <h4 id="maxi_cache_conditional"> <a href="#maxi_cache_conditional" class="anchor-heading" aria-labelledby="maxi_cache_conditional"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> maxi_cache_conditional </h4> <p>This example illustrates case of usefulness of cases in cases of Vitis HLS burst failures</p> <p><strong>dut. cpp</strong></p> <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">extern</span> <span class="s">"C"</span> <span class="p">{</span>
+<span class="kt">void</span> <span class="n">dut</span><span class="p">(</span><span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">int</span><span class="o">*</span> <span class="n">in</span><span class="p">,</span> <span class="c1">// Read-Only Vector 1</span>
+         <span class="kt">unsigned</span> <span class="kt">int</span><span class="o">*</span> <span class="n">out</span><span class="p">,</span>      <span class="c1">// Output Result</span>
+         <span class="kt">int</span> <span class="n">size</span>                <span class="c1">// Size in integer</span>
+<span class="p">)</span> <span class="p">{</span>
+
+<span class="cp">#pragma HLS INTERFACE m_axi port = in bundle = aximm depth = 1024
+#pragma HLS INTERFACE m_axi port = out bundle = out depth = 1024
+</span>
+<span class="c1">// new cache pragma</span>
+<span class="cp">#pragma HLS cache port = in lines = 8 depth = 128
+</span><span class="c1">//indicate the number of cache lines is 8</span>
+<span class="c1">//and the size of each line is 128 in words</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">size</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+<span class="cp">#pragma HLS pipeline II = 1
+</span>        <span class="kt">int</span> <span class="n">t</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">!=</span> <span class="mi">512</span><span class="p">)</span>
+            <span class="n">t</span> <span class="o">=</span> <span class="n">in</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="k">else</span>
+            <span class="n">t</span> <span class="o">=</span> <span class="n">in</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+        <span class="n">out</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">t</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div> <p>The synthesis report is shown below:</p> <div align="center"><img src="Images/8_9.png" alt="drawing" width="1000" /></div> <p>How Caching Can Help:</p> <ul> <li> <p>Reduces Memory Accesses: The cache buffers elements of in, potentially reducing individual memory transactions and mitigating burst failures.</p> </li> <li> <p>Improves Performance: Caching can improve performance by avoiding memory stalls and leveraging burst transfers more effectively.</p> </li> </ul> <p><strong>vadd_test.h</strong></p> <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;math.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;string.h&gt;</span><span class="cp">
+</span>
+<span class="cp">#define N 1024
+</span>
+<span class="k">extern</span> <span class="s">"C"</span> <span class="kt">void</span> <span class="nf">dut</span><span class="p">(</span><span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">int</span><span class="o">*</span> <span class="n">in</span><span class="p">,</span> <span class="c1">// Read-Only Vector 1</span>
+                    <span class="kt">unsigned</span> <span class="kt">int</span><span class="o">*</span> <span class="n">out</span><span class="p">,</span>      <span class="c1">// Output Result</span>
+                    <span class="kt">int</span> <span class="n">size</span>                <span class="c1">// Size in integer</span>
+<span class="p">);</span>
+
+<span class="kt">void</span> <span class="nf">dut_sw</span><span class="p">(</span><span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">int</span><span class="o">*</span> <span class="n">in</span><span class="p">,</span> <span class="c1">// Read-Only Vector 1</span>
+            <span class="kt">unsigned</span> <span class="kt">int</span><span class="o">*</span> <span class="n">out</span><span class="p">,</span>      <span class="c1">// Output Result</span>
+            <span class="kt">int</span> <span class="n">size</span>                <span class="c1">// Size in integer</span>
+<span class="p">)</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">size</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">!=</span> <span class="mi">512</span><span class="p">)</span>
+            <span class="n">out</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">in</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="k">else</span>
+            <span class="n">out</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">in</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">A</span><span class="p">[</span><span class="n">N</span><span class="p">];</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">B</span><span class="p">[</span><span class="n">N</span><span class="p">],</span> <span class="n">C</span><span class="p">[</span><span class="n">N</span><span class="p">];</span>
+    <span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">int</span><span class="o">*</span> <span class="n">in</span> <span class="o">=</span> <span class="n">A</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span><span class="o">*</span> <span class="n">out</span> <span class="o">=</span> <span class="n">B</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span><span class="o">*</span> <span class="n">ref</span> <span class="o">=</span> <span class="n">C</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">N</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+        <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">N</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">B</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="n">C</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">dut</span><span class="p">(</span><span class="n">in</span><span class="p">,</span> <span class="n">out</span><span class="p">,</span> <span class="n">N</span><span class="p">);</span>
+    <span class="n">dut_sw</span><span class="p">(</span><span class="n">in</span><span class="p">,</span> <span class="n">ref</span><span class="p">,</span> <span class="n">N</span><span class="p">);</span>
+
+    <span class="kt">int</span> <span class="n">err</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">N</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">ref</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="n">out</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="p">{</span>
+            <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"index "</span> <span class="o">&lt;&lt;</span> <span class="n">i</span> <span class="o">&lt;&lt;</span> <span class="s">" ref = "</span> <span class="o">&lt;&lt;</span> <span class="n">ref</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                      <span class="o">&lt;&lt;</span> <span class="s">" out = "</span> <span class="o">&lt;&lt;</span> <span class="n">out</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+            <span class="n">err</span><span class="o">++</span><span class="p">;</span>
+        <span class="p">}</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">err</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"FAIL"</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"PASS"</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+</code></pre></div></div> <h4 id="maxi_cache_locality"> <a href="#maxi_cache_locality" class="anchor-heading" aria-labelledby="maxi_cache_locality"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> maxi_cache_locality </h4> <p>The following example shows a design where overlapping access will cause the burst to fail. Using the CACHE pragma or directive will improve the performance of the design.</p> <p><strong>dut.cpp</strong></p> <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span>
+<span class="k">extern</span> <span class="s">"C"</span> <span class="p">{</span>
+<span class="kt">void</span> <span class="n">dut</span><span class="p">(</span><span class="k">const</span> <span class="kt">int</span><span class="o">*</span> <span class="n">in</span><span class="p">,</span> <span class="c1">// Read-Only Vector 1</span>
+         <span class="kt">int</span><span class="o">*</span> <span class="n">out</span><span class="p">,</span>      <span class="c1">// Output Result</span>
+         <span class="kt">int</span> <span class="n">size</span>          <span class="c1">// Size in integer</span>
+<span class="p">)</span> <span class="p">{</span>
+
+<span class="cp">#pragma HLS INTERFACE mode = m_axi bundle = aximm2 depth =                     \
+    1024 max_read_burst_length = 16 num_read_outstanding = 32 port = in
+#pragma HLS INTERFACE m_axi port = out bundle = aximm depth = 1024
+#pragma HLS INTERFACE mode=s_axilite port=return
+#pragma HLS INTERFACE mode=s_axilite port=in
+#pragma HLS INTERFACE mode=s_axilite port=out
+#pragma HLS INTERFACE mode=s_axilite port=size
+</span>
+<span class="cp">#pragma HLS cache port = in lines = 1 depth = 128
+</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">size</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">out</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">in</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">in</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">];</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">"out[%d] is %d</span><span class="se">\r\n</span><span class="s">"</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="n">out</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div> <p>The synthesis report is shown below:</p> <div align="center"><img src="Images/8_7.png" alt="drawing" width="1000" /></div> <p>Caching can improve performance and mitigate burst failures in scenarios with:</p> <ul> <li> <p>Misaligned accesses</p> </li> <li> <p>Limited outstanding read capability</p> </li> </ul> <p>However, it might not completely eliminate burst failures, especially for very irregular access patterns or cache misses. Choosing appropriate cache parameters (lines, depth) is essential for effectiveness. It’s crucial to balance performance gains with potential area overhead and design complexity when using caches.</p> <p><strong>dut_tb.cpp</strong></p> <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;math.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;string.h&gt;</span><span class="cp">
+</span>
+<span class="cp">#define N 1024
+</span>
+<span class="k">extern</span> <span class="s">"C"</span> <span class="kt">void</span> <span class="nf">dut</span><span class="p">(</span><span class="k">const</span> <span class="kt">int</span><span class="o">*</span> <span class="n">in</span><span class="p">,</span> <span class="c1">// Read-Only Vector 1</span>
+		<span class="kt">int</span><span class="o">*</span> <span class="n">out</span><span class="p">,</span>      <span class="c1">// Output Result</span>
+                    <span class="kt">int</span> <span class="n">size</span>          <span class="c1">// Size in integer</span>
+<span class="p">);</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">A</span><span class="p">[</span><span class="n">N</span> <span class="o">+</span> <span class="mi">1</span><span class="p">];</span>
+    <span class="kt">int</span> <span class="n">B</span><span class="p">[</span><span class="n">N</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span> <span class="n">C</span><span class="p">[</span><span class="n">N</span> <span class="o">+</span> <span class="mi">1</span><span class="p">];</span>
+    <span class="k">const</span> <span class="kt">int</span><span class="o">*</span> <span class="n">in</span> <span class="o">=</span> <span class="n">A</span><span class="p">;</span>
+    <span class="kt">int</span><span class="o">*</span> <span class="n">out</span> <span class="o">=</span> <span class="n">B</span><span class="p">;</span>
+    <span class="kt">int</span><span class="o">*</span> <span class="n">ref</span> <span class="o">=</span> <span class="n">C</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">N</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>
+        <span class="n">B</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="n">C</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">dut</span><span class="p">(</span><span class="n">in</span><span class="p">,</span> <span class="n">out</span><span class="p">,</span> <span class="n">N</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="n">err</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">N</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">fabs</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">/</span> <span class="n">ref</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">1e-6</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"index "</span> <span class="o">&lt;&lt;</span> <span class="n">i</span> <span class="o">&lt;&lt;</span> <span class="s">" ref = "</span> <span class="o">&lt;&lt;</span> <span class="n">ref</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                      <span class="o">&lt;&lt;</span> <span class="s">" out = "</span> <span class="o">&lt;&lt;</span> <span class="n">out</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+            <span class="n">err</span><span class="o">++</span><span class="p">;</span>
+        <span class="p">}</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">err</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"FAIL"</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"PASS"</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+
+</code></pre></div></div> <h4 id="create-the-vivado-project-1"> <a href="#create-the-vivado-project-1" class="anchor-heading" aria-labelledby="create-the-vivado-project-1"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Create the Vivado project </h4> <p>The configure block design can use reference materials <a href="https://uri-nextlab.github.io/ParallelProgrammingLabs/docs/HLS_Labs/Lab1.html">here</a>. And we need to choose the number of the DMA according to the number of the interface.</p> <div align="center"><img src="Images/8_11.png" alt="drawing" width="800" /></div> <h4 id="run-synthesis--implementation-and-generate-bitstream-1"> <a href="#run-synthesis--implementation-and-generate-bitstream-1" class="anchor-heading" aria-labelledby="run-synthesis--implementation-and-generate-bitstream-1"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Run synthesis, Implementation, and generate bitstream </h4> <p>It may show some errors about I/O Ports, please fix them.</p> <h4 id="download-the-bitstream-file-to-pynq-1"> <a href="#download-the-bitstream-file-to-pynq-1" class="anchor-heading" aria-labelledby="download-the-bitstream-file-to-pynq-1"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Download the bitstream file to PYNQ </h4> <div align="center"><img src="Images/8_16.png" alt="drawing" width="1000" /></div> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">import</span> <span class="n">pynq</span>
+<span class="kn">from</span> <span class="n">pynq</span> <span class="kn">import</span> <span class="n">MMIO</span>
+</code></pre></div></div> <h4 id="allocate-dma-memory-address-size-1"> <a href="#allocate-dma-memory-address-size-1" class="anchor-heading" aria-labelledby="allocate-dma-memory-address-size-1"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Allocate DMA memory address size </h4> <p>The first step is to allocate the buffer. pynq allocate will be used to allocate the buffer, and NumPy will be used to specify the type of the buffer.</p> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">overlay</span> <span class="o">=</span> <span class="n">pynq</span><span class="p">.</span><span class="nc">Overlay</span><span class="p">(</span><span class="sh">'</span><span class="s">design_1.bit</span><span class="sh">'</span><span class="p">)</span>
+
+<span class="n">top_ip</span> <span class="o">=</span> <span class="n">overlay</span><span class="p">.</span><span class="n">dut_0</span>
+<span class="n">top_ip</span><span class="p">.</span><span class="n">signature</span>
+
+<span class="n">a_buffer</span> <span class="o">=</span> <span class="n">pynq</span><span class="p">.</span><span class="nf">allocate</span><span class="p">((</span><span class="mi">32</span><span class="p">),</span> <span class="n">np</span><span class="p">.</span><span class="n">int32</span><span class="p">)</span>
+<span class="n">b_buffer</span> <span class="o">=</span> <span class="n">pynq</span><span class="p">.</span><span class="nf">allocate</span><span class="p">((</span><span class="mi">32</span><span class="p">),</span> <span class="n">np</span><span class="p">.</span><span class="n">int32</span><span class="p">)</span>
+
+
+<span class="c1"># initialize input
+</span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range </span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">32</span><span class="p">):</span>
+    <span class="n">a_buffer</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span>
+</code></pre></div></div> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">aptr</span> <span class="o">=</span> <span class="n">a_buffer</span><span class="p">.</span><span class="n">physical_address</span>
+<span class="n">bptr</span> <span class="o">=</span> <span class="n">b_buffer</span><span class="p">.</span><span class="n">physical_address</span>
+
+<span class="n">top_ip</span><span class="p">.</span><span class="n">register_map</span>
+</code></pre></div></div> <div align="center"><img src="Images/8_10.png" alt="drawing" width="1000" /></div> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">top_ip</span><span class="p">.</span><span class="n">register_map</span><span class="p">.</span><span class="n">size</span><span class="o">=</span><span class="mi">32</span>
+<span class="c1"># specify the address
+# These addresses can be found in the generated .v file: vadd_control_s_axi.v
+</span><span class="n">top_ip</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="mh">0x10</span><span class="p">,</span> <span class="n">aptr</span><span class="p">)</span>
+<span class="n">top_ip</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="mh">0x1c</span><span class="p">,</span> <span class="n">bptr</span><span class="p">)</span>
+<span class="c1"># start the HLS kernel
+</span><span class="n">top_ip</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="mh">0x00</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+</code></pre></div></div> <p>// Find the address offset of the memory ports (input, and output in this example). This information can be found in the xtop_hw.h file under solution1/impl/misc/drivers/top_v1_0/src directory. We will see:</p> <div align="center"><img src="Images/8_8_2.png" alt="drawing" width="400" /></div> <h3 id="coefficient_filter"> <a href="#coefficient_filter" class="anchor-heading" aria-labelledby="coefficient_filter"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> coefficient_filter </h3> <p>Example code for a scaled-integer fixed-point Hamming window function. This example is intended to demonstrate the recommended coding style when an array should be implemented as a ROM. The key guideline is that the ROM’s source (in the C code) array should be initialized by a sub-function to the function that accesses (reads from) the array. When the the array is properly inferred to be a ROM, the initialization function will be optimized away during HLS.</p> <p><strong>hamming_window.cpp</strong></p> <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">"hamming_window.h"</span><span class="c1"> // Provides default WINDOW_LEN if not user defined</span><span class="cp">
+</span>
+<span class="c1">// Translation module function prototypes:</span>
+<span class="k">static</span> <span class="kt">void</span> <span class="nf">hamming_rom_init</span><span class="p">(</span><span class="kt">int16_t</span> <span class="n">rom_array</span><span class="p">[]);</span>
+
+<span class="c1">// Function definitions:</span>
+<span class="kt">void</span> <span class="nf">hamming_window</span><span class="p">(</span><span class="kt">int32_t</span> <span class="n">outdata</span><span class="p">[</span><span class="n">WINDOW_LEN</span><span class="p">],</span> <span class="kt">int16_t</span> <span class="n">indata</span><span class="p">[</span><span class="n">WINDOW_LEN</span><span class="p">])</span> <span class="p">{</span>
+  <span class="k">static</span> <span class="kt">int16_t</span> <span class="n">window_coeff</span><span class="p">[</span><span class="n">WINDOW_LEN</span><span class="p">];</span>
+  <span class="kt">unsigned</span> <span class="n">i</span><span class="p">;</span>
+
+  <span class="c1">// In order to ensure that 'window_coeff' is inferred and properly</span>
+  <span class="c1">// initialized as a ROM, it is recommended that the array initialization</span>
+  <span class="c1">// be done in a sub-function with global (wrt this source file) scope.</span>
+  <span class="n">hamming_rom_init</span><span class="p">(</span><span class="n">window_coeff</span><span class="p">);</span>
+<span class="nl">process_frame:</span>
+  <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">WINDOW_LEN</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+<span class="cp">#pragma HLS pipeline
+</span>    <span class="n">outdata</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="kt">int32_t</span><span class="p">)</span><span class="n">window_coeff</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="kt">int32_t</span><span class="p">)</span><span class="n">indata</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// This initialization function will be optimized away during high level</span>
+<span class="c1">// sythesis (HLS), resulting in the underlying memory being inferred as a ROM</span>
+<span class="c1">// by RTL synthesis.</span>
+<span class="k">static</span> <span class="kt">void</span> <span class="nf">hamming_rom_init</span><span class="p">(</span><span class="kt">int16_t</span> <span class="n">rom_array</span><span class="p">[</span><span class="n">WINDOW_LEN</span><span class="p">])</span> <span class="p">{</span>
+  <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+  <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">WINDOW_LEN</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">float</span> <span class="n">real_val</span> <span class="o">=</span>
+        <span class="mf">0.54</span><span class="n">f</span> <span class="o">-</span> <span class="mf">0.46</span><span class="n">f</span> <span class="o">*</span> <span class="n">cos</span><span class="p">(</span><span class="mf">2.0</span><span class="n">f</span> <span class="o">*</span> <span class="n">M_PI</span> <span class="o">*</span> <span class="n">i</span> <span class="o">/</span> <span class="p">(</span><span class="kt">float</span><span class="p">)(</span><span class="n">WINDOW_LEN</span> <span class="o">-</span> <span class="mi">1</span><span class="p">));</span>
+    <span class="n">rom_array</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="kt">int16_t</span><span class="p">)(</span><span class="n">round</span><span class="p">(</span><span class="n">WIN_COEFF_SCALE</span> <span class="o">*</span> <span class="n">real_val</span><span class="p">));</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div> <p><strong>hamming_window.h</strong></p> <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#ifndef HAMMING_WINDOW_H_
+#define HAMMING_WINDOW_H_
+</span>
+<span class="cp">#include</span> <span class="cpf">&lt;math.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;stdint.h&gt;</span><span class="cp">
+</span>
+<span class="cp">#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
+</span>
+<span class="c1">// If WINDOW_LEN is not defined by the user, define a default value</span>
+<span class="cp">#ifndef WINDOW_LEN
+#define WINDOW_LEN 256
+#endif
+</span><span class="c1">// If WIN_COEFF_FRACBITS not defined by user, set a default value</span>
+<span class="cp">#ifndef WIN_COEFF_FRACBITS
+#define WIN_COEFF_FRACBITS (14)
+#endif
+</span><span class="c1">// Set the scale factor for the window coefficients</span>
+<span class="cp">#define WIN_COEFF_SCALE ((float)(1 &lt;&lt; WIN_COEFF_FRACBITS))
+</span>
+<span class="c1">// This function applies an Hamming window function to the 'indata' buffer,</span>
+<span class="c1">// returning the windowed data in 'outdata'.  The coefficients are 16-bit</span>
+<span class="c1">// scaled integer, which may be interpreted as a signed fixed point format,</span>
+<span class="c1">// with WIN_COEFF_FRACBITS bits after the binary point.</span>
+<span class="kt">void</span> <span class="nf">hamming_window</span><span class="p">(</span><span class="kt">int32_t</span> <span class="n">outdata</span><span class="p">[],</span> <span class="kt">int16_t</span> <span class="n">indata</span><span class="p">[]);</span>
+
+<span class="cp">#endif // HAMMING_WINDOW_H_ not defined
+</span></code></pre></div></div> <p><strong>hamming_window_test.cpp</strong></p> <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span>
+<span class="cp">#include</span> <span class="cpf">"hamming_window.h"</span><span class="cp">
+</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span> <span class="p">{</span>
+  <span class="kt">int16_t</span> <span class="n">test_data</span><span class="p">[</span><span class="n">WINDOW_LEN</span><span class="p">];</span>
+  <span class="kt">int32_t</span> <span class="n">hw_result</span><span class="p">[</span><span class="n">WINDOW_LEN</span><span class="p">],</span> <span class="n">sw_result</span><span class="p">[</span><span class="n">WINDOW_LEN</span><span class="p">];</span>
+  <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+  <span class="kt">unsigned</span> <span class="n">err_cnt</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">check_dots</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+  <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">WINDOW_LEN</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// Generate a test pattern for input to DUT</span>
+    <span class="n">test_data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="kt">int16_t</span><span class="p">)((</span><span class="mf">32767.0</span> <span class="o">*</span> <span class="p">(</span><span class="kt">double</span><span class="p">)((</span><span class="n">i</span> <span class="o">%</span> <span class="mi">16</span><span class="p">)</span> <span class="o">-</span> <span class="mi">8</span><span class="p">)</span> <span class="o">/</span> <span class="mf">8.0</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">);</span>
+    <span class="c1">// Calculate the coefficient value for this index</span>
+    <span class="kt">int16_t</span> <span class="n">coeff_val</span> <span class="o">=</span> <span class="p">(</span><span class="kt">int16_t</span><span class="p">)(</span><span class="n">round</span><span class="p">(</span>
+        <span class="n">WIN_COEFF_SCALE</span> <span class="o">*</span>
+        <span class="p">(</span><span class="mf">0.54</span> <span class="o">-</span> <span class="mf">0.46</span> <span class="o">*</span> <span class="n">cos</span><span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">M_PI</span> <span class="o">*</span> <span class="n">i</span> <span class="o">/</span> <span class="p">(</span><span class="kt">double</span><span class="p">)(</span><span class="n">WINDOW_LEN</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)))));</span>
+    <span class="c1">// Generate array of expected values -- n.b. explicit casts to avoid</span>
+    <span class="c1">// integer promotion issues</span>
+    <span class="n">sw_result</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="kt">int32_t</span><span class="p">)</span><span class="n">test_data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="kt">int32_t</span><span class="p">)</span><span class="n">coeff_val</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="c1">// Call the DUT</span>
+  <span class="n">printf</span><span class="p">(</span><span class="s">"Running DUT..."</span><span class="p">);</span>
+  <span class="n">hamming_window</span><span class="p">(</span><span class="n">hw_result</span><span class="p">,</span> <span class="n">test_data</span><span class="p">);</span>
+  <span class="n">printf</span><span class="p">(</span><span class="s">"done.</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+
+  <span class="c1">// Check the results returned by DUT against expected values</span>
+  <span class="n">printf</span><span class="p">(</span><span class="s">"Testing DUT results"</span><span class="p">);</span>
+  <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">WINDOW_LEN</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">hw_result</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="n">sw_result</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="p">{</span>
+      <span class="n">err_cnt</span><span class="o">++</span><span class="p">;</span>
+      <span class="n">check_dots</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+      <span class="n">printf</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">!!! ERROR at i = %4d - expected: %10d</span><span class="se">\t</span><span class="s">got: %10d"</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span>
+             <span class="n">sw_result</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">hw_result</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span> <span class="c1">// indicate progress on console</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">check_dots</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+      <span class="n">printf</span><span class="p">(</span><span class="s">"."</span><span class="p">);</span>
+      <span class="k">if</span> <span class="p">(</span><span class="o">++</span><span class="n">check_dots</span> <span class="o">==</span> <span class="mi">64</span><span class="p">)</span>
+        <span class="n">check_dots</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="n">printf</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+
+  <span class="c1">// Print final status message</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">err_cnt</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"!!! TEST FAILED - %d errors detected !!!</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">err_cnt</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">else</span>
+    <span class="nf">printf</span><span class="p">(</span><span class="s">"*** Test Passed ***</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+
+  <span class="c1">// Only return 0 on success</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">err_cnt</span><span class="p">)</span>
+    <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="k">else</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div> <h3 id="ecc_flags"> <a href="#ecc_flags" class="anchor-heading" aria-labelledby="ecc_flags"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> ecc_flags </h3> <h4 id="pragma-hls-bind_storage"> <a href="#pragma-hls-bind_storage" class="anchor-heading" aria-labelledby="pragma-hls-bind_storage"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> pragma HLS bind_storage </h4> <p>The BIND_STORAGE pragma assigns a variable (array, or function argument) in the code to a specific memory type (<code class="language-plaintext highlighter-rouge">type</code>) in the RTL. If the pragma is not specified, the Vitis HLS tool determines the memory type to assign. The HLS tool implements the memory using specified implementations (<code class="language-plaintext highlighter-rouge">impl</code>) in the hardware.</p> <p>For example, you can use the pragma to specify which memory type to use to implement an array. This lets you control whether the array is implemented as a single or a dual-port RAM for example. Important: This feature is important for arrays on the top-level function interface, because the memory type associated with the array determines the number and type of ports needed in the RTL, as discussed in Arrays on the Interface. However, for variables assigned to top-level function arguments you must assign the memory type and implementation using the <code class="language-plaintext highlighter-rouge">-storage_type</code> and <code class="language-plaintext highlighter-rouge">-storage_impl</code> options of the INTERFACE pragma or directive.</p> <p>You can also specify the latency of the implementation. For block RAMs on the interface, the <code class="language-plaintext highlighter-rouge">latency</code> option lets you model off-chip, non-standard SRAMs at the interface, for example supporting an SRAM with a latency of 2 or 3. For internal operations, the <code class="language-plaintext highlighter-rouge">latency</code> option allows the memory to be implemented using more pipelined stages. These additional pipeline stages can help resolve timing issues during RTL synthesis. Important: To use the <code class="language-plaintext highlighter-rouge">latency</code> option, the operation must have an available multi-stage implementation. The HLS tool provides a multi-stage implementation for all block RAMs.</p> <p>Place the pragma in the C/C++ source within the body of the function where the variable is defined.</p> <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#pragma HLS bind_storage variable=&lt;variable&gt; type=&lt;type&gt;\
+[ impl=&lt;value&gt; latency=&lt;int&gt; ]
+</span></code></pre></div></div> <p>Where:</p> <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">variable</span><span class="o">=&lt;</span><span class="n">variable</span><span class="o">&gt;</span>
+</code></pre></div></div> <p>Defines the variable to assign the BIND_STORAGE pragma to. This is required when specifying the pragma.</p> <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">type</span><span class="o">=&lt;</span><span class="n">type</span><span class="o">&gt;</span>
+</code></pre></div></div> <p>Defines the type of memory to bind to the specified variable.</p> <p>Supported types include: <code class="language-plaintext highlighter-rouge">fifo</code>, <code class="language-plaintext highlighter-rouge">ram_1p</code>, <code class="language-plaintext highlighter-rouge">ram_1wnr</code>, <code class="language-plaintext highlighter-rouge">ram_2p</code>, <code class="language-plaintext highlighter-rouge">ram_s2p</code>, <code class="language-plaintext highlighter-rouge">ram_t2p</code>, <code class="language-plaintext highlighter-rouge">rom_1p</code>, <code class="language-plaintext highlighter-rouge">rom_2p</code>, <code class="language-plaintext highlighter-rouge">rom_np</code>.</p> <div align="center"><img src="Images/8_12.png" alt="drawing" width="700" /></div> <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">impl</span><span class="o">=&lt;</span><span class="n">value</span><span class="o">&gt;</span>
+</code></pre></div></div> <p>Defines the implementation for the specified memory type. Supported implementations include: <code class="language-plaintext highlighter-rouge">bram</code>, <code class="language-plaintext highlighter-rouge">bram_ecc</code>, <code class="language-plaintext highlighter-rouge">lutram</code>, <code class="language-plaintext highlighter-rouge">uram</code>, <code class="language-plaintext highlighter-rouge">uram_ecc</code>, <code class="language-plaintext highlighter-rouge">srl</code>, <code class="language-plaintext highlighter-rouge">memory</code>, and <code class="language-plaintext highlighter-rouge">auto</code> as described below.</p> <div align="center"><img src="Images/8_13.png" alt="drawing" width="600" /></div> <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">latency</span><span class="o">=&lt;</span><span class="kt">int</span><span class="o">&gt;</span>
+</code></pre></div></div> <p>Defines the default latency for the binding of the type. The following table shows that the valid latency varies according to the specified <code class="language-plaintext highlighter-rouge">type</code> and ```simple ``. The default is -1, which lets Vitis HLS choose the latency.</p> <div align="center"><img src="Images/8_14.png" alt="drawing" width="300" /></div> <p>This example illustrates how to infer an error code correction ultra-RAM using BIND_STORAGE.</p> <p><strong>ecc_flags.h</strong></p> <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#define N 10
+</span>
+<span class="k">using</span> <span class="n">din_t</span> <span class="o">=</span> <span class="kt">int</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">ecc_flags</span><span class="p">(</span><span class="n">din_t</span> <span class="n">in1</span><span class="p">[</span><span class="n">N</span><span class="p">],</span> <span class="n">din_t</span> <span class="n">in2</span><span class="p">[</span><span class="n">N</span><span class="p">],</span> <span class="k">const</span> <span class="n">din_t</span> <span class="n">Iter</span><span class="p">,</span> <span class="n">din_t</span> <span class="n">output</span><span class="p">[</span><span class="n">N</span><span class="p">]);</span>
+</code></pre></div></div> <p><strong>ecc_flags.cpp</strong></p> <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">"ecc_flags.h"</span><span class="cp">
+</span>
+<span class="kt">void</span> <span class="nf">sfunc2</span><span class="p">(</span><span class="n">din_t</span> <span class="n">vec1</span><span class="p">[</span><span class="n">N</span><span class="p">],</span> <span class="k">const</span> <span class="n">din_t</span> <span class="n">sIter</span><span class="p">,</span> <span class="n">din_t</span> <span class="n">ovec</span><span class="p">[</span><span class="n">N</span><span class="p">])</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">N</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+        <span class="n">ovec</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">vec1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">/</span> <span class="n">sIter</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">sfunc1</span><span class="p">(</span><span class="k">const</span> <span class="n">din_t</span> <span class="n">cIter</span><span class="p">,</span> <span class="n">din_t</span> <span class="n">a</span><span class="p">[</span><span class="n">N</span><span class="p">],</span> <span class="n">din_t</span> <span class="n">b</span><span class="p">[</span><span class="n">N</span><span class="p">],</span> <span class="n">din_t</span> <span class="n">res</span><span class="p">[</span><span class="n">N</span><span class="p">])</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+    <span class="n">din_t</span> <span class="n">res1</span><span class="p">[</span><span class="n">N</span><span class="p">];</span>
+<span class="cp">#pragma HLS ARRAY_RESHAPE variable = res1 dim = 1 factor = 2 block
+</span><span class="c1">// #pragma HLS BIND_STORAGE variable = res1 type = ram_s2p impl = uram_ecc</span>
+<span class="cp">#pragma HLS BIND_STORAGE variable = res1 type = ram_s2p impl = bram_ecc
+</span><span class="c1">//Because the PYNQ hasn't the uram, so we change to the bram_ecc</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">N</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">res1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">b</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+    <span class="p">}</span>
+    <span class="n">sfunc2</span><span class="p">(</span><span class="n">res1</span><span class="p">,</span> <span class="n">cIter</span><span class="p">,</span> <span class="n">res</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">sfunc3</span><span class="p">(</span><span class="n">din_t</span> <span class="n">inrun</span><span class="p">[</span><span class="n">N</span><span class="p">],</span> <span class="n">din_t</span> <span class="n">oval</span><span class="p">[</span><span class="n">N</span><span class="p">])</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+    <span class="n">din_t</span> <span class="n">calc</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">N</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">calc</span> <span class="o">=</span> <span class="p">(</span><span class="n">inrun</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">inrun</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">/</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+        <span class="n">oval</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">calc</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">ecc_flags</span><span class="p">(</span><span class="n">din_t</span> <span class="n">in1</span><span class="p">[</span><span class="n">N</span><span class="p">],</span> <span class="n">din_t</span> <span class="n">in2</span><span class="p">[</span><span class="n">N</span><span class="p">],</span> <span class="k">const</span> <span class="n">din_t</span> <span class="n">Iter</span><span class="p">,</span> <span class="n">din_t</span> <span class="n">output</span><span class="p">[</span><span class="n">N</span><span class="p">])</span> <span class="p">{</span>
+    <span class="n">din_t</span> <span class="n">auxbuffer1</span><span class="p">[</span><span class="n">N</span><span class="p">];</span>
+
+    <span class="n">sfunc1</span><span class="p">(</span><span class="n">Iter</span><span class="p">,</span> <span class="n">in1</span><span class="p">,</span> <span class="n">in2</span><span class="p">,</span> <span class="n">auxbuffer1</span><span class="p">);</span>
+    <span class="n">sfunc3</span><span class="p">(</span><span class="n">auxbuffer1</span><span class="p">,</span> <span class="n">output</span><span class="p">);</span>
+
+    <span class="k">return</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div> <p>The synthesis report is shown below.</p> <div align="center"><img src="Images/8_15.png" alt="drawing" width="900" /></div> <p><strong>ecc_flags_test .h</strong></p> <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">"ecc_flags.h"</span><span class="cp">
+</span>
+<span class="cp">#include</span> <span class="cpf">&lt;cstdlib&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;fstream&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+</span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">din_t</span> <span class="n">in1</span><span class="p">[</span><span class="n">N</span><span class="p">];</span>
+    <span class="n">din_t</span> <span class="n">in2</span><span class="p">[</span><span class="n">N</span><span class="p">];</span>
+    <span class="n">din_t</span> <span class="n">output</span><span class="p">[</span><span class="n">N</span><span class="p">];</span>
+    <span class="k">const</span> <span class="n">din_t</span> <span class="n">Iter</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
+
+    <span class="kt">int</span> <span class="n">i</span><span class="p">,</span> <span class="n">retval</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">ofstream</span> <span class="kt">FILE</span><span class="p">;</span>
+
+    <span class="c1">// Create input data</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">N</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">in1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1000</span> <span class="o">*</span> <span class="n">i</span><span class="p">;</span>
+        <span class="n">in2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1000</span> <span class="o">*</span> <span class="n">i</span><span class="p">;</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">in1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">in2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="c1">// Save the results to a file</span>
+    <span class="kt">FILE</span><span class="p">.</span><span class="n">open</span><span class="p">(</span><span class="s">"result.dat"</span><span class="p">);</span>
+
+    <span class="c1">// Call the function</span>
+
+    <span class="n">ecc_flags</span><span class="p">(</span><span class="n">in1</span><span class="p">,</span> <span class="n">in2</span><span class="p">,</span> <span class="n">Iter</span><span class="p">,</span> <span class="n">output</span><span class="p">);</span>
+
+    <span class="c1">// Save output data</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">N</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">output</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+        <span class="kt">FILE</span> <span class="o">&lt;&lt;</span> <span class="n">output</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="kt">FILE</span><span class="p">.</span><span class="n">close</span><span class="p">();</span>
+
+    <span class="c1">// Compare the results file with the golden results</span>
+    <span class="n">retval</span> <span class="o">=</span> <span class="n">system</span><span class="p">(</span><span class="s">"diff --brief -w result.dat result.golden.dat"</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">retval</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">"Test failed  !!!</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+        <span class="n">retval</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">"Test passed !</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="c1">// Return 0 if the test passes</span>
+    <span class="k">return</span> <span class="n">retval</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div> <h3 id="imem_2rw"> <a href="#imem_2rw" class="anchor-heading" aria-labelledby="imem_2rw"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Imem_2rw </h3> <h4 id="mapping-software-arrays-to-hardware-memory"> <a href="#mapping-software-arrays-to-hardware-memory" class="anchor-heading" aria-labelledby="mapping-software-arrays-to-hardware-memory"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Mapping Software Arrays to Hardware Memory </h4> <p>Arrays are a fundamental data structure in any C++ software program. Software programmers view arrays as simply a container and allocate/deallocate arrays on demand - often dynamically. This type of dynamic memory allocation for arrays is not supported when the same program needs to be synthesized for hardware. For synthesizing arrays to hardware, knowing the exact amount of memory (statically) required for your algorithm becomes necessary. In addition, the memory architecture on FPGAs (also called “local memory”) has very different trade-offs when compared to global memory which is often the DDR memory or HBM memory banks. Access to global memory has high latency costs and can take many cycles while access to local memory is often quick and only takes one or more cycles.</p> <p>When an HLS design has been suitably pipelined and/or unrolled, the memory access pattern becomes established. The HLS compiler allows users to map arrays to various types of resources - where the array elements are available in parallel with or without handshaking signals. Both internal arrays and arrays in the top-level function’s interface can be mapped to registers or memories. If the array is in the top-level interface, the tool automatically creates the address, data, and control signals required to interface to external memory. If the array is internal to the design, the tool not only creates the necessary address, data, and control signals to access the memory but also instantiates the memory model (which is then inferred as memory by the downstream RTL synthesis tool).</p> <p>Arrays are typically implemented as memory (RAM, ROM, or shift registers) after synthesis. Arrays can also be fully partitioned into individual registers to create a fully parallel implementation provided the platform has enough registers to support this step. Arrays on the top-level function interface are synthesized as RTL ports that access external memory. Internal to the design, arrays sized less than 1024 will be synthesized as a shift register. Arrays sized greater than 1024 will be synthesized into block RAM (BRAM), LUTRAM, or UltraRAM (URAM) depending on the optimization settings (see BIND_STORAGE directive/pragma).</p> <p>This is simple example of vector addition to demonstrate how to utilize both ports of Local Memory in Vitis HLS:</p> <p><strong>vadd.h</strong></p> <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#define DATA_SIZE 4096
+#define BUFFER_SIZE 1024
+</span>
+<span class="kt">void</span> <span class="nf">vadd</span><span class="p">(</span><span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">int</span><span class="o">*</span> <span class="n">in1</span><span class="p">,</span> <span class="c1">// Read-Only Vector 1</span>
+          <span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">int</span><span class="o">*</span> <span class="n">in2</span><span class="p">,</span> <span class="c1">// Read-Only Vector 2</span>
+          <span class="kt">unsigned</span> <span class="kt">int</span><span class="o">*</span> <span class="n">out_r</span><span class="p">,</span>     <span class="c1">// Output Result</span>
+          <span class="kt">int</span> <span class="n">size</span>                 <span class="c1">// Size in integer</span>
+          <span class="p">);</span>
+
+</code></pre></div></div> <p><strong>vadd.cpp</strong></p> <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;string.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">"vadd.h"</span><span class="cp">
+</span>
+
+<span class="c1">// TRIPCOUNT identifiers</span>
+<span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">c_chunk_sz</span> <span class="o">=</span> <span class="n">BUFFER_SIZE</span><span class="p">;</span><span class="c1">//1024</span>
+<span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">c_size</span> <span class="o">=</span> <span class="n">DATA_SIZE</span><span class="p">;</span><span class="c1">//4096</span>
+
+<span class="cm">/*
+    Vector Addition Kernel Implementation
+    Arguments:
+        in1   (input)     --&gt; Input Vector1
+        in2   (input)     --&gt; Input Vector2
+        out_r   (output)    --&gt; Output Vector
+        size  (input)     --&gt; Size of Vector in Integer
+   */</span>
+<span class="kt">void</span> <span class="nf">vadd</span><span class="p">(</span><span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">int</span><span class="o">*</span> <span class="n">in1</span><span class="p">,</span> <span class="c1">// Read-Only Vector 1</span>
+          <span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">int</span><span class="o">*</span> <span class="n">in2</span><span class="p">,</span> <span class="c1">// Read-Only Vector 2</span>
+          <span class="kt">unsigned</span> <span class="kt">int</span><span class="o">*</span> <span class="n">out_r</span><span class="p">,</span>     <span class="c1">// Output Result</span>
+          <span class="kt">int</span> <span class="n">size</span>                 <span class="c1">// Size in integer</span>
+          <span class="p">)</span> <span class="p">{</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">v1_buffer</span><span class="p">[</span><span class="n">BUFFER_SIZE</span><span class="p">];</span>   <span class="c1">// Local memory to store vector1</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">v2_buffer</span><span class="p">[</span><span class="n">BUFFER_SIZE</span><span class="p">];</span>   <span class="c1">// Local memory to store vector2</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">vout_buffer</span><span class="p">[</span><span class="n">BUFFER_SIZE</span><span class="p">];</span> <span class="c1">// Local Memory to store result</span>
+
+<span class="cp">#pragma HLS INTERFACE m_axi port = in1 depth = DATA_SIZE
+#pragma HLS INTERFACE m_axi port = in2 depth = DATA_SIZE
+#pragma HLS INTERFACE m_axi port = out_r depth = DATA_SIZE
+</span><span class="c1">//#pragma HLS DATAFLOW</span>
+<span class="cp">#pragma HLS interface s_axilite register port=return
+#pragma HLS interface s_axilite port=size
+</span>    <span class="c1">// Per iteration of this loop perform BUFFER_SIZE vector addition</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">size</span><span class="p">;</span> <span class="n">i</span> <span class="o">+=</span> <span class="n">BUFFER_SIZE</span><span class="p">)</span> <span class="p">{</span>
+<span class="cp">#pragma HLS LOOP_TRIPCOUNT min = c_size / c_chunk_sz max = c_size / c_chunk_sz
+</span>        <span class="kt">int</span> <span class="n">chunk_size</span> <span class="o">=</span> <span class="n">BUFFER_SIZE</span><span class="p">;</span>
+        <span class="c1">// boundary checks</span>
+<span class="c1">//        if ((i + BUFFER_SIZE) &gt; size) chunk_size = size - i;</span>
+
+    <span class="c1">// burst read of v1 and v2 vector from global memory</span>
+    <span class="nl">read1:</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">chunk_size</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+<span class="cp">#pragma HLS LOOP_TRIPCOUNT min = c_chunk_sz max = c_chunk_sz
+</span>            <span class="n">v1_buffer</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">in1</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="n">j</span><span class="p">];</span>
+        <span class="p">}</span>
+    <span class="n">read2</span><span class="o">:</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">chunk_size</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+<span class="cp">#pragma HLS LOOP_TRIPCOUNT min = c_chunk_sz max = c_chunk_sz
+</span>            <span class="n">v2_buffer</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">in2</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="n">j</span><span class="p">];</span>
+        <span class="p">}</span>
+
+    <span class="c1">// FPGA implementation, local array is mostly implemented as BRAM Memory</span>
+    <span class="c1">// block.</span>
+    <span class="c1">// BRAM Memory Block contains two memory ports which allow two parallel access</span>
+    <span class="c1">// to memory. To utilized both ports of BRAM block, vector addition loop is</span>
+    <span class="c1">// unroll with factor of 2. It is equivalent to following code:</span>
+    <span class="c1">//  for (int j = 0 ; j &lt; chunk_size ; j+= 2){</span>
+    <span class="c1">//    vout_buffer[j]   = v1_buffer[j] + v2_buffer[j];</span>
+    <span class="c1">//    vout_buffer[j+1] = v1_buffer[j+1] + v2_buffer[j+1];</span>
+    <span class="c1">//  }</span>
+    <span class="c1">// Which means two iterations of loop will be executed together and as a</span>
+    <span class="c1">// result</span>
+    <span class="c1">// it will double the performance.</span>
+    <span class="c1">// Auto-pipeline is going to apply pipeline to this loop</span>
+    <span class="n">vadd</span><span class="o">:</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">chunk_size</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+<span class="c1">// As the outer loop is not a perfect loop</span>
+<span class="cp">#pragma HLS loop_flatten off
+#pragma HLS UNROLL FACTOR = 2
+#pragma HLS LOOP_TRIPCOUNT min = c_chunk_sz max = c_chunk_sz
+</span>            <span class="c1">// perform vector addition</span>
+            <span class="n">vout_buffer</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">v1_buffer</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="n">v2_buffer</span><span class="p">[</span><span class="n">j</span><span class="p">];</span>
+        <span class="p">}</span>
+
+    <span class="c1">// burst write the result</span>
+    <span class="n">write</span><span class="o">:</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">chunk_size</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+<span class="cp">#pragma HLS LOOP_TRIPCOUNT min = c_chunk_sz max = c_chunk_sz
+</span>            <span class="n">out_r</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">vout_buffer</span><span class="p">[</span><span class="n">j</span><span class="p">];</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div> <p><strong>vadd_test.h</strong></p> <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+#include</span> <span class="cpf">"vadd.h"</span><span class="cp">
+</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+
+    <span class="c1">// Allocate Memory in Host Memory</span>
+    <span class="kt">size_t</span> <span class="n">vector_size_bytes</span> <span class="o">=</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="o">*</span> <span class="n">DATA_SIZE</span><span class="p">;</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">unsigned</span> <span class="kt">int</span><span class="o">&gt;</span> <span class="n">source_in1</span><span class="p">(</span><span class="n">DATA_SIZE</span><span class="p">);</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">unsigned</span> <span class="kt">int</span><span class="o">&gt;</span> <span class="n">source_in2</span><span class="p">(</span><span class="n">DATA_SIZE</span><span class="p">);</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">unsigned</span> <span class="kt">int</span><span class="o">&gt;</span> <span class="n">source_hw_results</span><span class="p">(</span><span class="n">DATA_SIZE</span><span class="p">);</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">unsigned</span> <span class="kt">int</span><span class="o">&gt;</span> <span class="n">source_sw_results</span><span class="p">(</span><span class="n">DATA_SIZE</span><span class="p">);</span>
+
+    <span class="c1">// Create the test data and Software Result</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">DATA_SIZE</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">source_in1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>
+        <span class="n">source_in2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span> <span class="o">*</span> <span class="n">i</span><span class="p">;</span>
+        <span class="n">source_sw_results</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="n">i</span><span class="p">;</span>
+        <span class="n">source_hw_results</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">vadd</span><span class="p">(</span><span class="n">source_in1</span><span class="p">.</span><span class="n">data</span><span class="p">(),</span> <span class="n">source_in2</span><span class="p">.</span><span class="n">data</span><span class="p">(),</span> <span class="n">source_hw_results</span><span class="p">.</span><span class="n">data</span><span class="p">(),</span> <span class="n">DATA_SIZE</span><span class="p">);</span>
+
+    <span class="c1">// Compare the results of the Device to the simulation</span>
+    <span class="kt">int</span> <span class="n">match</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">DATA_SIZE</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">source_hw_results</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="n">source_sw_results</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="p">{</span>
+            <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Error: Result mismatch"</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+            <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"i = "</span> <span class="o">&lt;&lt;</span> <span class="n">i</span> <span class="o">&lt;&lt;</span> <span class="s">" CPU result = "</span> <span class="o">&lt;&lt;</span> <span class="n">source_sw_results</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                      <span class="o">&lt;&lt;</span> <span class="s">" Device result = "</span> <span class="o">&lt;&lt;</span> <span class="n">source_hw_results</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+            <span class="n">match</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"TEST "</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">match</span> <span class="o">?</span> <span class="s">"FAILED"</span> <span class="o">:</span> <span class="s">"PASSED"</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">match</span> <span class="o">?</span> <span class="n">EXIT_FAILURE</span> <span class="o">:</span> <span class="n">EXIT_SUCCESS</span><span class="p">);</span>
+<span class="p">}</span>
+
+</code></pre></div></div> <h4 id="create-the-vivado-project-2"> <a href="#create-the-vivado-project-2" class="anchor-heading" aria-labelledby="create-the-vivado-project-2"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Create the Vivado project </h4> <p>The configure block design can use reference materials <a href="https://uri-nextlab.github.io/ParallelProgrammingLabs/docs/HLS_Labs/Lab1.html">here</a>. And we need to choose the number of the DMA according to the number of the interface.</p> <div align="center"><img src="Images/8_19.png" alt="drawing" width="1000" /></div> <h4 id="run-synthesis--implementation-and-generate-bitstream-2"> <a href="#run-synthesis--implementation-and-generate-bitstream-2" class="anchor-heading" aria-labelledby="run-synthesis--implementation-and-generate-bitstream-2"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Run synthesis, Implementation, and generate bitstream </h4> <p>It may show some errors about I/O Ports, please fix them.</p> <h4 id="download-the-bitstream-file-to-pynq-2"> <a href="#download-the-bitstream-file-to-pynq-2" class="anchor-heading" aria-labelledby="download-the-bitstream-file-to-pynq-2"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Download the bitstream file to PYNQ </h4> <div align="center"><img src="Images/8_16.png" alt="drawing" width="1000" /></div> <h4 id="allocate-dma-memory-address-size-2"> <a href="#allocate-dma-memory-address-size-2" class="anchor-heading" aria-labelledby="allocate-dma-memory-address-size-2"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Allocate DMA memory address size </h4> <p>The first step is to allocate the buffer. pynq allocate will be used to allocate the buffer, and NumPy will be used to specify the type of the buffer.</p> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="n">overlay</span> <span class="o">=</span> <span class="n">pynq</span><span class="p">.</span><span class="nc">Overlay</span><span class="p">(</span><span class="sh">'</span><span class="s">design_1.bit</span><span class="sh">'</span><span class="p">)</span>
+
+<span class="n">top_ip</span> <span class="o">=</span> <span class="n">overlay</span><span class="p">.</span><span class="n">vadd_0</span>
+<span class="n">top_ip</span><span class="p">.</span><span class="n">signature</span>
+
+<span class="n">a_buffer</span> <span class="o">=</span> <span class="n">pynq</span><span class="p">.</span><span class="nf">allocate</span><span class="p">((</span><span class="mi">32</span><span class="p">),</span> <span class="n">np</span><span class="p">.</span><span class="n">int32</span><span class="p">)</span>
+<span class="n">b_buffer</span> <span class="o">=</span> <span class="n">pynq</span><span class="p">.</span><span class="nf">allocate</span><span class="p">((</span><span class="mi">32</span><span class="p">),</span> <span class="n">np</span><span class="p">.</span><span class="n">int32</span><span class="p">)</span>
+<span class="n">sum_buffer</span> <span class="o">=</span> <span class="n">pynq</span><span class="p">.</span><span class="nf">allocate</span><span class="p">((</span><span class="mi">32</span><span class="p">),</span> <span class="n">np</span><span class="p">.</span><span class="n">int32</span><span class="p">)</span>
+
+<span class="c1"># initialize input
+</span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range </span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">32</span><span class="p">):</span>
+    <span class="n">a_buffer</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span>
+    <span class="n">b_buffer</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span>
+</code></pre></div></div> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">aptr</span> <span class="o">=</span> <span class="n">a_buffer</span><span class="p">.</span><span class="n">physical_address</span>
+<span class="n">bptr</span> <span class="o">=</span> <span class="n">b_buffer</span><span class="p">.</span><span class="n">physical_address</span>
+<span class="n">sumptr</span> <span class="o">=</span> <span class="n">sum_buffer</span><span class="p">.</span><span class="n">physical_address</span>
+
+<span class="n">top_ip</span><span class="p">.</span><span class="n">register_map</span>
+
+</code></pre></div></div> <div align="center"><img src="Images/8_17.png" alt="drawing" width="600" /></div> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">top_ip</span><span class="p">.</span><span class="n">register_map</span><span class="p">.</span><span class="n">size</span><span class="o">=</span><span class="mi">32</span>
+<span class="c1"># specify the address
+# These addresses are in the generated .v file: vadd_control_s_axi.v
+</span><span class="n">top_ip</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="mh">0x10</span><span class="p">,</span> <span class="n">aptr</span><span class="p">)</span>
+<span class="n">top_ip</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="mh">0x1c</span><span class="p">,</span> <span class="n">bptr</span><span class="p">)</span>
+<span class="n">top_ip</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="mh">0x28</span><span class="p">,</span> <span class="n">sumptr</span><span class="p">)</span>
+<span class="c1"># start the HLS kernel
+</span><span class="n">top_ip</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="mh">0x00</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+</code></pre></div></div> <p>We will see:</p> <div align="center"><img src="Images/8_18.png" alt="drawing" width="400" /></div> <h2 id="demonstrates"> <a href="#demonstrates" class="anchor-heading" aria-labelledby="demonstrates"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Demonstrates </h2> <p>You need to finish the <code class="language-plaintext highlighter-rouge">vadd</code> function for the <code class="language-plaintext highlighter-rouge">burst_rw</code> and the <code class="language-plaintext highlighter-rouge">dut</code> function for the <code class="language-plaintext highlighter-rouge">cache</code> and implement it on the PYNQ-Z2 board.</p> </main> </div> </div> <div class="search-overlay"></div> </div> </body> </html>

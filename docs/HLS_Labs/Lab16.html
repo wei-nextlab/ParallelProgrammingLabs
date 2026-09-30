@@ -1,0 +1,715 @@
+<!DOCTYPE html> <html lang="en-US"> <head> <meta charset="UTF-8"> <meta http-equiv="X-UA-Compatible" content="IE=Edge"> <link rel="stylesheet" href="/ParallelProgrammingLabs/assets/css/just-the-docs-default.css"> <link rel="stylesheet" href="/ParallelProgrammingLabs/assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet"> <style id="jtd-nav-activation"> .site-nav > ul.nav-list:first-child > li > a, .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(16)) > a, .site-nav > ul.nav-list:first-child > li > ul > li > ul > li > a { background-image: none; } .site-nav > ul.nav-list:not(:first-child) a, .site-nav li.external a { background-image: none; } .site-nav > ul.nav-list:first-child > li:nth-child(5) > ul > li:nth-child(16) > a { font-weight: 600; text-decoration: none; }.site-nav > ul.nav-list:first-child > li:nth-child(5) > button svg, .site-nav > ul.nav-list:first-child > li:nth-child(5) > ul > li:nth-child(16) > button svg { transform: rotate(-90deg); }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(5) > ul.nav-list, .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(5) > ul.nav-list > li.nav-list-item:nth-child(16) > ul.nav-list { display: block; } </style> <script src="/ParallelProgrammingLabs/assets/js/vendor/lunr.min.js"></script> <script src="/ParallelProgrammingLabs/assets/js/just-the-docs.js"></script> <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- Begin Jekyll SEO tag v2.8.0 --> <title>Lab16 | FPGA/SoC/Verilog/HLS</title> <meta name="generator" content="Jekyll v4.3.3" /> <meta property="og:title" content="Lab16" /> <meta property="og:locale" content="en_US" /> <meta name="description" content="FPGA, SoC, Verilog, and HLS labs" /> <meta property="og:description" content="FPGA, SoC, Verilog, and HLS labs" /> <link rel="canonical" href="https://wei-nextlab.github.io/ParallelProgrammingLabs/docs/HLS_Labs/Lab16.html" /> <meta property="og:url" content="https://wei-nextlab.github.io/ParallelProgrammingLabs/docs/HLS_Labs/Lab16.html" /> <meta property="og:site_name" content="FPGA/SoC/Verilog/HLS" /> <meta property="og:type" content="website" /> <meta name="twitter:card" content="summary" /> <meta property="twitter:title" content="Lab16" /> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"WebPage","description":"FPGA, SoC, Verilog, and HLS labs","headline":"Lab16","url":"https://wei-nextlab.github.io/ParallelProgrammingLabs/docs/HLS_Labs/Lab16.html"}</script> <!-- End Jekyll SEO tag --> </head> <body> <a class="skip-to-main" href="#main-content">Skip to main content</a> <svg xmlns="http://www.w3.org/2000/svg" class="d-none"> <symbol id="svg-link" viewBox="0 0 24 24"> <title>Link</title> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"> <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path> </svg> </symbol> <symbol id="svg-menu" viewBox="0 0 24 24"> <title>Menu</title> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"> <line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line> </svg> </symbol> <symbol id="svg-arrow-right" viewBox="0 0 24 24"> <title>Expand</title> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"> <polyline points="9 18 15 12 9 6"></polyline> </svg> </symbol> <!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE --> <symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"> <title id="svg-external-link-title">(external link)</title> <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line> </symbol> <symbol id="svg-doc" viewBox="0 0 24 24"> <title>Document</title> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"> <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline> </svg> </symbol> <symbol id="svg-search" viewBox="0 0 24 24"> <title>Search</title> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"> <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line> </svg> </symbol> <!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md --> <symbol id="svg-copy" viewBox="0 0 16 16"> <title>Copy</title> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16"> <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/> <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/> </svg> </symbol> <symbol id="svg-copied" viewBox="0 0 16 16"> <title>Copied</title> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16"> <path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/> <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/> </svg> </symbol> </svg> <div class="side-bar"> <div class="site-header" role="banner"> <a href="/ParallelProgrammingLabs/" class="site-title lh-tight"> FPGA/SoC/Verilog/HLS </a> <button id="menu-button" class="site-button btn-reset" aria-label="Toggle menu" aria-pressed="false"> <svg viewBox="0 0 24 24" class="icon" aria-hidden="true"><use xlink:href="#svg-menu"></use></svg> </button> </div> <nav aria-label="Main" id="site-nav" class="site-nav"> <ul class="nav-list"><li class="nav-list-item"><a href="/ParallelProgrammingLabs/" class="nav-list-link">Home</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Preparation category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/ParallelProgrammingLabs/docs/Vitis_HLS_Tutor/" class="nav-list-link">Preparation</a><ul class="nav-list"><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Vitis_HLS_Tutor/Install_Vitis.html" class="nav-list-link">Install Vitis</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Vitis_HLS_Tutor/Create_Vitis_HLS_Prj.html" class="nav-list-link">Create Vitis HLS Project</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Vitis_HLS_Tutor/Generating_bitstream_in_Vivado.html" class="nav-list-link">Generating Bitstream in Vivado</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Vitis_HLS_Tutor/Deploying_the_Adder_on_FPGA.html" class="nav-list-link">Deploying the Adder on FPGA</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Verilog Labs (Basics) category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/" class="nav-list-link">Verilog Labs (Basics)</a><ul class="nav-list"><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/Lab1_Modeling_Concepts.html" class="nav-list-link">Lab1</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/Lab2_Addition.html" class="nav-list-link">Lab2</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/Lab3_Multi-Output%20Circuits.html" class="nav-list-link">Lab3</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/Lab4_Tasks,%20Functions,%20and%20Testbench%20.html" class="nav-list-link">Lab4</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/Lab5_Modeling%20Latches%20and%20Flip-flops%20.html" class="nav-list-link">Lab5</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/Lab6_Modeling%20Registers%20and%20Counters%20.html" class="nav-list-link">Lab6</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/Lab7_Behavioral%20Modeling%20and%20Timing%20Constraints.html" class="nav-list-link">Lab7</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/Lab8_Architectural%20Wizard%20and%20IP%20Catalog.html" class="nav-list-link">Lab8</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/Lab9_Counters,%20Timers%20and%20Real-Time%20Clock.html" class="nav-list-link">Lab9</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/Lab10_Finite%20State%20Machines%20.html" class="nav-list-link">Lab10</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/Lab11_Sequential%20System%20Design%20Using%20ASM%20Charts%20.html" class="nav-list-link">Lab11</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in FPGA/SoC Labs category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/ParallelProgrammingLabs/docs/Labs/" class="nav-list-link">FPGA/SoC Labs</a><ul class="nav-list"><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Labs/Lab1_led.html" class="nav-list-link">Lab1</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Labs/Lab2_uart.html" class="nav-list-link">Lab2</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Labs/Lab3_IO_Planning.html" class="nav-list-link">Lab3</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Labs/Lab4_ILA.html" class="nav-list-link">Lab4</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Labs/Lab5_IPI.html" class="nav-list-link">Lab5</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Labs/Lab6_DMA.html" class="nav-list-link">Lab6</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Labs/Lab7_Fibonacci_sp.html" class="nav-list-link">Lab7</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Labs/Lab8_State_Machines.html" class="nav-list-link">Lab8</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Labs/Lab9_Simple_Processor.html" class="nav-list-link">Lab9</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Labs/Lab10_Bit-pair%20Recoded%20Multiplier.html" class="nav-list-link">Lab10</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in HLS Labs category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/ParallelProgrammingLabs/docs/HLS_Labs/" class="nav-list-link">HLS Labs</a><ul class="nav-list"><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab1.html" class="nav-list-link">Lab1</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab2.html" class="nav-list-link">Lab2</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab3.html" class="nav-list-link">Lab3</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab4.html" class="nav-list-link">Lab4</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab5.html" class="nav-list-link">Lab5</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab6.html" class="nav-list-link">Lab6</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab7.html" class="nav-list-link">Lab7</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab8.html" class="nav-list-link">Lab8</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab9.html" class="nav-list-link">Lab9</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab10.html" class="nav-list-link">Lab10</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab11.html" class="nav-list-link">Lab11</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab12.html" class="nav-list-link">Lab12</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab13.html" class="nav-list-link">Lab13</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab14.html" class="nav-list-link">Lab14</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab15.html" class="nav-list-link">Lab15</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab16.html" class="nav-list-link">Lab16</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab17.html" class="nav-list-link">Lab17</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab18.html" class="nav-list-link">Lab18</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab19.html" class="nav-list-link">Lab19</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab20.html" class="nav-list-link">Lab20</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab21.html" class="nav-list-link">Lab21</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab22.html" class="nav-list-link">Lab22</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab23.html" class="nav-list-link">Lab23</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab24.html" class="nav-list-link">Lab24</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab25.html" class="nav-list-link">Lab25</a></li></ul></li></ul> </nav> <footer class="site-footer"> This site uses <a href="https://github.com/just-the-docs/just-the-docs">Just the Docs</a>, a documentation theme for Jekyll. </footer> </div> <div class="main" id="top"> <div id="main-header" class="main-header"> <div class="search" role="search"> <div class="search-input-wrap"> <input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search FPGA/SoC/Verilog/HLS" aria-label="Search FPGA/SoC/Verilog/HLS" autocomplete="off"> <label for="search-input" class="search-label"><svg viewBox="0 0 24 24" class="search-icon"><use xlink:href="#svg-search"></use></svg></label> </div> <div id="search-results" class="search-results"></div> </div> <nav aria-label="Auxiliary" class="aux-nav"> <ul class="aux-nav-list"> <li class="aux-nav-list-item"> <a href="https://github.com/wei-nextlab/ParallelProgrammingLabs" class="site-button" > GitHub Repository </a> </li> </ul> </nav> </div> <div class="main-content-wrap"> <nav aria-label="Breadcrumb" class="breadcrumb-nav"> <ol class="breadcrumb-nav-list"> <li class="breadcrumb-nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/">HLS Labs</a></li> <li class="breadcrumb-nav-list-item"><span>Lab16</span></li> </ol> </nav> <div id="main-content" class="main-content"> <main> <h1 id="lab16-model_2"> <a href="#lab16-model_2" class="anchor-heading" aria-labelledby="lab16-model_2"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Lab16 Model_2 </h1> <script type="text/x-mathjax-config"> MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], displayMath: [ ['$$','$$'], ["\\[","\\]"] ], processEscapes: false, } }); </script> <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"> </script> <h2 id="free_running_kernel_remerge_ii4to1"> <a href="#free_running_kernel_remerge_ii4to1" class="anchor-heading" aria-labelledby="free_running_kernel_remerge_ii4to1"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> free_running_kernel_remerge_ii4to1 </h2> <p>This example illustrates the coding example of achieving II=1 based on two sources using the De-Mux/Mux mechanism. It also uses an ap_ctrl_none, which shows the free-running kernel behavior.</p> <p><strong>example.cpp</strong></p> <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">"example.h"</span><span class="cp">
+</span>
+<span class="c1">//Write out the read data</span>
+<span class="c1">//Input: in</span>
+<span class="c1">//Output: out</span>
+<span class="k">template</span> <span class="o">&lt;</span><span class="kt">int</span> <span class="n">ID</span><span class="p">&gt;</span> <span class="kt">void</span> <span class="nf">proc</span><span class="p">(</span><span class="n">stream</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="mi">16</span><span class="o">&gt;&amp;</span> <span class="n">in</span><span class="p">,</span> <span class="n">stream</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="mi">16</span><span class="o">&gt;&amp;</span> <span class="n">out</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">25</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+<span class="cp">#pragma HLS PIPELINE II = 4
+#pragma HLS LATENCY min = 2 max = 2
+</span>        <span class="kt">int</span> <span class="n">var</span><span class="p">;</span>
+        <span class="n">in</span><span class="p">.</span><span class="n">read</span><span class="p">(</span><span class="n">var</span><span class="p">);</span>
+        <span class="n">out</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">var</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">//--------------------------------------------</span>
+<span class="c1">//</span>
+<span class="kt">void</span> <span class="nf">mux</span><span class="p">(</span><span class="n">stream</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="mi">16</span><span class="o">&gt;</span> <span class="p">(</span><span class="o">&amp;</span><span class="n">inter</span><span class="p">)[</span><span class="mi">2</span><span class="p">],</span> <span class="n">stream</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">mux_output</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">mux_sel</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">50</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+<span class="cp">#pragma HLS PIPELINE II = 1
+</span>        <span class="kt">int</span> <span class="n">var</span><span class="p">;</span>
+        <span class="n">inter</span><span class="p">[</span><span class="n">mux_sel</span><span class="p">].</span><span class="n">read</span><span class="p">(</span><span class="n">var</span><span class="p">);</span>
+        <span class="n">mux_output</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">var</span><span class="p">);</span>
+        <span class="n">mux_sel</span> <span class="o">=</span> <span class="p">(</span><span class="n">mux_sel</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="o">?</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">//--------------------------------------------</span>
+<span class="kt">void</span> <span class="nf">demux</span><span class="p">(</span><span class="n">stream</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">in</span><span class="p">,</span> <span class="n">stream</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="mi">16</span><span class="o">&gt;</span> <span class="p">(</span><span class="o">&amp;</span><span class="n">inter</span><span class="p">)[</span><span class="mi">2</span><span class="p">])</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">demux_sel</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">50</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+<span class="cp">#pragma HLS PIPELINE II = 1
+</span>
+        <span class="kt">int</span> <span class="n">var</span><span class="p">;</span>
+        <span class="n">in</span><span class="p">.</span><span class="n">read</span><span class="p">(</span><span class="n">var</span><span class="p">);</span>
+        <span class="n">inter</span><span class="p">[</span><span class="n">demux_sel</span><span class="p">].</span><span class="n">write</span><span class="p">(</span><span class="n">var</span><span class="p">);</span>
+        <span class="n">demux_sel</span> <span class="o">=</span> <span class="p">(</span><span class="n">demux_sel</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="o">?</span> <span class="mi">1</span> <span class="o">:</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">example</span><span class="p">(</span><span class="n">stream</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">in</span><span class="p">,</span> <span class="n">stream</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">out</span><span class="p">)</span> <span class="p">{</span>
+<span class="cp">#pragma HLS INTERFACE mode=axis port=in
+#pragma HLS INTERFACE mode=axis port=out
+#pragma HLS INTERFACE mode = ap_ctrl_none port = return
+#pragma HLS DATAFLOW
+</span>
+    <span class="n">stream</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="mi">16</span><span class="o">&gt;</span> <span class="n">inter</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+    <span class="n">stream</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="mi">16</span><span class="o">&gt;</span> <span class="n">mux_in</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+
+    <span class="n">demux</span><span class="p">(</span><span class="n">in</span><span class="p">,</span> <span class="n">inter</span><span class="p">);</span>
+    <span class="n">proc</span><span class="o">&lt;</span><span class="mi">0</span><span class="o">&gt;</span><span class="p">(</span><span class="n">inter</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">mux_in</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+    <span class="n">proc</span><span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;</span><span class="p">(</span><span class="n">inter</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">mux_in</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+    <span class="n">mux</span><span class="p">(</span><span class="n">mux_in</span><span class="p">,</span> <span class="n">out</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div> <p><strong>example.h</strong></p> <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">"ap_int.h"</span><span class="cp">
+#include</span> <span class="cpf">&lt;hls_stream.h&gt;</span><span class="cp">
+</span><span class="k">using</span> <span class="k">namespace</span> <span class="n">hls</span><span class="p">;</span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+</span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+</code></pre></div></div> <p>The synthesis report is shown below:</p> <div align="center"><img src="Images/16/1.png" alt="drawing" width="800" /></div> <p>The dataflow view is shown below:</p> <div align="center"><img src="Images/16/2.png" alt="drawing" width="800" /></div> <p><strong>example_test.cpp</strong></p> <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">"example.h"</span><span class="cp">
+</span>
+<span class="kt">void</span> <span class="nf">example</span><span class="p">(</span><span class="n">stream</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">in</span><span class="p">,</span> <span class="n">stream</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">out</span><span class="p">);</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+
+    <span class="n">stream</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">in</span><span class="p">(</span><span class="s">"in_stream"</span><span class="p">);</span>
+    <span class="n">stream</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">out</span><span class="p">(</span><span class="s">"out_stream"</span><span class="p">);</span>
+
+    <span class="kt">int</span> <span class="n">N</span> <span class="o">=</span> <span class="mi">50</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">N</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+        <span class="n">in</span> <span class="o">&lt;&lt;</span> <span class="n">i</span><span class="p">;</span>
+
+    <span class="n">example</span><span class="p">(</span><span class="n">in</span><span class="p">,</span> <span class="n">out</span><span class="p">);</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">p</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">p</span> <span class="o">&lt;</span> <span class="n">N</span><span class="p">;</span> <span class="n">p</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">var</span><span class="p">;</span>
+        <span class="n">out</span><span class="p">.</span><span class="n">read</span><span class="p">(</span><span class="n">var</span><span class="p">);</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">"var is %d</span><span class="se">\r\n</span><span class="s"> "</span><span class="p">,</span><span class="n">var</span><span class="p">);</span>
+
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div> <p>And this IP can transfer data with the AXI_DMA, because the port is <code class="language-plaintext highlighter-rouge">axis</code>, but we should add the <code class="language-plaintext highlighter-rouge">middle_data</code> IP to provide the <code class="language-plaintext highlighter-rouge">last</code> signal. You can find the <code class="language-plaintext highlighter-rouge">middle_data</code> coding in the <a href="https://uri-nextlab.github.io/ParallelProgrammingLabs/docs/HLS_Labs/Lab5.html">Lab5/Simple_data_driven/Export the test_IP</a>.</p> <h4 id="create-the-vivado-project"> <a href="#create-the-vivado-project" class="anchor-heading" aria-labelledby="create-the-vivado-project"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Create the Vivado project </h4> <p>The configure block design can use reference materials <a href="https://uri-nextlab.github.io/ParallelProgrammingLabs/docs/HLS_Labs/Lab1.html">here</a>. And we need to choose the number of the DMA according to the number of the interface.</p> <div align="center"><img src="Images/16/3.png" alt="drawing" width="600" /></div> <h4 id="run-synthesis--implementation-and-generate-bitstream"> <a href="#run-synthesis--implementation-and-generate-bitstream" class="anchor-heading" aria-labelledby="run-synthesis--implementation-and-generate-bitstream"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Run synthesis, Implementation, and generate bitstream </h4> <p>It may show some errors about I/O Ports, please fix them.</p> <h4 id="download-the-bitstream-file-to-pynq"> <a href="#download-the-bitstream-file-to-pynq" class="anchor-heading" aria-labelledby="download-the-bitstream-file-to-pynq"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Download the bitstream file to PYNQ </h4> <div align="center"><img src="Images/8_16.png" alt="drawing" width="800" /></div> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">import</span> <span class="n">pynq</span>
+<span class="kn">from</span> <span class="n">pynq</span> <span class="kn">import</span> <span class="n">MMIO</span>
+<span class="n">hw</span> <span class="o">=</span> <span class="n">pynq</span><span class="p">.</span><span class="nc">Overlay</span><span class="p">(</span><span class="sh">'</span><span class="s">design_1.bit</span><span class="sh">'</span><span class="p">)</span>
+</code></pre></div></div> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">s2mm</span> <span class="o">=</span> <span class="n">hw</span><span class="p">.</span><span class="n">axi_dma_0</span><span class="p">.</span><span class="n">sendchannel</span>
+<span class="n">mm2s</span> <span class="o">=</span> <span class="n">hw</span><span class="p">.</span><span class="n">axi_dma_0</span><span class="p">.</span><span class="n">recvchannel</span>
+</code></pre></div></div> <h4 id="allocate-dma-memory-address-size"> <a href="#allocate-dma-memory-address-size" class="anchor-heading" aria-labelledby="allocate-dma-memory-address-size"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Allocate DMA memory address size </h4> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">top</span><span class="o">=</span><span class="n">hw</span><span class="p">.</span><span class="n">example_0</span>
+<span class="n">N</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">oBuf_0</span> <span class="o">=</span> <span class="nf">allocate</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">N</span><span class="p">,),</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">int32</span><span class="p">)</span>
+<span class="n">iBuf_0</span> <span class="o">=</span> <span class="nf">allocate</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">N</span><span class="p">,),</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">int32</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+    <span class="n">iBuf_0</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span> <span class="n">i</span>
+</code></pre></div></div> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#begin the DMA transfer
+</span><span class="n">s2mm</span><span class="p">.</span><span class="nf">transfer</span><span class="p">(</span><span class="n">iBuf_0</span><span class="p">)</span>
+<span class="n">mm2s</span><span class="p">.</span><span class="nf">transfer</span><span class="p">(</span><span class="n">oBuf_0</span><span class="p">)</span>
+<span class="n">s2mm</span><span class="p">.</span><span class="nf">wait</span><span class="p">()</span>
+<span class="n">mm2s</span><span class="p">.</span><span class="nf">wait</span><span class="p">()</span>
+</code></pre></div></div> <p>We will see:</p> <div align="center"><img src="Images/16/7 .png" alt="drawing" width="200" /></div> <h2 id="using_c_templates"> <a href="#using_c_templates" class="anchor-heading" aria-labelledby="using_c_templates"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> using_C++_templates </h2> <p>Vitis HLS supports the use of templates in C++ for synthesis. Vitis HLS does not support templates for the top-level function.</p> <p>Templates can also be used to implement a recursion form unsupported in standard C synthesis (Recursive Functions).</p> <p>The following code example shows a case in which a templatized <code class="language-plaintext highlighter-rouge">struct</code> is used to implement a tail-recursion Fibonacci algorithm. The key to performing synthesis is that a termination class is used to implement the final call in the recursion, where a template size of one is used.</p> <p><strong>cpp_template.h</strong></p> <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#ifndef _CPP_TEMPLATE_H_
+#define _CPP_TEMPLATE_H_
+</span>
+<span class="cp">#include</span> <span class="cpf">&lt;cstdlib&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;fstream&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;iomanip&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+</span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="cp">#define FIB_N 5
+</span>
+<span class="k">typedef</span> <span class="kt">int</span> <span class="n">data_t</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">cpp_template</span><span class="p">(</span><span class="n">data_t</span> <span class="n">a</span><span class="p">,</span> <span class="n">data_t</span> <span class="n">b</span><span class="p">,</span> <span class="n">data_t</span><span class="o">&amp;</span> <span class="n">dout</span><span class="p">);</span>
+
+<span class="cp">#endif
+</span></code></pre></div></div> <p><strong>cpp_template.cpp</strong></p> <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">"cpp_template.h"</span><span class="cp">
+</span>
+<span class="c1">// Tail recursive call</span>
+<span class="k">template</span> <span class="o">&lt;</span><span class="n">data_t</span> <span class="n">N</span><span class="p">&gt;</span> <span class="k">struct</span> <span class="nc">fibon_s</span> <span class="p">{</span>
+    <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">T</span><span class="p">&gt;</span> <span class="k">static</span> <span class="n">T</span> <span class="n">fibon_f</span><span class="p">(</span><span class="n">T</span> <span class="n">a</span><span class="p">,</span> <span class="n">T</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">fibon_s</span><span class="o">&lt;</span><span class="n">N</span> <span class="o">-</span> <span class="mi">1</span><span class="o">&gt;::</span><span class="n">fibon_f</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">));</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="c1">// Termination condition</span>
+<span class="k">template</span> <span class="o">&lt;</span><span class="p">&gt;</span> <span class="k">struct</span> <span class="nc">fibon_s</span><span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">T</span><span class="p">&gt;</span> <span class="k">static</span> <span class="n">T</span> <span class="n">fibon_f</span><span class="p">(</span><span class="n">T</span> <span class="n">a</span><span class="p">,</span> <span class="n">T</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">b</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="kt">void</span> <span class="nf">cpp_template</span><span class="p">(</span><span class="n">data_t</span> <span class="n">a</span><span class="p">,</span> <span class="n">data_t</span> <span class="n">b</span><span class="p">,</span> <span class="n">data_t</span><span class="o">&amp;</span> <span class="n">dout</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">dout</span> <span class="o">=</span> <span class="n">fibon_s</span><span class="o">&lt;</span><span class="n">FIB_N</span><span class="o">&gt;::</span><span class="n">fibon_f</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div> <p><strong>cpp_template_test.cpp</strong></p> <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">"cpp_template.h"</span><span class="cp">
+</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">ofstream</span> <span class="n">result</span><span class="p">;</span>
+    <span class="n">data_t</span> <span class="n">input</span><span class="p">,</span> <span class="n">output</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">retval</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+
+    <span class="k">for</span> <span class="p">(</span><span class="n">data_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="mi">250</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">input</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>
+        <span class="n">cpp_template</span><span class="p">(</span><span class="n">input</span><span class="p">,</span> <span class="n">input</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">output</span><span class="p">);</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">"output is %d</span><span class="se">\r\n</span><span class="s">"</span><span class="p">,</span><span class="n">output</span><span class="p">);</span>
+
+    <span class="p">}</span>
+
+
+<span class="p">}</span>
+</code></pre></div></div> <h2 id="using_c_templates_for_multiple_instances"> <a href="#using_c_templates_for_multiple_instances" class="anchor-heading" aria-labelledby="using_c_templates_for_multiple_instances"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> using_C++_templates_for_multiple_instances </h2> <p>A static variable in a template function is duplicated for each different value of the template arguments.</p> <p>Different C++ template values passed to a function create unique instances of the function for each template value. Vitis HLS synthesizes these copies independently within their context. This can be beneficial because the tool can provide specific optimizations for each unique instance, producing a straightforward implementation of the function.</p> <p>This simple example shows how to use C++ template functions to create multiple instances of the same function. This is one way to prevent Vitis HLS from creating one module master and then sharing the instance of the master across multiple cycles. The template function method can be used to create multiple instances of the same function and Vitis HLS would treat them as separate unique functions that are not shared.</p> <p><strong>cpp_template.cpp</strong></p> <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">"cpp_template.h"</span><span class="cp">
+</span>
+<span class="kt">void</span> <span class="nf">cpp_template</span><span class="p">(</span><span class="kt">int</span> <span class="n">inp</span><span class="p">,</span> <span class="kt">int</span><span class="o">*</span> <span class="n">out</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">out0</span><span class="p">,</span> <span class="n">out1</span><span class="p">,</span> <span class="n">out2</span><span class="p">,</span> <span class="n">out3</span><span class="p">,</span> <span class="n">out4</span><span class="p">;</span>
+
+    <span class="c1">// Use templated functions to get multiple instances</span>
+    <span class="c1">// of the same function.</span>
+    <span class="n">func_with_static</span><span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">out0</span><span class="p">);</span>
+    <span class="n">func_with_static</span><span class="o">&lt;</span><span class="mi">2</span><span class="o">&gt;</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">out1</span><span class="p">);</span>
+    <span class="n">func_with_static</span><span class="o">&lt;</span><span class="mi">3</span><span class="o">&gt;</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">out2</span><span class="p">);</span>
+    <span class="n">func_with_static</span><span class="o">&lt;</span><span class="mi">4</span><span class="o">&gt;</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">out3</span><span class="p">);</span>
+    <span class="n">func_with_static</span><span class="o">&lt;</span><span class="mi">5</span><span class="o">&gt;</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">out4</span><span class="p">);</span>
+
+    <span class="o">*</span><span class="n">out</span> <span class="o">+=</span> <span class="n">out0</span> <span class="o">+</span> <span class="n">out1</span> <span class="o">+</span> <span class="n">out2</span> <span class="o">+</span> <span class="n">out3</span> <span class="o">+</span> <span class="n">out4</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div> <p><strong>cpp_template.h</strong></p> <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#ifndef _CPP_TEMPLATE_H_
+#define _CPP_TEMPLATE_H_
+</span>
+<span class="cp">#include</span> <span class="cpf">&lt;cstdio&gt;</span><span class="cp">
+</span>
+<span class="kt">void</span> <span class="nf">cpp_template</span><span class="p">(</span><span class="kt">int</span> <span class="n">inp</span><span class="p">,</span> <span class="kt">int</span><span class="o">*</span> <span class="n">out</span><span class="p">);</span>
+
+<span class="k">template</span> <span class="o">&lt;</span><span class="kt">int</span> <span class="n">K</span><span class="p">&gt;</span> <span class="kt">void</span> <span class="nf">func_with_static</span><span class="p">(</span><span class="kt">int</span> <span class="n">inp</span><span class="p">,</span> <span class="kt">int</span><span class="o">*</span> <span class="n">dout</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// Use inline off pragma to avoid automatic inlining</span>
+<span class="cp">#pragma HLS INLINE off
+</span>    <span class="k">static</span> <span class="kt">int</span> <span class="n">acc</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">acc</span> <span class="o">+=</span> <span class="n">inp</span><span class="p">;</span>
+    <span class="o">*</span><span class="n">dout</span> <span class="o">=</span> <span class="n">acc</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="cp">#endif
+</span></code></pre></div></div> <p><strong>cpp_template_test.cpp</strong></p> <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="cp">#include</span> <span class="cpf">"cpp_template.h"</span><span class="cp">
+</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">total_dut</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">retval</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="c1">// Call the DUT</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">cpp_template</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">total_dut</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="c1">// Compare the results</span>
+    <span class="n">retval</span> <span class="o">=</span> <span class="p">(</span><span class="mi">825</span> <span class="o">!=</span> <span class="n">total_dut</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">retval</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">"Test failed  !!!</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+        <span class="n">retval</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">"Test passed !</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="c1">// Return 0 if the test passed</span>
+    <span class="k">return</span> <span class="n">retval</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div> <h2 id="using_arbitrary_precision_arith"> <a href="#using_arbitrary_precision_arith" class="anchor-heading" aria-labelledby="using_arbitrary_precision_arith"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> using_arbitrary_precision_arith </h2> <p>Vitis HLS does not support C arbitrary precision types. AMD recommends using C++ types with arbitrary precision. Vitis HLS provides arbitrary precision integer data types that manage the value of the integer numbers within the boundaries of the specified width, as shown in the following table. <a href="https://docs.xilinx.com/r/en-US/ug1399-vitis-hls/Arbitrary-Precision-Data-Types-Library">Ref</a></p> <div align="center"><img src="Images/16/4.png" alt="drawing" width="800" /></div> <p>The header file ap_int.h defines the arbitrary precision integer data type for the C++ <code class="language-plaintext highlighter-rouge">ap_[u]int</code> data types. To use arbitrary precision integer data types in a C++ function:</p> <ul> <li> <p>Add header file ap_int.h to the source code.</p> </li> <li> <p>Change the bit types to <code class="language-plaintext highlighter-rouge">ap_int&lt;N&gt;</code> for signed types or <code class="language-plaintext highlighter-rouge">ap_uint&lt;N&gt;</code> for unsigned types, where <code class="language-plaintext highlighter-rouge">N</code> is a bit-size from 1 to 1024.</p> </li> </ul> <p>This example illustrates defining arbitrary precision variables through the ap_int.h library</p> <p><strong>cpp_ap_int_arith.h</strong></p> <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#ifndef _CPP_AP_INT_ARITH_H_
+#define _CPP_AP_INT_ARITH_H_
+</span>
+<span class="cp">#include</span> <span class="cpf">"ap_int.h"</span><span class="cp">
+#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span>
+<span class="cp">#define N 9
+</span>
+<span class="c1">// Old data types</span>
+<span class="c1">// typedef char dinA_t;</span>
+<span class="c1">// typedef short dinB_t;</span>
+<span class="c1">// typedef int dinC_t;</span>
+<span class="c1">// typedef long long dinD_t;</span>
+<span class="c1">// typedef int dout1_t;</span>
+<span class="c1">// typedef unsigned int dout2_t;</span>
+<span class="c1">// typedef int32_t dout3_t;</span>
+<span class="c1">// typedef int64_t dout4_t;</span>
+
+<span class="k">typedef</span> <span class="n">ap_int</span><span class="o">&lt;</span><span class="mi">6</span><span class="o">&gt;</span> <span class="n">dinA_t</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="n">ap_int</span><span class="o">&lt;</span><span class="mi">12</span><span class="o">&gt;</span> <span class="n">dinB_t</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="n">ap_int</span><span class="o">&lt;</span><span class="mi">22</span><span class="o">&gt;</span> <span class="n">dinC_t</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="n">ap_int</span><span class="o">&lt;</span><span class="mi">33</span><span class="o">&gt;</span> <span class="n">dinD_t</span><span class="p">;</span>
+
+<span class="k">typedef</span> <span class="n">ap_int</span><span class="o">&lt;</span><span class="mi">18</span><span class="o">&gt;</span> <span class="n">dout1_t</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="n">ap_uint</span><span class="o">&lt;</span><span class="mi">13</span><span class="o">&gt;</span> <span class="n">dout2_t</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="n">ap_int</span><span class="o">&lt;</span><span class="mi">22</span><span class="o">&gt;</span> <span class="n">dout3_t</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="n">ap_int</span><span class="o">&lt;</span><span class="mi">6</span><span class="o">&gt;</span> <span class="n">dout4_t</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">cpp_ap_int_arith</span><span class="p">(</span><span class="n">dinA_t</span> <span class="n">inA</span><span class="p">,</span> <span class="n">dinB_t</span> <span class="n">inB</span><span class="p">,</span> <span class="n">dinC_t</span> <span class="n">inC</span><span class="p">,</span> <span class="n">dinD_t</span> <span class="n">inD</span><span class="p">,</span>
+                      <span class="n">dout1_t</span><span class="o">*</span> <span class="n">out1</span><span class="p">,</span> <span class="n">dout2_t</span><span class="o">*</span> <span class="n">out2</span><span class="p">,</span> <span class="n">dout3_t</span><span class="o">*</span> <span class="n">out3</span><span class="p">,</span>
+                      <span class="n">dout4_t</span><span class="o">*</span> <span class="n">out4</span><span class="p">);</span>
+
+<span class="cp">#endif
+</span></code></pre></div></div> <p><strong>cpp_ap_int_arith.cpp</strong></p> <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">"cpp_ap_int_arith.h"</span><span class="cp">
+</span>
+<span class="kt">void</span> <span class="nf">cpp_ap_int_arith</span><span class="p">(</span><span class="n">dinA_t</span> <span class="n">inA</span><span class="p">,</span> <span class="n">dinB_t</span> <span class="n">inB</span><span class="p">,</span> <span class="n">dinC_t</span> <span class="n">inC</span><span class="p">,</span> <span class="n">dinD_t</span> <span class="n">inD</span><span class="p">,</span>
+                      <span class="n">dout1_t</span><span class="o">*</span> <span class="n">out1</span><span class="p">,</span> <span class="n">dout2_t</span><span class="o">*</span> <span class="n">out2</span><span class="p">,</span> <span class="n">dout3_t</span><span class="o">*</span> <span class="n">out3</span><span class="p">,</span>
+                      <span class="n">dout4_t</span><span class="o">*</span> <span class="n">out4</span><span class="p">)</span> <span class="p">{</span>
+
+    <span class="c1">// Basic arithmetic operations</span>
+    <span class="o">*</span><span class="n">out1</span> <span class="o">=</span> <span class="n">inA</span> <span class="o">*</span> <span class="n">inB</span><span class="p">;</span>
+    <span class="o">*</span><span class="n">out2</span> <span class="o">=</span> <span class="n">inB</span> <span class="o">+</span> <span class="n">inA</span><span class="p">;</span>
+    <span class="o">*</span><span class="n">out3</span> <span class="o">=</span> <span class="n">inC</span> <span class="o">/</span> <span class="n">inA</span><span class="p">;</span>
+    <span class="o">*</span><span class="n">out4</span> <span class="o">=</span> <span class="n">inD</span> <span class="o">%</span> <span class="n">inA</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div> <p><strong>cpp_ap_int_arith_test.cpp</strong></p> <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">"cpp_ap_int_arith.h"</span><span class="cp">
+</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">dinA_t</span> <span class="n">inA</span><span class="p">;</span>
+    <span class="n">dinB_t</span> <span class="n">inB</span><span class="p">;</span>
+    <span class="n">dinC_t</span> <span class="n">inC</span><span class="p">;</span>
+    <span class="n">dinD_t</span> <span class="n">inD</span><span class="p">;</span>
+    <span class="n">dout1_t</span> <span class="n">out1</span><span class="p">;</span>
+    <span class="n">dout2_t</span> <span class="n">out2</span><span class="p">;</span>
+    <span class="n">dout3_t</span> <span class="n">out3</span><span class="p">;</span>
+    <span class="n">dout4_t</span> <span class="n">out4</span><span class="p">;</span>
+
+    <span class="kt">int</span> <span class="n">i</span><span class="p">,</span> <span class="n">retval</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">N</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// Create input data</span>
+        <span class="n">inA</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">2</span><span class="p">;</span>
+        <span class="n">inB</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">23</span><span class="p">;</span>
+        <span class="n">inC</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">234</span><span class="p">;</span>
+        <span class="n">inD</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">2345</span><span class="p">;</span>
+
+        <span class="c1">// Call the function to operate on the data</span>
+        <span class="n">cpp_ap_int_arith</span><span class="p">(</span><span class="n">inA</span><span class="p">,</span> <span class="n">inB</span><span class="p">,</span> <span class="n">inC</span><span class="p">,</span> <span class="n">inD</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">out1</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">out2</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">out3</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">out4</span><span class="p">);</span>
+
+    <span class="p">}</span>
+
+<span class="p">}</span>
+</code></pre></div></div> <h2 id="using_arbitrary_precision_casting"> <a href="#using_arbitrary_precision_casting" class="anchor-heading" aria-labelledby="using_arbitrary_precision_casting"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> using_arbitrary_precision_casting </h2> <p>This simple test illustrates casting to/from arbitrary precision data types defined through ap_int.h</p> <p><strong>arbitrary_precision_casting.cpp</strong></p> <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">"arbitrary_precision_casting.h"</span><span class="cp">
+</span>
+<span class="n">dout_t</span> <span class="nf">arbitrary_precision_casting</span><span class="p">(</span><span class="n">din_t</span> <span class="n">a</span><span class="p">,</span> <span class="n">din_t</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+
+    <span class="k">return</span> <span class="p">(</span><span class="n">dout_t</span><span class="p">)</span><span class="n">a</span> <span class="o">*</span> <span class="p">(</span><span class="n">dout_t</span><span class="p">)</span><span class="n">b</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div> <p><strong>arbitrary_precision_casting.h</strong></p> <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#ifndef _ARBITRARY_PRECISION_CASTING_H_
+#define _ARBITRARY_PRECISION_CASTING_H_
+</span>
+<span class="cp">#include</span> <span class="cpf">&lt;fstream&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+</span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="cp">#include</span> <span class="cpf">"ap_int.h"</span><span class="cp">
+</span>
+<span class="k">typedef</span> <span class="n">ap_int</span><span class="o">&lt;</span><span class="mi">18</span><span class="o">&gt;</span> <span class="n">din_t</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="n">ap_int</span><span class="o">&lt;</span><span class="mi">36</span><span class="o">&gt;</span> <span class="n">dout_t</span><span class="p">;</span>
+
+<span class="n">dout_t</span> <span class="nf">arbitrary_precision_casting</span><span class="p">(</span><span class="n">din_t</span> <span class="n">a</span><span class="p">,</span> <span class="n">din_t</span> <span class="n">b</span><span class="p">);</span>
+
+<span class="cp">#endif
+</span></code></pre></div></div> <p><strong>arbitrary_precision_casting_test.cpp</strong></p> <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">"arbitrary_precision_casting.h"</span><span class="cp">
+</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">din_t</span> <span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">;</span>
+    <span class="n">dout_t</span> <span class="n">RES</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">i</span><span class="p">,</span> <span class="n">retval</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+
+    <span class="c1">// Call the function</span>
+    <span class="n">A</span> <span class="o">=</span> <span class="mi">65536</span><span class="p">;</span>
+    <span class="n">B</span> <span class="o">=</span> <span class="mi">65536</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">20</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">RES</span> <span class="o">=</span> <span class="n">arbitrary_precision_casting</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">);</span>
+        <span class="n">A</span> <span class="o">=</span> <span class="n">A</span> <span class="o">+</span> <span class="mi">1024</span><span class="p">;</span>
+        <span class="n">B</span> <span class="o">=</span> <span class="n">B</span> <span class="o">-</span> <span class="mi">2047</span><span class="p">;</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">"RES is %u</span><span class="se">\r\n</span><span class="s">"</span><span class="p">,</span><span class="n">RES</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div> <h2 id="using_fixed_point"> <a href="#using_fixed_point" class="anchor-heading" aria-labelledby="using_fixed_point"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> using_fixed_point </h2> <p>In Vitis HLS, it is important to use fixed-point data types, because the behavior of the C++ simulations performed using fixed-point data types match that of the resulting hardware created by synthesis. This allows you to analyze the effects of bit-accuracy, quantization, and overflow with fast C-level simulation.</p> <p>These data types manage the value of real (non-integer) numbers within the boundaries of a specified total width (W) and integer width (I) with the expression (W = I + B), as shown in the following figure. <a href="https://docs.xilinx.com/r/en-US/ug1399-vitis-hls/Arbitrary-Precision-Fixed-Point-Data-Types">Ref</a></p> <div align="center"><img src="Images/16/5.png" alt="drawing" width="400" /></div> <p>This simple test illustrates how to use ap_fixed/ap_ufixed fixed point data types.</p> <p><strong>cpp_ap_fixed.h</strong></p> <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#ifndef _CPP_AP_FIXED_H_
+#define _CPP_AP_FIXED_H_
+</span>
+<span class="cp">#include</span> <span class="cpf">&lt;cmath&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;cstdlib&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;fstream&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;iomanip&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+</span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+<span class="cp">#include</span> <span class="cpf">"ap_fixed.h"</span><span class="cp">
+</span>
+<span class="k">typedef</span> <span class="n">ap_ufixed</span><span class="o">&lt;</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="n">AP_RND</span><span class="p">,</span> <span class="n">AP_SAT</span><span class="o">&gt;</span> <span class="n">din1_t</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="n">ap_fixed</span><span class="o">&lt;</span><span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">AP_RND</span><span class="p">,</span> <span class="n">AP_WRAP</span><span class="o">&gt;</span> <span class="n">din2_t</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="n">ap_fixed</span><span class="o">&lt;</span><span class="mi">22</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="n">AP_TRN</span><span class="p">,</span> <span class="n">AP_SAT</span><span class="o">&gt;</span> <span class="n">dint_t</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="n">ap_fixed</span><span class="o">&lt;</span><span class="mi">36</span><span class="p">,</span> <span class="mi">30</span><span class="o">&gt;</span> <span class="n">dout_t</span><span class="p">;</span>
+
+<span class="n">dout_t</span> <span class="nf">cpp_ap_fixed</span><span class="p">(</span><span class="n">din1_t</span> <span class="n">d_in1</span><span class="p">,</span> <span class="n">din2_t</span> <span class="n">d_in2</span><span class="p">);</span>
+
+<span class="cp">#endif
+</span></code></pre></div></div> <p><strong>cpp_ap_fixed.cpp</strong></p> <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">"cpp_ap_fixed.h"</span><span class="cp">
+</span>
+<span class="n">dout_t</span> <span class="nf">cpp_ap_fixed</span><span class="p">(</span><span class="n">din1_t</span> <span class="n">d_in1</span><span class="p">,</span> <span class="n">din2_t</span> <span class="n">d_in2</span><span class="p">)</span> <span class="p">{</span>
+
+    <span class="k">static</span> <span class="n">dint_t</span> <span class="n">sum</span><span class="p">;</span>
+    <span class="n">sum</span> <span class="o">=</span> <span class="o">+</span><span class="n">d_in1</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">sum</span> <span class="o">*</span> <span class="n">d_in2</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div> <p><strong>cpp_ap_fixed_test.cpp</strong></p> <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">"cpp_ap_fixed.h"</span><span class="cp">
+</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">ofstream</span> <span class="n">result</span><span class="p">;</span>
+    <span class="n">din1_t</span> <span class="n">in1</span> <span class="o">=</span> <span class="mf">0.25</span><span class="p">;</span>
+    <span class="n">din2_t</span> <span class="n">in2</span> <span class="o">=</span> <span class="mf">2.125</span><span class="p">;</span>
+    <span class="n">dout_t</span> <span class="n">output</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">retval</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="mi">250</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="n">cpp_ap_fixed</span><span class="p">(</span><span class="n">in1</span><span class="p">,</span> <span class="n">in2</span><span class="p">);</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">"output is %u</span><span class="se">\r\n</span><span class="s">"</span><span class="p">,</span><span class="n">output</span><span class="p">);</span>
+        <span class="n">in1</span> <span class="o">=</span> <span class="n">in1</span> <span class="o">+</span> <span class="n">din1_t</span><span class="p">(</span><span class="mf">0.25</span><span class="p">);</span>
+        <span class="n">in2</span> <span class="o">=</span> <span class="n">in2</span> <span class="o">-</span> <span class="n">din2_t</span><span class="p">(</span><span class="mf">0.125</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div> <div align="center"><img src="Images/16/6.png" alt="drawing" width="400" /></div> <h2 id="using_float_and_double"> <a href="#using_float_and_double" class="anchor-heading" aria-labelledby="using_float_and_double"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> using_float_and_double </h2> <p>Advanced floating-point power of 2 with bounds checking and defining helper typedefs to allow easy parsing of the IEEE-754 floating-point fields.</p> <p><strong>fp_mul_pow2.c</strong></p> <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">"fp_mul_pow2.h"</span><span class="cp">
+</span>
+<span class="cp">#ifdef ABS
+#undef ABS
+#endif
+#define ABS(n) ((n &lt; 0) ? -n : n)
+</span>
+<span class="kt">float</span> <span class="nf">float_mul_pow2</span><span class="p">(</span><span class="kt">float</span> <span class="n">x</span><span class="p">,</span> <span class="kt">int8_t</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">float_num_t</span> <span class="n">x_num</span><span class="p">,</span> <span class="n">prod</span><span class="p">;</span>
+
+  <span class="n">x_num</span><span class="p">.</span><span class="n">fp_num</span> <span class="o">=</span> <span class="n">x</span><span class="p">;</span>
+<span class="cp">#ifndef AESL_FP_MATH_NO_BOUNDS_TESTS
+</span>  <span class="k">if</span> <span class="p">(</span><span class="n">x_num</span><span class="p">.</span><span class="n">bexp</span> <span class="o">==</span> <span class="mh">0xFF</span> <span class="o">||</span> <span class="n">x_num</span><span class="p">.</span><span class="n">bexp</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="c1">// pass through NaN, INF &amp; denorm</span>
+    <span class="n">prod</span><span class="p">.</span><span class="n">fp_num</span> <span class="o">=</span> <span class="n">x_num</span><span class="p">.</span><span class="n">fp_num</span><span class="p">;</span>
+  <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">n</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">x_num</span><span class="p">.</span><span class="n">bexp</span> <span class="o">&gt;=</span> <span class="mi">255</span> <span class="o">-</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// detect and handle overflow</span>
+    <span class="n">prod</span><span class="p">.</span><span class="n">sign</span> <span class="o">=</span> <span class="n">x_num</span><span class="p">.</span><span class="n">sign</span><span class="p">;</span>                   <span class="c1">//</span>
+    <span class="n">prod</span><span class="p">.</span><span class="n">bexp</span> <span class="o">=</span> <span class="mh">0xFF</span><span class="p">;</span>                         <span class="c1">// +/-INF</span>
+    <span class="n">prod</span><span class="p">.</span><span class="n">mant</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>                            <span class="c1">//</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="nf">if</span> <span class="p">(</span><span class="n">n</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span>
+             <span class="n">x_num</span><span class="p">.</span><span class="n">bexp</span> <span class="o">&lt;=</span> <span class="n">ABS</span><span class="p">(</span><span class="n">n</span><span class="p">))</span> <span class="p">{</span> <span class="c1">// handle underflow (doesn't gen denorms)</span>
+    <span class="n">prod</span><span class="p">.</span><span class="n">sign</span> <span class="o">=</span> <span class="n">x_num</span><span class="p">.</span><span class="n">sign</span><span class="p">;</span>          <span class="c1">//</span>
+    <span class="n">prod</span><span class="p">.</span><span class="n">bexp</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>                   <span class="c1">// +/-ZERO</span>
+    <span class="n">prod</span><span class="p">.</span><span class="n">mant</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>                   <span class="c1">//</span>
+  <span class="p">}</span> <span class="k">else</span>
+<span class="cp">#endif // AESL_FP_MATH_NO_BOUNDS_TESTS not defined
+</span>  <span class="p">{</span>
+    <span class="n">prod</span><span class="p">.</span><span class="n">sign</span> <span class="o">=</span> <span class="n">x_num</span><span class="p">.</span><span class="n">sign</span><span class="p">;</span>
+    <span class="n">prod</span><span class="p">.</span><span class="n">bexp</span> <span class="o">=</span> <span class="n">x_num</span><span class="p">.</span><span class="n">bexp</span> <span class="o">+</span> <span class="n">n</span><span class="p">;</span>
+    <span class="n">prod</span><span class="p">.</span><span class="n">mant</span> <span class="o">=</span> <span class="n">x_num</span><span class="p">.</span><span class="n">mant</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="n">prod</span><span class="p">.</span><span class="n">fp_num</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">double</span> <span class="nf">double_mul_pow2</span><span class="p">(</span><span class="kt">double</span> <span class="n">x</span><span class="p">,</span> <span class="kt">int16_t</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">double_num_t</span> <span class="n">x_num</span><span class="p">,</span> <span class="n">prod</span><span class="p">;</span>
+
+  <span class="n">x_num</span><span class="p">.</span><span class="n">fp_num</span> <span class="o">=</span> <span class="n">x</span><span class="p">;</span>
+<span class="cp">#ifndef AESL_FP_MATH_NO_BOUNDS_TESTS
+</span>  <span class="k">if</span> <span class="p">(</span><span class="n">x_num</span><span class="p">.</span><span class="n">bexp</span> <span class="o">==</span> <span class="mh">0xFF</span> <span class="o">||</span> <span class="n">x_num</span><span class="p">.</span><span class="n">bexp</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="c1">// pass through NaN, INF &amp; denorm</span>
+    <span class="n">prod</span><span class="p">.</span><span class="n">fp_num</span> <span class="o">=</span> <span class="n">x_num</span><span class="p">.</span><span class="n">fp_num</span><span class="p">;</span>
+  <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">n</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">x_num</span><span class="p">.</span><span class="n">bexp</span> <span class="o">&gt;=</span> <span class="mi">2047</span> <span class="o">-</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// detect and handle overflow</span>
+    <span class="n">prod</span><span class="p">.</span><span class="n">sign</span> <span class="o">=</span> <span class="n">x_num</span><span class="p">.</span><span class="n">sign</span><span class="p">;</span>                    <span class="c1">//</span>
+    <span class="n">prod</span><span class="p">.</span><span class="n">bexp</span> <span class="o">=</span> <span class="mh">0x7FF</span><span class="p">;</span>                         <span class="c1">// +/-INF</span>
+    <span class="n">prod</span><span class="p">.</span><span class="n">mant</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>                             <span class="c1">//</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="nf">if</span> <span class="p">(</span><span class="n">n</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span>
+             <span class="n">x_num</span><span class="p">.</span><span class="n">bexp</span> <span class="o">&lt;=</span> <span class="n">ABS</span><span class="p">(</span><span class="n">n</span><span class="p">))</span> <span class="p">{</span> <span class="c1">// handle underflow (doesn't gen denorms)</span>
+    <span class="n">prod</span><span class="p">.</span><span class="n">sign</span> <span class="o">=</span> <span class="n">x_num</span><span class="p">.</span><span class="n">sign</span><span class="p">;</span>          <span class="c1">//</span>
+    <span class="n">prod</span><span class="p">.</span><span class="n">bexp</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>                   <span class="c1">// +/-ZERO</span>
+    <span class="n">prod</span><span class="p">.</span><span class="n">mant</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>                   <span class="c1">//</span>
+  <span class="p">}</span> <span class="k">else</span>
+<span class="cp">#endif // AESL_FP_MATH_NO_BOUNDS_TESTS not defined
+</span>  <span class="p">{</span>
+    <span class="n">prod</span><span class="p">.</span><span class="n">sign</span> <span class="o">=</span> <span class="n">x_num</span><span class="p">.</span><span class="n">sign</span><span class="p">;</span>
+    <span class="n">prod</span><span class="p">.</span><span class="n">bexp</span> <span class="o">=</span> <span class="n">x_num</span><span class="p">.</span><span class="n">bexp</span> <span class="o">+</span> <span class="n">n</span><span class="p">;</span>
+    <span class="n">prod</span><span class="p">.</span><span class="n">mant</span> <span class="o">=</span> <span class="n">x_num</span><span class="p">.</span><span class="n">mant</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="n">prod</span><span class="p">.</span><span class="n">fp_num</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div> <p><strong>fp_mul_pow2.h</strong></p> <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#ifndef FLOAT_MUL_POW2_H_
+#define FLOAT_MUL_POW2_H_
+</span>
+<span class="cp">#include</span> <span class="cpf">&lt;stdint.h&gt;</span><span class="cp">
+</span>
+<span class="c1">// Uncomment the following line to eliminate bounds checking, ignoring</span>
+<span class="c1">//overflow, underflow, NaN inputs, etc.</span>
+<span class="c1">//#define AESL_FP_MATH_NO_BOUNDS_TESTS</span>
+
+<span class="c1">// Helper typedefs that allow easy parsing of the IEEE-754 floating point</span>
+<span class="c1">// format fields (sign, biased exponent and mantissa), via C bit-fields, as</span>
+<span class="c1">// well as directly manipulating the whole word bitfield ('raw_bits').</span>
+<span class="k">typedef</span> <span class="k">union</span> <span class="p">{</span>
+    <span class="kt">float</span> <span class="n">fp_num</span><span class="p">;</span>
+    <span class="kt">uint32_t</span> <span class="n">raw_bits</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="p">{</span>
+        <span class="kt">uint32_t</span> <span class="n">mant</span> <span class="o">:</span> <span class="mi">23</span><span class="p">;</span>
+        <span class="kt">uint32_t</span> <span class="n">bexp</span> <span class="o">:</span> <span class="mi">8</span><span class="p">;</span>
+        <span class="kt">uint32_t</span> <span class="n">sign</span> <span class="o">:</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">};</span>
+<span class="p">}</span> <span class="n">float_num_t</span><span class="p">;</span>
+
+<span class="k">typedef</span> <span class="k">union</span> <span class="p">{</span>
+    <span class="kt">double</span> <span class="n">fp_num</span><span class="p">;</span>
+    <span class="kt">uint64_t</span> <span class="n">raw_bits</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="p">{</span>
+        <span class="kt">uint64_t</span> <span class="n">mant</span> <span class="o">:</span> <span class="mi">52</span><span class="p">;</span>
+        <span class="kt">uint64_t</span> <span class="n">bexp</span> <span class="o">:</span> <span class="mi">11</span><span class="p">;</span>
+        <span class="kt">uint64_t</span> <span class="n">sign</span> <span class="o">:</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">};</span>
+<span class="p">}</span> <span class="n">double_num_t</span><span class="p">;</span>
+
+<span class="c1">// These functions implement floating point (single- and double-precision)</span>
+<span class="c1">// multiplication by a power-of-two for HLS. Multiplication by a power-of-two</span>
+<span class="c1">// can be much more effecient than arbitrary multiplication, because it can</span>
+<span class="c1">// be reduced to a simple 8- or 11-bit (single- &amp; double-precision</span>
+<span class="c1">// respectively) addition to the biased exponent w/ some basic checks for</span>
+<span class="c1">// overflow and underflow (which can be eliminated if desired by defining the</span>
+<span class="c1">// preprocessor macro AESL_FP_MATH_NO_BOUNDS_TESTS.</span>
+<span class="kt">float</span> <span class="nf">float_mul_pow2</span><span class="p">(</span><span class="kt">float</span> <span class="n">x</span><span class="p">,</span> <span class="kt">int8_t</span> <span class="n">n</span><span class="p">);</span>
+<span class="kt">double</span> <span class="nf">double_mul_pow2</span><span class="p">(</span><span class="kt">double</span> <span class="n">x</span><span class="p">,</span> <span class="kt">int16_t</span> <span class="n">n</span><span class="p">);</span>
+
+<span class="cp">#endif // FLOAT_MUL_POW2_H_
+</span></code></pre></div></div> <p><strong>fp_mul_pow2_test.c</strong></p> <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;math.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="cp">
+</span>
+<span class="cp">#include</span> <span class="cpf">"fp_mul_pow2.h"</span><span class="cp">
+</span>
+<span class="cp">#define NUM_TEST_ITERS 16
+</span>
+<span class="c1">// Simple test program to validate SW models and for re-use in RTL co-simulation</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kt">double</span> <span class="n">test_val</span> <span class="o">=</span> <span class="mf">1.5</span><span class="p">;</span>
+  <span class="kt">int16_t</span> <span class="n">test_exp</span> <span class="o">=</span> <span class="o">-</span><span class="mi">15</span><span class="p">;</span>
+  <span class="n">double_num_t</span> <span class="n">hw_result</span><span class="p">,</span> <span class="n">sw_result</span><span class="p">;</span>
+  <span class="kt">unsigned</span> <span class="n">i</span><span class="p">,</span> <span class="n">err_cnt</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+  <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">NUM_TEST_ITERS</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// Get results from HW version</span>
+    <span class="n">hw_result</span><span class="p">.</span><span class="n">fp_num</span> <span class="o">=</span> <span class="n">double_mul_pow2</span><span class="p">(</span><span class="n">test_val</span><span class="p">,</span> <span class="n">test_exp</span><span class="p">);</span>
+    <span class="c1">// Generate expected result</span>
+    <span class="n">sw_result</span><span class="p">.</span><span class="n">fp_num</span> <span class="o">=</span> <span class="n">test_val</span> <span class="o">*</span> <span class="n">pow</span><span class="p">(</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">test_exp</span><span class="p">);</span>
+    <span class="c1">// Print out the result</span>
+    <span class="n">print</span><span class="p">(</span><span class="s">"hw_result = %13g : bits = 0x%016llX : "</span><span class="p">,</span> <span class="n">hw_result</span><span class="p">.</span><span class="n">fp_num</span><span class="p">,</span>
+           <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">long</span> <span class="kt">long</span><span class="p">)</span><span class="n">hw_result</span><span class="p">.</span><span class="n">raw_bits</span><span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"sign = %c, exp = %5d, mant = 0x%014llX"</span><span class="p">,</span> <span class="n">hw_result</span><span class="p">.</span><span class="n">sign</span> <span class="o">?</span> <span class="sc">'-'</span> <span class="o">:</span> <span class="sc">'+'</span><span class="p">,</span>
+           <span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">hw_result</span><span class="p">.</span><span class="n">bexp</span> <span class="o">-</span> <span class="mi">1023</span><span class="p">,</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">long</span> <span class="kt">long</span><span class="p">)</span><span class="n">hw_result</span><span class="p">.</span><span class="n">mant</span><span class="p">);</span>
+    <span class="c1">// Check for mismatch</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">hw_result</span><span class="p">.</span><span class="n">fp_num</span> <span class="o">!=</span> <span class="n">sw_result</span><span class="p">.</span><span class="n">fp_num</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">err_cnt</span><span class="o">++</span><span class="p">;</span>
+      <span class="n">printf</span><span class="p">(</span><span class="s">" !!! MISMATCH !!!</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+      <span class="n">printf</span><span class="p">(</span><span class="s">"sw_result = %13g : bits = 0x%016llX : "</span><span class="p">,</span> <span class="n">sw_result</span><span class="p">.</span><span class="n">fp_num</span><span class="p">,</span>
+             <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">long</span> <span class="kt">long</span><span class="p">)</span><span class="n">sw_result</span><span class="p">.</span><span class="n">raw_bits</span><span class="p">);</span>
+      <span class="n">printf</span><span class="p">(</span><span class="s">"sign = %c, exp = %5d, mant = 0x%014llX</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span>
+             <span class="n">sw_result</span><span class="p">.</span><span class="n">sign</span> <span class="o">?</span> <span class="sc">'-'</span> <span class="o">:</span> <span class="sc">'+'</span><span class="p">,</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">sw_result</span><span class="p">.</span><span class="n">bexp</span> <span class="o">-</span> <span class="mi">1023</span><span class="p">,</span>
+             <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">long</span> <span class="kt">long</span><span class="p">)</span><span class="n">sw_result</span><span class="p">.</span><span class="n">mant</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="n">printf</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="c1">// Generate new inputs</span>
+    <span class="n">test_val</span> <span class="o">=</span> <span class="p">((</span><span class="n">RAND_MAX</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="n">rand</span><span class="p">())</span> <span class="o">/</span> <span class="p">(</span><span class="kt">float</span><span class="p">)</span><span class="n">rand</span><span class="p">();</span>
+    <span class="n">test_exp</span> <span class="o">=</span> <span class="mi">1023</span> <span class="o">-</span> <span class="p">(</span><span class="n">rand</span><span class="p">()</span> <span class="o">&amp;</span> <span class="mh">0x7FF</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="c1">// Print final test status</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">err_cnt</span><span class="p">)</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"!!! TEST FAILED !!!</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+  <span class="k">else</span>
+    <span class="nf">printf</span><span class="p">(</span><span class="s">"*** Test passed ***</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+  <span class="c1">// Return 0 only on success</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">err_cnt</span><span class="p">)</span>
+    <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="k">else</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div> <h2 id="using_vectors"> <a href="#using_vectors" class="anchor-heading" aria-labelledby="using_vectors"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> using_vectors </h2> <p>The vector data type is provided to model and synthesize single instruction multiple data (SIMD) type operations easily. Many operators are overloaded to provide SIMD behavior for vector types. The AMD Vitis™ HLS library provides the reference implementation for the <code class="language-plaintext highlighter-rouge">hls::vector&lt;T, N&gt;</code> type which represents a single-instruction multiple-data (SIMD) vector, as defined below.</p> <ul> <li> <p><code class="language-plaintext highlighter-rouge">T</code>: The type of elements that the vector holds, can be a user-defined type that must provide common arithmetic operations.</p> </li> <li> <p><code class="language-plaintext highlighter-rouge">N</code>: The number of elements that the vector holds, must be a positive integer.</p> </li> <li> <p>The best performance is achieved when both the bit-width of <code class="language-plaintext highlighter-rouge">T</code> and <code class="language-plaintext highlighter-rouge">N</code> are integer powers of 2.</p> </li> </ul> <p>Vitis HLS provides a template type <code class="language-plaintext highlighter-rouge">hls::vector</code> that can be used to define SIMD operands. All the operations performed using this type are mapped to hardware during synthesis that will execute these operations in parallel. These operations can be carried out in a loop pipelined with II=1.</p> <p><strong>Vector Data Type Usage</strong></p> <p>The vector data type is provided to model and synthesize SIMD-type vector operations easily. AMD Vitis™ HLS vector data type can be defined as follows, where <code class="language-plaintext highlighter-rouge">T</code> is a primitive or user-defined type with most of the arithmetic operations defined on it. <code class="language-plaintext highlighter-rouge">N</code> is an integer greater than zero. Once a vector type variable is declared it can be used like any other primitive type variable to perform arithmetic and logic operations.</p> <p><strong>Memory Layout</strong></p> <p>For any vector type defined as <code class="language-plaintext highlighter-rouge">hls::vector&lt;T, N&gt;</code>, the storage is guaranteed to be contiguous of size <code class="language-plaintext highlighter-rouge">sizeof(T)*N</code> and aligned to the greatest power of 2 such that the allocated size is at least <code class="language-plaintext highlighter-rouge">sizeof(T)*N</code>. In particular, when N is a power of 2 and <code class="language-plaintext highlighter-rouge">sizeof(T)</code> is a power of 2, <code class="language-plaintext highlighter-rouge">vector&lt;T, N&gt;</code> is aligned to its total size. This matches vector implementation on most architectures.</p> <p><strong>Requirements and Dependencies</strong></p> <p>Vitis HLS vector types require support for C++ 14 or later. It has the following dependencies on the standard headers:</p> <ul> <li> <p><code class="language-plaintext highlighter-rouge">&lt;array&gt;</code>: <code class="language-plaintext highlighter-rouge">std::array&lt;T,N&gt;</code></p> </li> <li> <p><code class="language-plaintext highlighter-rouge">&lt;cassert&gt;</code>: <code class="language-plaintext highlighter-rouge">assert</code></p> </li> <li> <p><code class="language-plaintext highlighter-rouge">&lt;initializer list&gt;</code>: <code class="language-plaintext highlighter-rouge">std::initializer list&lt;T&gt;</code></p> </li> </ul> <p><strong>Supported Operations</strong></p> <ul> <li>Initialization:</li> </ul> <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">hls</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="mi">4</span><span class="o">&gt;</span> <span class="n">x</span><span class="p">;</span> <span class="c1">// uninitialized</span>
+<span class="n">hls</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="mi">4</span><span class="o">&gt;</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span> <span class="c1">// scalar initialized: all elements set to 10</span>
+<span class="n">hls</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="mi">4</span><span class="o">&gt;</span> <span class="n">z</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">};</span> <span class="c1">// initializer list (must have 4 elements)</span>
+<span class="n">hls</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">ap_int</span><span class="p">,</span> <span class="mi">4</span><span class="o">&gt;</span> <span class="n">a</span><span class="p">;</span> <span class="c1">// uninitialized arbitrary precision data type</span>
+</code></pre></div></div> <ul> <li>Access:</li> </ul> <p>The operator[] enables access to individual elements of the vector, similar to a standard array:</p> <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">...;</span> <span class="c1">// set the element at index i</span>
+<span class="p">...</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">];</span> <span class="c1">// value of the element at index i</span>
+</code></pre></div></div> <p>This example illustrates using Load-Compute-Store using a vector datatype.</p> <p><strong>example.h</strong></p> <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#ifndef __EXAMPLE_H__
+#define __EXAMPLE_H__
+</span>
+<span class="cp">#include</span> <span class="cpf">"hls_vector.h"</span><span class="cp">
+#include</span> <span class="cpf">&lt;ap_int.h&gt;</span><span class="cp">
+</span>
+<span class="cp">#define NUM 32
+</span>
+<span class="c1">// Each vector will be 64 bytes (16 x 4 bytes)</span>
+<span class="k">typedef</span> <span class="n">hls</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">float</span><span class="p">,</span> <span class="mi">16</span><span class="o">&gt;</span> <span class="n">float16</span><span class="p">;</span>
+
+<span class="k">extern</span> <span class="s">"C"</span> <span class="kt">void</span> <span class="nf">example</span><span class="p">(</span><span class="n">float16</span><span class="o">*</span> <span class="n">res</span><span class="p">,</span> <span class="k">const</span> <span class="n">float16</span><span class="o">*</span> <span class="n">lhs</span><span class="p">,</span> <span class="k">const</span> <span class="n">float16</span><span class="o">*</span> <span class="n">rhs</span><span class="p">,</span>
+                        <span class="kt">int</span> <span class="n">n</span><span class="p">);</span>
+<span class="cp">#endif
+</span></code></pre></div></div> <p><strong>example.cpp</strong></p> <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">"example.h"</span><span class="cp">
+#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+</span>
+<span class="k">template</span> <span class="o">&lt;</span><span class="kt">int</span> <span class="n">N</span><span class="p">,</span> <span class="k">typename</span> <span class="nc">T</span><span class="p">&gt;</span> <span class="kt">void</span> <span class="nf">load</span><span class="p">(</span><span class="n">T</span> <span class="p">(</span><span class="o">&amp;</span><span class="n">out</span><span class="p">)[</span><span class="n">N</span><span class="p">],</span> <span class="k">const</span> <span class="n">T</span><span class="o">*</span> <span class="n">in</span><span class="p">)</span> <span class="p">{</span>
+<span class="cp">#pragma HLS INLINE off
+</span>    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">N</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+<span class="cp">#pragma HLS pipeline
+</span>        <span class="n">out</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">in</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">template</span> <span class="o">&lt;</span><span class="kt">int</span> <span class="n">N</span><span class="p">,</span> <span class="k">typename</span> <span class="nc">T</span><span class="p">&gt;</span> <span class="kt">void</span> <span class="nf">store</span><span class="p">(</span><span class="n">T</span><span class="o">*</span> <span class="n">out</span><span class="p">,</span> <span class="k">const</span> <span class="n">T</span> <span class="p">(</span><span class="o">&amp;</span><span class="n">in</span><span class="p">)[</span><span class="n">N</span><span class="p">])</span> <span class="p">{</span>
+<span class="cp">#pragma HLS INLINE off
+</span>    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">N</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+<span class="cp">#pragma HLS pipeline
+</span>        <span class="n">out</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">in</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">template</span> <span class="o">&lt;</span><span class="kt">int</span> <span class="n">N</span><span class="p">,</span> <span class="k">typename</span> <span class="nc">T</span><span class="p">,</span> <span class="k">typename</span> <span class="nc">S</span><span class="p">&gt;</span>
+<span class="kt">void</span> <span class="nf">compute</span><span class="p">(</span><span class="n">T</span> <span class="p">(</span><span class="o">&amp;</span><span class="n">res</span><span class="p">)[</span><span class="n">N</span><span class="p">],</span> <span class="k">const</span> <span class="n">S</span> <span class="p">(</span><span class="o">&amp;</span><span class="n">lhs</span><span class="p">)[</span><span class="n">N</span><span class="p">],</span> <span class="k">const</span> <span class="n">S</span> <span class="p">(</span><span class="o">&amp;</span><span class="n">rhs</span><span class="p">)[</span><span class="n">N</span><span class="p">])</span> <span class="p">{</span>
+<span class="cp">#pragma HLS INLINE off
+</span>    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">N</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+<span class="cp">#pragma HLS pipeline
+</span>        <span class="n">res</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">lhs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">rhs</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">extern</span> <span class="s">"C"</span> <span class="kt">void</span> <span class="nf">example</span><span class="p">(</span><span class="n">float16</span><span class="o">*</span> <span class="n">res</span><span class="p">,</span> <span class="k">const</span> <span class="n">float16</span><span class="o">*</span> <span class="n">lhs</span><span class="p">,</span> <span class="k">const</span> <span class="n">float16</span><span class="o">*</span> <span class="n">rhs</span><span class="p">,</span>
+                        <span class="kt">int</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+<span class="cp">#pragma HLS INTERFACE m_axi port = lhs offset = slave bundle = gmem0 depth = 32
+#pragma HLS INTERFACE m_axi port = rhs offset = slave bundle = gmem1 depth = 32
+#pragma HLS INTERFACE m_axi port = res offset = slave bundle = gmem0 depth = 32
+#pragma HLS INTERFACE mode=s_axilite port=return
+#pragma HLS INTERFACE mode=s_axilite port=n
+</span>    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">float16</span> <span class="n">lhs_buf</span><span class="p">[</span><span class="n">NUM</span><span class="p">];</span>
+        <span class="n">float16</span> <span class="n">rhs_buf</span><span class="p">[</span><span class="n">NUM</span><span class="p">];</span>
+        <span class="n">float16</span> <span class="n">res_buf</span><span class="p">[</span><span class="n">NUM</span><span class="p">];</span>
+
+<span class="cp">#pragma HLS DATAFLOW
+</span>        <span class="n">load</span><span class="p">(</span><span class="n">lhs_buf</span><span class="p">,</span> <span class="n">lhs</span><span class="p">);</span>
+        <span class="n">load</span><span class="p">(</span><span class="n">rhs_buf</span><span class="p">,</span> <span class="n">rhs</span><span class="p">);</span>
+        <span class="n">compute</span><span class="p">(</span><span class="n">res_buf</span><span class="p">,</span> <span class="n">lhs_buf</span><span class="p">,</span> <span class="n">rhs_buf</span><span class="p">);</span>
+        <span class="n">store</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">res_buf</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div> <p>The synthesis report is shown below:</p> <div align="center"><img src="Images/16/8.png" alt="drawing" width="400" /></div> <p>The dataflow view is shown below:</p> <div align="center"><img src="Images/16/9.png" alt="drawing" width="400" /></div> <p><strong>example_tb.cpp</strong></p> <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">"example.h"</span><span class="cp">
+#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp">
+</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span><span class="p">,</span> <span class="kt">char</span><span class="o">**</span><span class="p">)</span> <span class="p">{</span>
+
+    <span class="c1">// The size of these vectors needs to match the depth of the adapter fifo</span>
+    <span class="c1">// (specified via the depth option to interface pragma)</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">float16</span><span class="o">&gt;</span> <span class="n">lhs</span><span class="p">(</span><span class="mi">32</span><span class="p">);</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">float16</span><span class="o">&gt;</span> <span class="n">rhs</span><span class="p">(</span><span class="mi">32</span><span class="p">);</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">float16</span><span class="o">&gt;</span> <span class="n">res</span><span class="p">(</span><span class="mi">32</span><span class="p">);</span>
+<span class="c1">//this is the same as res[32][16]</span>
+<span class="c1">//typedef hls::vector&lt;float, 16&gt; float16;</span>
+
+    <span class="n">float16</span> <span class="n">tmp1</span> <span class="o">=</span> <span class="p">{</span><span class="mf">3.2</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">,</span>
+                    <span class="mf">3.2</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">};</span>
+    <span class="n">float16</span> <span class="n">tmp2</span> <span class="o">=</span> <span class="p">{</span><span class="mf">9.2</span><span class="p">,</span> <span class="mf">8.1</span><span class="p">,</span> <span class="mf">9.1</span><span class="p">,</span> <span class="mf">6.1</span><span class="p">,</span> <span class="mf">5.3</span><span class="p">,</span> <span class="mf">3.2</span><span class="p">,</span> <span class="mf">5.9</span><span class="p">,</span> <span class="mf">3.8</span><span class="p">,</span>
+                    <span class="mf">3.9</span><span class="p">,</span> <span class="mf">9.1</span><span class="p">,</span> <span class="mf">3.3</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">,</span> <span class="mf">9.9</span><span class="p">,</span> <span class="mf">2.1</span><span class="p">,</span> <span class="mf">2.7</span><span class="p">,</span> <span class="mf">6.1</span><span class="p">};</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">NUM</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">lhs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">?</span> <span class="n">tmp1</span> <span class="o">:</span> <span class="n">tmp2</span><span class="p">;</span>
+        <span class="n">rhs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">?</span> <span class="n">tmp2</span> <span class="o">:</span> <span class="n">tmp1</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Size of res.data() = "</span> <span class="o">&lt;&lt;</span> <span class="n">res</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+
+    <span class="n">example</span><span class="p">(</span><span class="n">res</span><span class="p">.</span><span class="n">data</span><span class="p">(),</span> <span class="n">lhs</span><span class="p">.</span><span class="n">data</span><span class="p">(),</span> <span class="n">rhs</span><span class="p">.</span><span class="n">data</span><span class="p">(),</span> <span class="mi">2</span><span class="p">);</span>
+  <span class="c1">//   example(res.data(), &amp;tmp1, &amp;tmp2, 1);</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"The output value for res[0][1] should be 9.2 and is "</span>
+              <span class="o">&lt;&lt;</span> <span class="n">res</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div> <p>This function <code class="language-plaintext highlighter-rouge">example</code> is to add the array <code class="language-plaintext highlighter-rouge">lhs</code> and <code class="language-plaintext highlighter-rouge">rhs</code>. You can see the result is right by running <code class="language-plaintext highlighter-rouge">C simulation</code> like below:</p> <div align="center"><img src="Images/16/10.png" alt="drawing" width="400" /></div> <h4 id="create-the-vivado-project-1"> <a href="#create-the-vivado-project-1" class="anchor-heading" aria-labelledby="create-the-vivado-project-1"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Create the Vivado project </h4> <p>The configure block design can use reference materials <a href="https://uri-nextlab.github.io/ParallelProgrammingLabs/docs/HLS_Labs/Lab1.html">here</a>. And we need to choose the number of the DMA according to the number of the interface.</p> <div align="center"><img src="Images/16/11.png" alt="drawing" width="600" /></div> <h4 id="run-synthesis--implementation-and-generate-bitstream-1"> <a href="#run-synthesis--implementation-and-generate-bitstream-1" class="anchor-heading" aria-labelledby="run-synthesis--implementation-and-generate-bitstream-1"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Run synthesis, Implementation, and generate bitstream </h4> <p>It may show some errors about I/O Ports, please fix them.</p> <h4 id="download-the-bitstream-file-to-pynq-1"> <a href="#download-the-bitstream-file-to-pynq-1" class="anchor-heading" aria-labelledby="download-the-bitstream-file-to-pynq-1"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Download the bitstream file to PYNQ </h4> <div align="center"><img src="Images/8_16.png" alt="drawing" width="800" /></div> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">import</span> <span class="n">pynq</span>
+<span class="kn">from</span> <span class="n">pynq</span> <span class="kn">import</span> <span class="n">MMIO</span>
+<span class="n">overlay</span> <span class="o">=</span> <span class="n">pynq</span><span class="p">.</span><span class="nc">Overlay</span><span class="p">(</span><span class="sh">'</span><span class="s">design_1.bit</span><span class="sh">'</span><span class="p">)</span>
+
+</code></pre></div></div> <h4 id="allocate-dma-memory-address-size-1"> <a href="#allocate-dma-memory-address-size-1" class="anchor-heading" aria-labelledby="allocate-dma-memory-address-size-1"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Allocate DMA memory address size </h4> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">top_ip</span> <span class="o">=</span> <span class="n">overlay</span><span class="p">.</span><span class="n">example_0</span>
+<span class="n">top_ip</span><span class="p">.</span><span class="n">signature</span>
+<span class="n">a_buffer</span> <span class="o">=</span> <span class="n">pynq</span><span class="p">.</span><span class="nf">allocate</span><span class="p">((</span><span class="mi">16</span><span class="p">),</span> <span class="n">np</span><span class="p">.</span><span class="n">float32</span><span class="p">)</span>
+<span class="n">b_buffer</span> <span class="o">=</span> <span class="n">pynq</span><span class="p">.</span><span class="nf">allocate</span><span class="p">((</span><span class="mi">16</span><span class="p">),</span> <span class="n">np</span><span class="p">.</span><span class="n">float32</span><span class="p">)</span>
+<span class="n">sum_buffer</span> <span class="o">=</span> <span class="n">pynq</span><span class="p">.</span><span class="nf">allocate</span><span class="p">((</span><span class="mi">16</span><span class="p">),</span> <span class="n">np</span><span class="p">.</span><span class="n">float32</span><span class="p">)</span>
+
+<span class="n">tmp1</span> <span class="o">=</span> <span class="p">[</span><span class="mf">3.2</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">,</span> <span class="mf">3.2</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">]</span>
+<span class="n">tmp2</span> <span class="o">=</span> <span class="p">[</span><span class="mf">9.2</span><span class="p">,</span> <span class="mf">8.1</span><span class="p">,</span> <span class="mf">9.1</span><span class="p">,</span> <span class="mf">6.1</span><span class="p">,</span> <span class="mf">5.3</span><span class="p">,</span> <span class="mf">3.2</span><span class="p">,</span> <span class="mf">5.9</span><span class="p">,</span> <span class="mf">3.8</span><span class="p">,</span><span class="mf">3.9</span><span class="p">,</span> <span class="mf">9.1</span><span class="p">,</span> <span class="mf">3.3</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">,</span> <span class="mf">9.9</span><span class="p">,</span> <span class="mf">2.1</span><span class="p">,</span> <span class="mf">2.7</span><span class="p">,</span> <span class="mf">6.1</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">16</span><span class="p">):</span>
+    <span class="n">a_buffer</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">tmp1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="n">b_buffer</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">tmp2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+</code></pre></div></div> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">aptr</span> <span class="o">=</span> <span class="n">a_buffer</span><span class="p">.</span><span class="n">physical_address</span>
+<span class="n">bptr</span> <span class="o">=</span> <span class="n">b_buffer</span><span class="p">.</span><span class="n">physical_address</span>
+<span class="n">sumptr</span> <span class="o">=</span> <span class="n">sum_buffer</span><span class="p">.</span><span class="n">physical_address</span>
+</code></pre></div></div> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">top_ip</span><span class="p">.</span><span class="n">register_map</span><span class="p">.</span><span class="n">n</span><span class="o">=</span><span class="mi">1</span>
+<span class="n">top_ip</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="mh">0x10</span><span class="p">,</span> <span class="n">sumptr</span><span class="p">)</span>
+<span class="n">top_ip</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="mh">0x1c</span><span class="p">,</span> <span class="n">aptr</span><span class="p">)</span>
+<span class="n">top_ip</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="mh">0x28</span><span class="p">,</span> <span class="n">bptr</span><span class="p">)</span>
+
+<span class="c1"># start the HLS kernel
+</span><span class="n">top_ip</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="mh">0x00</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">isready</span> <span class="o">=</span> <span class="n">top_ip</span><span class="p">.</span><span class="nf">read</span><span class="p">(</span><span class="mh">0x00</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="s">FPGA returns:</span><span class="sh">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">sum_buffer</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">10</span><span class="p">])</span>
+</code></pre></div></div> <p>We will see:</p> <div align="center"><img src="Images/16/12.png" alt="drawing" width="600" /></div> <h2 id="variable_bound_loops"> <a href="#variable_bound_loops" class="anchor-heading" aria-labelledby="variable_bound_loops"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> variable_bound_loops </h2> <p>Some of the optimizations that Vitis HLS can apply are prevented when the loop has <a href="https://docs.xilinx.com/r/en-US/ug1399-vitis-hls/Working-with-Variable-Loop-Bounds">variable bounds</a>.</p> <p>This example shows how to write a loop that has a variable bound and apply pragmas/directives to such a loop.</p> <p><strong>loop_var.h</strong></p> <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#ifndef _LOOP_VAR_H_
+#define _LOOP_VAR_H_
+</span>
+<span class="cp">#include</span> <span class="cpf">&lt;fstream&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+</span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="cp">#include</span> <span class="cpf">"ap_int.h"</span><span class="cp">
+#define N 32
+</span>
+<span class="k">typedef</span> <span class="n">ap_int</span><span class="o">&lt;</span><span class="mi">8</span><span class="o">&gt;</span> <span class="n">din_t</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="n">ap_int</span><span class="o">&lt;</span><span class="mi">13</span><span class="o">&gt;</span> <span class="n">dout_t</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="n">ap_uint</span><span class="o">&lt;</span><span class="mi">6</span><span class="o">&gt;</span> <span class="n">dsel_t</span><span class="p">;</span>
+
+<span class="n">dout_t</span> <span class="nf">loop_var</span><span class="p">(</span><span class="n">din_t</span> <span class="n">A</span><span class="p">[</span><span class="n">N</span><span class="p">],</span> <span class="n">dsel_t</span> <span class="n">width</span><span class="p">);</span>
+<span class="n">dout_t</span> <span class="nf">loop_max_bounds</span><span class="p">(</span><span class="n">din_t</span> <span class="n">A</span><span class="p">[</span><span class="n">N</span><span class="p">],</span> <span class="n">dsel_t</span> <span class="n">width</span><span class="p">);</span>
+
+<span class="cp">#endif
+</span></code></pre></div></div> <p><strong>loop_var.cpp</strong></p> <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">"loop_var.h"</span><span class="cp">
+</span>
+<span class="n">dout_t</span> <span class="nf">loop_var</span><span class="p">(</span><span class="n">din_t</span> <span class="n">A</span><span class="p">[</span><span class="n">N</span><span class="p">],</span> <span class="n">dsel_t</span> <span class="n">width</span><span class="p">)</span> <span class="p">{</span>
+
+    <span class="n">dout_t</span> <span class="n">out_accum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">dsel_t</span> <span class="n">x</span><span class="p">;</span>
+
+<span class="nl">LOOP_X:</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="n">width</span><span class="p">;</span> <span class="n">x</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+<span class="c1">//#pragma HLS UNROLL</span>
+        <span class="n">out_accum</span> <span class="o">+=</span> <span class="n">A</span><span class="p">[</span><span class="n">x</span><span class="p">];</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">out_accum</span><span class="p">;</span>
+<span class="p">}</span>
+
+
+<span class="n">dout_t</span> <span class="nf">loop_max_bounds</span><span class="p">(</span><span class="n">din_t</span> <span class="n">A</span><span class="p">[</span><span class="n">N</span><span class="p">],</span> <span class="n">dsel_t</span> <span class="n">width</span><span class="p">)</span> <span class="p">{</span>
+
+ <span class="n">dout_t</span> <span class="n">out_accum</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+ <span class="kt">int</span> <span class="n">x</span><span class="p">;</span>
+
+ <span class="nl">LOOP_X:</span><span class="k">for</span> <span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">x</span><span class="o">&lt;</span><span class="n">N</span><span class="p">;</span> <span class="n">x</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+<span class="c1">//#pragma HLS UNROLL</span>
+ <span class="k">if</span> <span class="p">(</span><span class="n">x</span><span class="o">&lt;</span><span class="n">width</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">out_accum</span> <span class="o">+=</span> <span class="n">A</span><span class="p">[</span><span class="n">x</span><span class="p">];</span>
+ <span class="p">}</span>
+ <span class="p">}</span>
+ <span class="k">return</span> <span class="n">out_accum</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div> <p>Attempting to optimize the design (<code class="language-plaintext highlighter-rouge">loop_var</code>) in the example above reveals the issues created by variable loop bounds. The first issue with variable loop bounds is that they prevent Vitis HLS from determining the latency of the loop. Vitis HLS can determine the latency to complete one iteration of the loop. Still, because it cannot statically determine the exact variable <code class="language-plaintext highlighter-rouge">width</code>, it does not know how many iterations are performed and thus cannot report the loop latency (the number of cycles to execute all iterations of the loop completely).</p> <div align="center"><img src="Images/16/13.png" alt="drawing" width="800" /></div> <p>The report shows that the <code class="language-plaintext highlighter-rouge">Trip Counter</code> is 63 becauce the type of the <code class="language-plaintext highlighter-rouge">x</code> is <code class="language-plaintext highlighter-rouge">ap_uint&lt;6&gt;</code>.</p> <p>The solution to loops with variable bounds is to make the number of loop iteration a fixed value with conditional executions inside the loop. The code from the variable loop bounds example can be rewritten as shown in the following code example. Here, the loop bounds are explicitly set to the maximum value of variable width and the loop body is conditionally executed (<code class="language-plaintext highlighter-rouge">loop_max_bounds</code>).</p> <div align="center"><img src="Images/16/14.png" alt="drawing" width="800" /></div> <p><strong>loop_var_tb.c++</strong></p> <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">"loop_var.h"</span><span class="cp">
+</span>
+<span class="n">dout_t</span> <span class="nf">loop_max_bounds</span><span class="p">(</span><span class="n">din_t</span> <span class="n">A</span><span class="p">[</span><span class="n">N</span><span class="p">],</span> <span class="n">dsel_t</span> <span class="n">width</span><span class="p">)</span> <span class="p">;</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">din_t</span> <span class="n">A</span><span class="p">[</span><span class="n">N</span><span class="p">];</span>
+    <span class="n">dsel_t</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">16</span><span class="p">;</span>
+    <span class="n">dout_t</span> <span class="n">accum</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">i</span><span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">N</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="c1">// Call the function</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">N</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+<span class="c1">//        x = i;</span>
+        <span class="n">accum</span> <span class="o">=</span> <span class="n">loop_max_bounds</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">x</span><span class="p">);</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">"accum is %d</span><span class="se">\r\n</span><span class="s">"</span><span class="p">,</span><span class="n">accum</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div> <h2 id="demonstrate"> <a href="#demonstrate" class="anchor-heading" aria-labelledby="demonstrate"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Demonstrate </h2> <p>Please create an HLS component to achieve II=1 from II=4, create an HLS component for using the vector datatype, and implement them on the PYNQ-Z2 board. And you can refer to the example of the first and <code class="language-plaintext highlighter-rouge">using_vectors</code> part above.</p> </main> </div> </div> <div class="search-overlay"></div> </div> </body> </html>

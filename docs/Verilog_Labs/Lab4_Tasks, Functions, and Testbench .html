@@ -1,0 +1,439 @@
+<!DOCTYPE html> <html lang="en-US"> <head> <meta charset="UTF-8"> <meta http-equiv="X-UA-Compatible" content="IE=Edge"> <link rel="stylesheet" href="/ParallelProgrammingLabs/assets/css/just-the-docs-default.css"> <link rel="stylesheet" href="/ParallelProgrammingLabs/assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet"> <style id="jtd-nav-activation"> .site-nav > ul.nav-list:first-child > li > a, .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(4)) > a, .site-nav > ul.nav-list:first-child > li > ul > li > ul > li > a { background-image: none; } .site-nav > ul.nav-list:not(:first-child) a, .site-nav li.external a { background-image: none; } .site-nav > ul.nav-list:first-child > li:nth-child(3) > ul > li:nth-child(4) > a { font-weight: 600; text-decoration: none; }.site-nav > ul.nav-list:first-child > li:nth-child(3) > button svg, .site-nav > ul.nav-list:first-child > li:nth-child(3) > ul > li:nth-child(4) > button svg { transform: rotate(-90deg); }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(3) > ul.nav-list, .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(3) > ul.nav-list > li.nav-list-item:nth-child(4) > ul.nav-list { display: block; } </style> <script src="/ParallelProgrammingLabs/assets/js/vendor/lunr.min.js"></script> <script src="/ParallelProgrammingLabs/assets/js/just-the-docs.js"></script> <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- Begin Jekyll SEO tag v2.8.0 --> <title>Lab4 | FPGA/SoC/Verilog/HLS</title> <meta name="generator" content="Jekyll v4.3.3" /> <meta property="og:title" content="Lab4" /> <meta property="og:locale" content="en_US" /> <meta name="description" content="FPGA, SoC, Verilog, and HLS labs" /> <meta property="og:description" content="FPGA, SoC, Verilog, and HLS labs" /> <link rel="canonical" href="https://wei-nextlab.github.io/ParallelProgrammingLabs/docs/Verilog_Labs/Lab4_Tasks,%20Functions,%20and%20Testbench%20.html" /> <meta property="og:url" content="https://wei-nextlab.github.io/ParallelProgrammingLabs/docs/Verilog_Labs/Lab4_Tasks,%20Functions,%20and%20Testbench%20.html" /> <meta property="og:site_name" content="FPGA/SoC/Verilog/HLS" /> <meta property="og:type" content="website" /> <meta name="twitter:card" content="summary" /> <meta property="twitter:title" content="Lab4" /> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"WebPage","description":"FPGA, SoC, Verilog, and HLS labs","headline":"Lab4","url":"https://wei-nextlab.github.io/ParallelProgrammingLabs/docs/Verilog_Labs/Lab4_Tasks,%20Functions,%20and%20Testbench%20.html"}</script> <!-- End Jekyll SEO tag --> </head> <body> <a class="skip-to-main" href="#main-content">Skip to main content</a> <svg xmlns="http://www.w3.org/2000/svg" class="d-none"> <symbol id="svg-link" viewBox="0 0 24 24"> <title>Link</title> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"> <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path> </svg> </symbol> <symbol id="svg-menu" viewBox="0 0 24 24"> <title>Menu</title> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"> <line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line> </svg> </symbol> <symbol id="svg-arrow-right" viewBox="0 0 24 24"> <title>Expand</title> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"> <polyline points="9 18 15 12 9 6"></polyline> </svg> </symbol> <!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE --> <symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"> <title id="svg-external-link-title">(external link)</title> <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line> </symbol> <symbol id="svg-doc" viewBox="0 0 24 24"> <title>Document</title> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"> <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline> </svg> </symbol> <symbol id="svg-search" viewBox="0 0 24 24"> <title>Search</title> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"> <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line> </svg> </symbol> <!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md --> <symbol id="svg-copy" viewBox="0 0 16 16"> <title>Copy</title> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16"> <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/> <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/> </svg> </symbol> <symbol id="svg-copied" viewBox="0 0 16 16"> <title>Copied</title> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16"> <path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/> <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/> </svg> </symbol> </svg> <div class="side-bar"> <div class="site-header" role="banner"> <a href="/ParallelProgrammingLabs/" class="site-title lh-tight"> FPGA/SoC/Verilog/HLS </a> <button id="menu-button" class="site-button btn-reset" aria-label="Toggle menu" aria-pressed="false"> <svg viewBox="0 0 24 24" class="icon" aria-hidden="true"><use xlink:href="#svg-menu"></use></svg> </button> </div> <nav aria-label="Main" id="site-nav" class="site-nav"> <ul class="nav-list"><li class="nav-list-item"><a href="/ParallelProgrammingLabs/" class="nav-list-link">Home</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Preparation category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/ParallelProgrammingLabs/docs/Vitis_HLS_Tutor/" class="nav-list-link">Preparation</a><ul class="nav-list"><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Vitis_HLS_Tutor/Install_Vitis.html" class="nav-list-link">Install Vitis</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Vitis_HLS_Tutor/Create_Vitis_HLS_Prj.html" class="nav-list-link">Create Vitis HLS Project</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Vitis_HLS_Tutor/Generating_bitstream_in_Vivado.html" class="nav-list-link">Generating Bitstream in Vivado</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Vitis_HLS_Tutor/Deploying_the_Adder_on_FPGA.html" class="nav-list-link">Deploying the Adder on FPGA</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Verilog Labs (Basics) category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/" class="nav-list-link">Verilog Labs (Basics)</a><ul class="nav-list"><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/Lab1_Modeling_Concepts.html" class="nav-list-link">Lab1</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/Lab2_Addition.html" class="nav-list-link">Lab2</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/Lab3_Multi-Output%20Circuits.html" class="nav-list-link">Lab3</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/Lab4_Tasks,%20Functions,%20and%20Testbench%20.html" class="nav-list-link">Lab4</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/Lab5_Modeling%20Latches%20and%20Flip-flops%20.html" class="nav-list-link">Lab5</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/Lab6_Modeling%20Registers%20and%20Counters%20.html" class="nav-list-link">Lab6</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/Lab7_Behavioral%20Modeling%20and%20Timing%20Constraints.html" class="nav-list-link">Lab7</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/Lab8_Architectural%20Wizard%20and%20IP%20Catalog.html" class="nav-list-link">Lab8</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/Lab9_Counters,%20Timers%20and%20Real-Time%20Clock.html" class="nav-list-link">Lab9</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/Lab10_Finite%20State%20Machines%20.html" class="nav-list-link">Lab10</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/Lab11_Sequential%20System%20Design%20Using%20ASM%20Charts%20.html" class="nav-list-link">Lab11</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in FPGA/SoC Labs category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/ParallelProgrammingLabs/docs/Labs/" class="nav-list-link">FPGA/SoC Labs</a><ul class="nav-list"><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Labs/Lab1_led.html" class="nav-list-link">Lab1</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Labs/Lab2_uart.html" class="nav-list-link">Lab2</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Labs/Lab3_IO_Planning.html" class="nav-list-link">Lab3</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Labs/Lab4_ILA.html" class="nav-list-link">Lab4</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Labs/Lab5_IPI.html" class="nav-list-link">Lab5</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Labs/Lab6_DMA.html" class="nav-list-link">Lab6</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Labs/Lab7_Fibonacci_sp.html" class="nav-list-link">Lab7</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Labs/Lab8_State_Machines.html" class="nav-list-link">Lab8</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Labs/Lab9_Simple_Processor.html" class="nav-list-link">Lab9</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Labs/Lab10_Bit-pair%20Recoded%20Multiplier.html" class="nav-list-link">Lab10</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in HLS Labs category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/ParallelProgrammingLabs/docs/HLS_Labs/" class="nav-list-link">HLS Labs</a><ul class="nav-list"><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab1.html" class="nav-list-link">Lab1</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab2.html" class="nav-list-link">Lab2</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab3.html" class="nav-list-link">Lab3</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab4.html" class="nav-list-link">Lab4</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab5.html" class="nav-list-link">Lab5</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab6.html" class="nav-list-link">Lab6</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab7.html" class="nav-list-link">Lab7</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab8.html" class="nav-list-link">Lab8</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab9.html" class="nav-list-link">Lab9</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab10.html" class="nav-list-link">Lab10</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab11.html" class="nav-list-link">Lab11</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab12.html" class="nav-list-link">Lab12</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab13.html" class="nav-list-link">Lab13</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab14.html" class="nav-list-link">Lab14</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab15.html" class="nav-list-link">Lab15</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab16.html" class="nav-list-link">Lab16</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab17.html" class="nav-list-link">Lab17</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab18.html" class="nav-list-link">Lab18</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab19.html" class="nav-list-link">Lab19</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab20.html" class="nav-list-link">Lab20</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab21.html" class="nav-list-link">Lab21</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab22.html" class="nav-list-link">Lab22</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab23.html" class="nav-list-link">Lab23</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab24.html" class="nav-list-link">Lab24</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab25.html" class="nav-list-link">Lab25</a></li></ul></li></ul> </nav> <footer class="site-footer"> This site uses <a href="https://github.com/just-the-docs/just-the-docs">Just the Docs</a>, a documentation theme for Jekyll. </footer> </div> <div class="main" id="top"> <div id="main-header" class="main-header"> <div class="search" role="search"> <div class="search-input-wrap"> <input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search FPGA/SoC/Verilog/HLS" aria-label="Search FPGA/SoC/Verilog/HLS" autocomplete="off"> <label for="search-input" class="search-label"><svg viewBox="0 0 24 24" class="search-icon"><use xlink:href="#svg-search"></use></svg></label> </div> <div id="search-results" class="search-results"></div> </div> <nav aria-label="Auxiliary" class="aux-nav"> <ul class="aux-nav-list"> <li class="aux-nav-list-item"> <a href="https://github.com/wei-nextlab/ParallelProgrammingLabs" class="site-button" > GitHub Repository </a> </li> </ul> </nav> </div> <div class="main-content-wrap"> <nav aria-label="Breadcrumb" class="breadcrumb-nav"> <ol class="breadcrumb-nav-list"> <li class="breadcrumb-nav-list-item"><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/">Verilog Labs (Basics)</a></li> <li class="breadcrumb-nav-list-item"><span>Lab4</span></li> </ol> </nav> <div id="main-content" class="main-content"> <main> <h1 id="lab4_tasks-functions-and-testbench"> <a href="#lab4_tasks-functions-and-testbench" class="anchor-heading" aria-labelledby="lab4_tasks-functions-and-testbench"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Lab4_Tasks, Functions, and Testbench </h1> <h2 id="introduction"> <a href="#introduction" class="anchor-heading" aria-labelledby="introduction"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Introduction </h2> <p>Verilog lets you define sub-programs using tasks and functions. They are used to improve readability and exploit re-usability code. Functions are equivalent to combinatorial logic and cannot replace code containing event or delay control operators (as used in sequential logic). Tasks are more general than functions and may contain timing controls. Testbench is a program or model written in any language to exercise and verify the functional correctness of a hardware model during the simulation. Verilog is primarily a means for hardware modeling (simulation). The language contains various resources for formatting, reading, storing, allocating dynamically, comparing, and writing simulation data, including input stimulus and output results.</p> <p>This lab will teach you how to write tasks, functions, and testbenches. You will learn about the components of a testbench, and language constructs available to verify the correctness of the underlying hardware model.</p> <h2 id="tasks"> <a href="#tasks" class="anchor-heading" aria-labelledby="tasks"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Tasks </h2> <p>A task is like a procedure that can execute common pieces of code from several different places in a model. A task can contain timing controls and call other tasks and functions (described in the next part). A task is defined, within a module definition, as:</p> <div class="language-verilog highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">task</span> <span class="n">task_id</span><span class="p">;</span>
+ <span class="p">[</span><span class="n">declarations</span><span class="p">]</span>
+ <span class="n">procedure</span> <span class="n">statements</span>
+<span class="k">endtask</span>
+</code></pre></div></div> <p>A task can have zero, one, or more arguments. Values are passed to and from a task through arguments. The arguments can be input, output, or inout. Here is an example of a task definition and usage.</p> <div class="language-verilog highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">module</span> <span class="n">HAS_TASK</span><span class="p">;</span>
+ <span class="k">parameter</span> <span class="n">MAXBITS</span> <span class="o">=</span> <span class="mi">8</span><span class="p">;</span>
+ <span class="k">task</span> <span class="n">REVERSE_BITS</span><span class="p">;</span> <span class="c1">// task definition starts here</span>
+ <span class="kt">input</span> <span class="p">[</span><span class="n">MAXBITS</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">:</span> <span class="mi">0</span><span class="p">]</span> <span class="n">DIN</span><span class="p">;</span>
+ <span class="kt">output</span> <span class="p">[</span><span class="n">MAXBITS</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">:</span> <span class="mi">0</span><span class="p">]</span> <span class="n">DOUT</span><span class="p">;</span>
+ <span class="kt">integer</span> <span class="n">k</span><span class="p">;</span>
+ <span class="k">begin</span>
+ <span class="k">for</span> <span class="p">(</span><span class="n">k</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="n">MAXBITS</span><span class="p">;</span> <span class="n">k</span> <span class="o">=</span> <span class="n">k</span> <span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+ <span class="n">DOUT</span><span class="p">[</span><span class="n">MAXBITS</span><span class="o">-</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">DIN</span><span class="p">[</span><span class="n">k</span><span class="p">];</span>
+ <span class="k">end</span>
+ <span class="k">endtask</span> <span class="c1">// task definition ends here</span>
+ <span class="kt">reg</span> <span class="p">[</span><span class="n">MAXBITS</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="n">REG_X</span><span class="p">,</span> <span class="n">NEW_REG</span><span class="p">;</span>
+ <span class="k">always</span> <span class="o">@</span> <span class="p">(</span><span class="n">REG_X</span><span class="p">)</span>
+ <span class="n">REVERSE_BITS</span><span class="p">(</span><span class="n">REG_X</span><span class="p">,</span><span class="n">NEX_REG</span><span class="p">);</span> <span class="c1">// task being called</span>
+<span class="k">endmodule</span> 
+
+</code></pre></div></div> <p>Verilog HDL also provides a few system tasks. The system task name is preceded by a $. For example,</p> <p><code class="language-plaintext highlighter-rouge">$display</code> –Print the specified information to standard output with an end-of-line character.</p> <p>e.g. <strong>$display</strong>(“At Simulation time %t, the x_var is %d”); will print x_var value in decimal format and time in the current time format.</p> <p><code class="language-plaintext highlighter-rouge">$write</code> –Similar to the display task, except it does not print an end-of-line character.</p> <p><code class="language-plaintext highlighter-rouge">$monitor</code> –Monitors the argument continuously. Whenever there is a change of value in an argument list, the entire argument list is displayed.</p> <div class="language-verilog highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">initial</span>
+ <span class="p">$</span><span class="nb">monitor</span><span class="p">(</span><span class="s">"At %t, D= %d, CLK = %d"</span><span class="p">,</span> <span class="p">$</span><span class="kt">time</span><span class="p">,</span> <span class="n">D</span><span class="p">,</span> <span class="n">CLK</span><span class="p">,</span> <span class="s">"and Q is %b"</span><span class="p">,</span> <span class="n">Q</span><span class="p">);</span> 
+</code></pre></div></div> <p>Note that the argument list values are printed in the <code class="language-plaintext highlighter-rouge">$display</code> task whenever it is called, whereas in the <code class="language-plaintext highlighter-rouge">$monitor</code> task gets printed whenever the value of one of the arguments changes.</p> <p>The system tasks are not synthesizable, i.e. they cannot be realized in real hardware.</p> <h3 id="part4-1-1"> <a href="#part4-1-1" class="anchor-heading" aria-labelledby="part4-1-1"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Part4-1-1 </h3> <p>Write a task called <code class="language-plaintext highlighter-rouge">add_two_values</code> which will take two 4-bit parameters, add them, and output a 4-bit sum and a carry. Write a module called add_two_values_task that calls the task with the operands received via input ports and outputs the result. Simulate the design with the provided testbench, add_two_values_tb.v, and verify the functionality.</p> <p>Create and add the Verilog module, named add_two_values_task, which defines a task called add_two_values. The task will take two 4-bit parameters, add them, and output a 4-bit sum and a carry. The module will call the task with the operands received via input ports and outputs the result.</p> <p><strong>lab4_1_1.v</strong></p> <div class="language-verilog highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Module for adding two 4-bit binary values using a task</span>
+<span class="k">module</span> <span class="n">add_two_values_task</span><span class="p">(</span>
+    <span class="kt">input</span> <span class="p">[</span><span class="mi">3</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">a</span><span class="p">,</span>    <span class="c1">// 4-bit input operand 'a'</span>
+    <span class="kt">input</span> <span class="p">[</span><span class="mi">3</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">b</span><span class="p">,</span>    <span class="c1">// 4-bit input operand 'b'</span>
+    <span class="kt">output</span> <span class="p">[</span><span class="mi">3</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">sum</span><span class="p">,</span> <span class="c1">// 4-bit output for the sum of 'a' and 'b'</span>
+    <span class="kt">output</span> <span class="n">carry</span>      <span class="c1">// Output for the carry out of the addition</span>
+<span class="p">);</span>
+
+    <span class="c1">// Internal registers to hold the sum and carry produced by the task</span>
+    <span class="c1">// These are necessary since tasks cannot be directly assigned to output ports</span>
+    <span class="kt">reg</span> <span class="p">[</span><span class="mi">3</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">internal_sum</span><span class="p">;</span>
+    <span class="kt">reg</span> <span class="n">internal_carry</span><span class="p">;</span>
+
+    <span class="c1">// Continuous assignments to link internal task outputs to module outputs</span>
+    <span class="k">assign</span> <span class="n">sum</span> <span class="o">=</span> <span class="n">internal_sum</span><span class="p">;</span>
+    <span class="k">assign</span> <span class="n">carry</span> <span class="o">=</span> <span class="n">internal_carry</span><span class="p">;</span>
+
+    <span class="c1">// Task for performing the addition of two 4-bit numbers</span>
+    <span class="c1">// It takes two 4-bit inputs and returns a 4-bit sum and a carryout</span>
+    <span class="k">task</span> <span class="n">add_two_values</span><span class="p">;</span>
+        <span class="kt">input</span> <span class="p">[</span><span class="mi">3</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">in_a</span><span class="p">,</span> <span class="n">in_b</span><span class="p">;</span> <span class="c1">// Input operands for the addition</span>
+        <span class="kt">output</span> <span class="p">[</span><span class="mi">3</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">out_sum</span><span class="p">;</span>   <span class="c1">// Output sum from the addition</span>
+        <span class="kt">output</span> <span class="n">out_carry</span><span class="p">;</span>       <span class="c1">// Output carry from the addition</span>
+        <span class="k">begin</span>
+            <span class="c1">// Perform the addition using Verilog's built-in addition operator</span>
+            <span class="c1">// The curly braces '{}' are used for concatenation, combining carry and sum into one 5-bit result</span>
+            <span class="o">{</span><span class="n">out_carry</span><span class="p">,</span> <span class="n">out_sum</span><span class="o">}</span> <span class="o">=</span> <span class="n">in_a</span> <span class="o">+</span> <span class="n">in_b</span><span class="p">;</span> 
+        <span class="k">end</span>
+    <span class="k">endtask</span>
+
+    <span class="c1">// Always block to execute the task with current inputs whenever they change</span>
+    <span class="c1">// This block is sensitive to any change in inputs 'a' and 'b'</span>
+    <span class="k">always</span> <span class="o">@</span> <span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="k">begin</span>
+        <span class="c1">// Call the addition task with module inputs and assign results to internal registers</span>
+        <span class="n">add_two_values</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">internal_sum</span><span class="p">,</span> <span class="n">internal_carry</span><span class="p">);</span> 
+    <span class="k">end</span>
+
+<span class="k">endmodule</span>
+
+
+</code></pre></div></div> <p>Simulate the design with the provided testbench, add_two_values_task_tb.v, and verify that the design works. Look for the messages displayed by the $display task in the simulator console window.</p> <p><strong>tb.v</strong></p> <div class="language-verilog highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Testbench for the add_two_values_task module</span>
+<span class="k">module</span> <span class="n">tb</span><span class="p">();</span>
+    <span class="kt">reg</span> <span class="p">[</span><span class="mi">3</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">ain</span><span class="p">,</span> <span class="n">bin</span><span class="p">;</span> <span class="c1">// Declare 4-bit input registers for the module under test</span>
+    <span class="kt">wire</span> <span class="n">cout</span><span class="p">;</span>          <span class="c1">// Declare a single-bit output wire for the carry output</span>
+    <span class="kt">wire</span> <span class="p">[</span><span class="mi">3</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">sum</span><span class="p">;</span>     <span class="c1">// Declare a 4-bit output wire for the sum output</span>
+    <span class="kt">integer</span> <span class="n">k</span><span class="p">;</span>          <span class="c1">// Declare an integer for the loop index in the test sequence</span>
+
+    <span class="c1">// Instantiate the Device Under Test (DUT) with named port mappings</span>
+    <span class="n">add_two_values_task</span> <span class="n">DUT</span> <span class="p">(.</span><span class="n">a</span><span class="p">(</span><span class="n">ain</span><span class="p">),</span> <span class="p">.</span><span class="n">b</span><span class="p">(</span><span class="n">bin</span><span class="p">),</span> <span class="p">.</span><span class="n">carry</span><span class="p">(</span><span class="n">cout</span><span class="p">),</span> <span class="p">.</span><span class="n">sum</span><span class="p">(</span><span class="n">sum</span><span class="p">));</span>
+
+    <span class="c1">// Initial block for the simulation</span>
+    <span class="k">initial</span> <span class="k">begin</span>
+      <span class="c1">// Set initial values for inputs</span>
+      <span class="n">ain</span> <span class="o">=</span> <span class="mh">4'h6</span><span class="p">;</span> <span class="n">bin</span> <span class="o">=</span> <span class="mh">4'ha</span><span class="p">;</span> <span class="c1">// Initialize 'ain' and 'bin' with hexadecimal values</span>
+      <span class="c1">// Display initial values and the outputs from DUT at the beginning of simulation</span>
+      <span class="p">$</span><span class="nb">display</span><span class="p">(</span><span class="s">"ain=%b, bin=%b, cout=%b, sum=%b at time=%t"</span><span class="p">,</span> <span class="n">ain</span><span class="p">,</span> <span class="n">bin</span><span class="p">,</span> <span class="n">cout</span><span class="p">,</span> <span class="n">sum</span><span class="p">,</span> <span class="p">$</span><span class="kt">time</span><span class="p">);</span>
+      
+      <span class="c1">// Loop to change inputs and observe the output changes</span>
+      <span class="k">for</span> <span class="p">(</span><span class="n">k</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">;</span> <span class="n">k</span> <span class="o">=</span> <span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">begin</span>
+          <span class="p">#</span><span class="mi">5</span> <span class="n">ain</span> <span class="o">=</span> <span class="n">ain</span> <span class="o">+</span> <span class="n">k</span><span class="p">;</span> <span class="n">bin</span> <span class="o">=</span> <span class="n">bin</span> <span class="o">+</span> <span class="n">k</span><span class="p">;</span> <span class="c1">// Increment 'ain' and 'bin' by 'k' after every 5-time units</span>
+          <span class="c1">// Display updated values and the outputs after each change</span>
+          <span class="p">$</span><span class="nb">display</span><span class="p">(</span><span class="s">"ain=%b, bin=%b, cout=%b, sum=%b at time=%t"</span><span class="p">,</span> <span class="n">ain</span><span class="p">,</span> <span class="n">bin</span><span class="p">,</span> <span class="n">cout</span><span class="p">,</span> <span class="n">sum</span><span class="p">,</span> <span class="p">$</span><span class="kt">time</span><span class="p">);</span>
+      <span class="k">end</span>
+      <span class="c1">// Print simulation completion message</span>
+      <span class="p">$</span><span class="nb">display</span><span class="p">(</span><span class="s">"Simulation Done"</span><span class="p">);</span>
+    <span class="k">end</span>
+<span class="k">endmodule</span>
+
+
+</code></pre></div></div> <p>We can run a Simulation to check the code by clicking the Run Simulation under the SIMULATION and choosing the first Run Behavioral Simulation.</p> <div align="center"><img src="imgs/v1/21.png" alt="drawing" width="600" /></div> <h3 id="part4-1-2"> <a href="#part4-1-2" class="anchor-heading" aria-labelledby="part4-1-2"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Part4-1-2 </h3> <p>Write a task called <code class="language-plaintext highlighter-rouge">calc_even_parity</code>to take an 8-bit number and compute and return parity. Write a module called calc_even_parity_task, which calls the task with the operand received via the input port and outputs the result. Use the provided testbench, calc_even_parity_task_tb.v, which displays the result using the $display system task. Simulate the design and verify the functionality.</p> <p><strong>lab4_1_2.v</strong></p> <div class="language-verilog highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Module for calculating the even parity of an 8-bit input</span>
+<span class="k">module</span> <span class="n">calc_even_parity_task</span> <span class="p">(</span>
+    <span class="kt">input</span> <span class="p">[</span><span class="mi">7</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">data</span><span class="p">,</span>   <span class="c1">// 8-bit input data for which to calculate parity</span>
+    <span class="kt">output</span> <span class="n">parity</span>       <span class="c1">// Output parity bit, high if the number of '1's in 'data' is even</span>
+<span class="p">);</span>
+    <span class="c1">// Internal register to hold the calculated parity</span>
+    <span class="kt">reg</span> <span class="n">internal_parity</span><span class="p">;</span>
+     
+    <span class="c1">// Continuous assignment to link the internal parity to the module's output</span>
+    <span class="k">assign</span> <span class="n">parity</span> <span class="o">=</span> <span class="n">internal_parity</span><span class="p">;</span>
+     
+    <span class="c1">// Task to calculate even parity for an 8-bit input</span>
+    <span class="k">task</span> <span class="n">calc_even_parity</span><span class="p">;</span>
+        <span class="kt">input</span> <span class="p">[</span><span class="mi">7</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">data</span><span class="p">;</span>    <span class="c1">// 8-bit input data for the task</span>
+        <span class="kt">output</span> <span class="n">parity</span><span class="p">;</span>       <span class="c1">// Output parity bit for the task</span>
+
+        <span class="kt">reg</span> <span class="p">[</span><span class="mi">7</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">temp</span><span class="p">;</span>      <span class="c1">// Temporary register for processing</span>
+        <span class="kt">integer</span> <span class="n">i</span><span class="p">;</span>           <span class="c1">// Loop counter</span>
+
+        <span class="k">begin</span>
+            <span class="n">temp</span> <span class="o">=</span> <span class="n">data</span><span class="p">;</span>     <span class="c1">// Copy input data to temporary register</span>
+            <span class="n">parity</span> <span class="o">=</span> <span class="mb">1'b0</span><span class="p">;</span>   <span class="c1">// Initialize parity to 0 (even)</span>
+
+            <span class="c1">// Loop through each bit of the input data</span>
+            <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">8</span><span class="p">;</span> <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">begin</span>
+                <span class="c1">// XOR the current parity with each bit of the input data</span>
+                <span class="c1">// If there are an even number of '1's, parity will end up being '0'.</span>
+                <span class="c1">// If there are an odd number of '1's, parity will end up being '1'.</span>
+                <span class="n">parity</span> <span class="o">=</span> <span class="n">parity</span> <span class="o">^</span> <span class="n">temp</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+            <span class="k">end</span>
+        <span class="k">end</span>
+    <span class="k">endtask</span>
+
+    <span class="c1">// Always block to calculate the parity whenever the input 'data' changes</span>
+    <span class="k">always</span> <span class="o">@</span> <span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="k">begin</span>
+        <span class="c1">// Call the even parity calculation task with the input data</span>
+        <span class="n">calc_even_parity</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">internal_parity</span><span class="p">);</span>
+    <span class="k">end</span>
+   
+<span class="k">endmodule</span>
+
+
+</code></pre></div></div> <p>Now we can see the <code class="language-plaintext highlighter-rouge">Schematic</code> under the RTL ANALYSIS part like below:</p> <div align="center"><img src="imgs/loop.png" alt="drawing" width="1000" /></div> <p><strong>tb.v</strong></p> <div class="language-verilog highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Define testbench module</span>
+<span class="k">module</span> <span class="n">tb</span><span class="p">();</span>
+    <span class="kt">reg</span> <span class="p">[</span><span class="mi">7</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">ain</span><span class="p">;</span>     <span class="c1">// 8-bit input register for the module under test</span>
+    <span class="kt">wire</span> <span class="n">parity</span><span class="p">;</span>       <span class="c1">//Single-bit output wire for the module under test</span>
+    <span class="kt">integer</span> <span class="n">k</span><span class="p">;</span>         <span class="c1">// Loop variable for test iteration</span>
+
+    <span class="c1">// Instantiate the Device Under Test (DUT) with named port mappings</span>
+    <span class="n">calc_even_parity_task</span> <span class="n">DUT</span> <span class="p">(.</span><span class="n">data</span><span class="p">(</span><span class="n">ain</span><span class="p">),</span> <span class="p">.</span><span class="n">parity</span><span class="p">(</span><span class="n">parity</span><span class="p">));</span>
+
+    <span class="c1">// Initial block for simulation</span>
+    <span class="k">initial</span> <span class="k">begin</span>
+      <span class="c1">// Set initial value for input</span>
+      <span class="n">ain</span> <span class="o">=</span> <span class="mh">8'ha8</span><span class="p">;</span> <span class="c1">// Initialize 'ain' with a hexadecimal value</span>
+      <span class="c1">// Display the initial input and resulting parity</span>
+      <span class="p">$</span><span class="nb">display</span><span class="p">(</span><span class="s">"ain=%h, parity=%b, at time=%t"</span><span class="p">,</span> <span class="n">ain</span><span class="p">,</span> <span class="n">parity</span><span class="p">,</span> <span class="p">$</span><span class="kt">time</span><span class="p">);</span>
+
+      <span class="c1">// Loop to modify input and observe changes in parity</span>
+      <span class="k">for</span> <span class="p">(</span><span class="n">k</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">;</span> <span class="n">k</span> <span class="o">=</span> <span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">begin</span>
+          <span class="p">#</span><span class="mi">5</span> <span class="n">ain</span> <span class="o">=</span> <span class="n">ain</span> <span class="o">+</span> <span class="n">k</span><span class="p">;</span> <span class="c1">// Increment input 'ain' by 'k' every 5 time units</span>
+          <span class="c1">// Display the updated input and resulting parity after each increment</span>
+          <span class="p">$</span><span class="nb">display</span><span class="p">(</span><span class="s">"ain=%h, parity=%b, at time=%t"</span><span class="p">,</span> <span class="n">ain</span><span class="p">,</span> <span class="n">parity</span><span class="p">,</span> <span class="p">$</span><span class="kt">time</span><span class="p">);</span>
+      <span class="k">end</span>
+      <span class="c1">// Indicate completion of the simulation</span>
+      <span class="p">$</span><span class="nb">display</span><span class="p">(</span><span class="s">"Simulation Done"</span><span class="p">);</span>
+    <span class="k">end</span>
+<span class="k">endmodule</span>
+
+</code></pre></div></div> <p>We can run a Simulation to check the code by clicking the Run Simulation under the SIMULATION and choosing the first Run Behavioral Simulation.</p> <div align="center"><img src="imgs/v1/22.png" alt="drawing" width="600" /></div> <h2 id="functions"> <a href="#functions" class="anchor-heading" aria-labelledby="functions"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Functions </h2> <p>Functions are declared within a parent module with the keywords function and endfunction. Functions are used if all of the following conditions are true:</p> <ul> <li> <p>There are no delay, timing, or event control constructs that are present</p> </li> <li> <p>It returns a single value</p> </li> <li> <p>There is at least one input argument</p> </li> <li> <p>There are no output or inout argument</p> </li> <li> <p>There are no non-blocking assignments</p> </li> </ul> <p>In short, functions may implement only combinatorial behavior, i.e. they compute a value based on the present value of the input arguments and return a single value. They are used in the right-hand side of an assignment statement. Here is an example of a function definition and call.</p> <div class="language-verilog highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">module</span> <span class="n">HAS_FUNCTION</span><span class="p">(</span><span class="n">X_IN</span><span class="p">,</span> <span class="n">REV_X</span><span class="p">);</span>
+ <span class="k">parameter</span> <span class="n">MAXBITS</span> <span class="o">=</span> <span class="mi">8</span><span class="p">;</span>
+ <span class="kt">output</span> <span class="kt">reg</span> <span class="p">[</span><span class="n">MAXBITS</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">:</span> <span class="mi">0</span><span class="p">]</span> <span class="n">REV_X</span><span class="p">;</span>
+ <span class="kt">input</span> <span class="p">[</span><span class="n">MAXBITS</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">:</span> <span class="mi">0</span><span class="p">]</span> <span class="n">X_IN</span><span class="p">;</span>
+ <span class="k">function</span> <span class="p">[</span><span class="n">MAXBITS</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">:</span> <span class="mi">0</span><span class="p">]</span> <span class="n">REVERSE_BITS</span><span class="p">;</span> <span class="c1">// function definition starts here</span>
+ <span class="kt">input</span> <span class="p">[</span><span class="n">MAXBITS</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">:</span> <span class="mi">0</span><span class="p">]</span> <span class="n">DIN</span><span class="p">;</span>
+ <span class="kt">integer</span> <span class="n">k</span><span class="p">;</span>
+ <span class="k">begin</span>
+ <span class="k">for</span> <span class="p">(</span><span class="n">k</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="n">MAXBITS</span><span class="p">;</span> <span class="n">k</span> <span class="o">=</span> <span class="n">k</span> <span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+ <span class="n">REVERSE_BITS</span><span class="p">[</span><span class="n">MAXBITS</span><span class="o">-</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">DIN</span><span class="p">[</span><span class="n">k</span><span class="p">];</span>
+ <span class="k">end</span>
+ <span class="k">endfunction</span> <span class="c1">// function definition ends here</span>
+<span class="k">always</span> <span class="o">@</span> <span class="p">(</span><span class="n">X_IN</span><span class="p">)</span>
+ <span class="n">REV_X</span> <span class="o">=</span> <span class="n">REVERSE_BITS</span><span class="p">(</span><span class="n">X_IN</span><span class="p">);</span> <span class="c1">// function being called</span>
+<span class="k">endmodule</span> 
+
+</code></pre></div></div> <h3 id="part4-2-1"> <a href="#part4-2-1" class="anchor-heading" aria-labelledby="part4-2-1"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Part4-2-1 </h3> <p>Write a function called <code class="language-plaintext highlighter-rouge">add_two_values</code> which will take two 4-bit parameters, add them and return a 5-bit sum. Write a module called add_two_values_function, with two 4-bit input ports and one 5-bit output port and call the function. Simulate the design with the provided testbench, add_two_values_function_tb.v, and verify the functionality.</p> <p>Create and add a Verilog module called add_two_values_function, which defines a function called add_two_values that takes two 4-bit parameters, adds them, and returns a 5-bit sum. The module will have two 4-bit input ports and one 5-bit output port. It will call the function.</p> <p><strong>lab4_2_1.v</strong></p> <div class="language-verilog highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Module for adding two 4-bit binary values using a Verilog function</span>
+<span class="k">module</span> <span class="n">add_two_values_function</span> <span class="p">(</span>
+    <span class="kt">input</span> <span class="p">[</span><span class="mi">3</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">a</span><span class="p">,</span>      <span class="c1">// First 4-bit input operand</span>
+    <span class="kt">input</span> <span class="p">[</span><span class="mi">3</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">b</span><span class="p">,</span>      <span class="c1">// Second 4-bit input operand</span>
+    <span class="kt">output</span> <span class="p">[</span><span class="mi">4</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">sum</span>    <span class="c1">// 5-bit output for the sum (includes carry out)</span>
+<span class="p">);</span>
+
+<span class="c1">// Function for adding two 4-bit values and returning a 5-bit result</span>
+<span class="c1">// This function is a combinational logic block that computes the sum of two inputs</span>
+<span class="k">function</span> <span class="p">[</span><span class="mi">4</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">add_two_values</span><span class="p">;</span>
+    <span class="kt">input</span> <span class="p">[</span><span class="mi">3</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">;</span> <span class="c1">// Declare two 4-bit input parameters for the function</span>
+    <span class="k">begin</span>
+        <span class="c1">// Perform addition and return the result</span>
+        <span class="c1">// The function returns the sum of 'a' and 'b', where {carry, sum} is a 5-bit number</span>
+        <span class="c1">// 'a' and 'b' are zero-extended to 5 bits before adding to ensure correct carryout</span>
+        <span class="n">add_two_values</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">;</span>
+    <span class="k">end</span>
+<span class="k">endfunction</span>
+
+    <span class="c1">// Continuous assignment statement to compute the sum</span>
+    <span class="c1">// Uses the add_two_values function to calculate the sum of 'a' and 'b'</span>
+    <span class="c1">// and assigns the result to the output 'sum'</span>
+    <span class="k">assign</span> <span class="n">sum</span> <span class="o">=</span> <span class="n">add_two_values</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">);</span>
+<span class="k">endmodule</span>
+
+</code></pre></div></div> <p><strong>tb.v</strong></p> <div class="language-verilog highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Testbench module to verify the add_two_values_function functionality</span>
+<span class="k">module</span> <span class="n">tb</span><span class="p">();</span>
+    <span class="kt">reg</span> <span class="p">[</span><span class="mi">3</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">ain</span><span class="p">,</span> <span class="n">bin</span><span class="p">;</span>  <span class="c1">// Define 4-bit registers for inputs</span>
+    <span class="kt">wire</span> <span class="p">[</span><span class="mi">4</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">sum</span><span class="p">;</span>      <span class="c1">// Define a 5-bit wire for the output, as the sum may overflow 4 bits</span>
+    <span class="kt">integer</span> <span class="n">k</span><span class="p">;</span>           <span class="c1">// Variable used for generating test cases in the for loop</span>
+    
+    <span class="c1">// Instantiate the Device Under Test (DUT) with named port mapping</span>
+    <span class="n">add_two_values_function</span> <span class="n">DUT</span> <span class="p">(.</span><span class="n">a</span><span class="p">(</span><span class="n">ain</span><span class="p">),</span> <span class="p">.</span><span class="n">b</span><span class="p">(</span><span class="n">bin</span><span class="p">),</span> <span class="p">.</span><span class="n">sum</span><span class="p">(</span><span class="n">sum</span><span class="p">));</span>
+     
+    <span class="c1">// Begin the simulation block</span>
+    <span class="k">initial</span> <span class="k">begin</span>
+      <span class="c1">// Initialize inputs</span>
+      <span class="n">ain</span> <span class="o">=</span> <span class="mh">4'h6</span><span class="p">;</span>  <span class="c1">// Set initial value of 'ain' to 6 (4'b0110)</span>
+      <span class="n">bin</span> <span class="o">=</span> <span class="mh">4'ha</span><span class="p">;</span>  <span class="c1">// Set initial value of 'bin' to 10 (4'b1010)</span>
+      
+      <span class="c1">// Display initial state of test variables and output</span>
+      <span class="p">$</span><span class="nb">display</span><span class="p">(</span><span class="s">"ain=%b, bin=%b, sum=%b at time=%t"</span><span class="p">,</span> <span class="n">ain</span><span class="p">,</span> <span class="n">bin</span><span class="p">,</span> <span class="n">sum</span><span class="p">,</span> <span class="p">$</span><span class="kt">time</span><span class="p">);</span>
+      
+      <span class="c1">// Generate additional test cases using a for loop</span>
+      <span class="k">for</span> <span class="p">(</span><span class="n">k</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">;</span> <span class="n">k</span> <span class="o">=</span> <span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">begin</span>
+          <span class="p">#</span><span class="mi">5</span> <span class="n">ain</span> <span class="o">=</span> <span class="n">ain</span> <span class="o">+</span> <span class="n">k</span><span class="p">;</span> <span class="n">bin</span> <span class="o">=</span> <span class="n">bin</span> <span class="o">+</span> <span class="n">k</span><span class="p">;</span> <span class="c1">// Increment 'ain' and 'bin' by 'k' every five time units</span>
+          
+          <span class="c1">// Display updated values after each increment</span>
+          <span class="p">$</span><span class="nb">display</span><span class="p">(</span><span class="s">"ain=%b, bin=%b, sum=%b at time=%t"</span><span class="p">,</span> <span class="n">ain</span><span class="p">,</span> <span class="n">bin</span><span class="p">,</span> <span class="n">sum</span><span class="p">,</span> <span class="p">$</span><span class="kt">time</span><span class="p">);</span>
+      <span class="k">end</span>
+      
+      <span class="c1">// Print a message once the simulation is complete</span>
+      <span class="p">$</span><span class="nb">display</span><span class="p">(</span><span class="s">"Simulation Done"</span><span class="p">);</span>
+    <span class="k">end</span>
+    
+<span class="k">endmodule</span>
+
+
+</code></pre></div></div> <p>We can run a Simulation to check the code by clicking the Run Simulation under the SIMULATION and choosing the first Run Behavioral Simulation.</p> <div align="center"><img src="imgs/v1/23.png" alt="drawing" width="600" /></div> <h3 id="part4-2-2"> <a href="#part4-2-2" class="anchor-heading" aria-labelledby="part4-2-2"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Part4-2-2 </h3> <p>Write a task called <code class="language-plaintext highlighter-rouge">calc_ones</code>, which will take an 8-bit number and calculate and return several ones. Write a module called calc_ones_function with one 8-bit input port and one 3-bit output port and call the function. Simulate the design with the provided testbench, calc_ones_function_tb.v, and verify the functionality.</p> <p><strong>lab4_2_2.v</strong></p> <div class="language-verilog highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Module for calculating the number of '1's in an 8-bit input using a Verilog function</span>
+<span class="k">module</span> <span class="n">calc_ones_function</span><span class="p">(</span>
+    <span class="kt">input</span> <span class="p">[</span><span class="mi">7</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">data</span><span class="p">,</span>            <span class="c1">// 8-bit input data to analyze</span>
+    <span class="kt">output</span> <span class="p">[</span><span class="mi">2</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">number_of_ones</span>  <span class="c1">// Output representing the number of '1's in the input data</span>
+<span class="p">);</span>
+
+<span class="c1">// Function to calculate the number of '1's in an 8-bit input</span>
+<span class="k">function</span> <span class="p">[</span><span class="mi">2</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">calc_ones</span><span class="p">;</span>
+    <span class="kt">input</span> <span class="p">[</span><span class="mi">7</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">a</span><span class="p">;</span>       <span class="c1">// Local input variable for the function, holding the data to be analyzed</span>
+    <span class="kt">integer</span> <span class="n">i</span><span class="p">;</span>          <span class="c1">// Local variable for looping through the bits in 'a'</span>
+    <span class="k">begin</span>
+        <span class="n">calc_ones</span> <span class="o">=</span> <span class="mi">3'd0</span><span class="p">;</span> <span class="c1">// Initialize the count of '1's to 0</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">8</span><span class="p">;</span> <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">begin</span>  <span class="c1">// Loop through each bit of 'a'</span>
+            <span class="c1">// If the current bit is '1', increment the count of '1's</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="mb">1'b1</span><span class="p">)</span> <span class="k">begin</span>
+                <span class="n">calc_ones</span> <span class="o">=</span> <span class="n">calc_ones</span> <span class="o">+</span> <span class="mb">1'b1</span><span class="p">;</span>
+            <span class="k">end</span> <span class="k">else</span> <span class="k">begin</span>
+                <span class="c1">// If the current bit is not '1', maintain the current count</span>
+                <span class="n">calc_ones</span> <span class="o">=</span> <span class="n">calc_ones</span><span class="p">;</span>
+            <span class="k">end</span>
+        <span class="k">end</span>
+    <span class="k">end</span>
+<span class="k">endfunction</span>
+
+<span class="c1">// Continuous assignment to assign the result of the calc_ones function</span>
+<span class="c1">// to the module output 'number_of_ones'</span>
+<span class="c1">// This assignment triggers whenever the input 'data' changes</span>
+<span class="k">assign</span> <span class="n">number_of_ones</span> <span class="o">=</span> <span class="n">calc_ones</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
+
+<span class="k">endmodule</span>
+
+</code></pre></div></div> <p><strong>tb.v</strong></p> <div class="language-verilog highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Testbench for the calc_ones_function module</span>
+<span class="k">module</span> <span class="n">tb</span><span class="p">();</span>
+    <span class="kt">reg</span> <span class="p">[</span><span class="mi">7</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">ain</span><span class="p">;</span>                       <span class="c1">// 8-bit input for testing</span>
+    <span class="kt">wire</span> <span class="p">[</span><span class="mi">2</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">number_of_ones</span><span class="p">;</span>           <span class="c1">// 3-bit output representing the number of ones in 'ain'</span>
+    <span class="kt">integer</span> <span class="n">k</span><span class="p">;</span>                           <span class="c1">// Loop variable for generating different test vectors</span>
+    
+    <span class="c1">// Instantiate the Device Under Test (DUT)</span>
+    <span class="n">calc_ones_function</span> <span class="n">DUT</span> <span class="p">(.</span><span class="n">data</span><span class="p">(</span><span class="n">ain</span><span class="p">),</span> <span class="p">.</span><span class="n">number_of_ones</span><span class="p">(</span><span class="n">number_of_ones</span><span class="p">));</span>
+     
+    <span class="c1">// Begin simulation</span>
+    <span class="k">initial</span> <span class="k">begin</span>
+      <span class="n">ain</span> <span class="o">=</span> <span class="mh">8'h4a</span><span class="p">;</span> <span class="c1">// Initialize 'ain' with a hexadecimal value</span>
+      <span class="p">#</span><span class="mi">5</span><span class="p">;</span> <span class="c1">// Wait 5 time units to ensure the DUT has processed the input</span>
+      <span class="c1">// Display the initial number of ones in 'ain'</span>
+      <span class="p">$</span><span class="nb">display</span><span class="p">(</span><span class="s">"ain=%h, number_of_ones=%d at time=%t"</span><span class="p">,</span> <span class="n">ain</span><span class="p">,</span> <span class="n">number_of_ones</span><span class="p">,</span> <span class="p">$</span><span class="kt">time</span><span class="p">);</span>
+
+      <span class="c1">// Change 'ain' several times to test different scenarios</span>
+      <span class="k">for</span> <span class="p">(</span><span class="n">k</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">;</span> <span class="n">k</span> <span class="o">=</span> <span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">begin</span>
+          <span class="p">#</span><span class="mi">5</span> <span class="n">ain</span> <span class="o">=</span> <span class="n">ain</span> <span class="o">+</span> <span class="n">k</span><span class="p">;</span> <span class="c1">// Increment 'ain' by 'k' after waiting 5 time units</span>
+          <span class="c1">// Display the updated number of ones in 'ain' after each change</span>
+          <span class="p">$</span><span class="nb">display</span><span class="p">(</span><span class="s">"ain=%h, number_of_ones=%d at time=%t"</span><span class="p">,</span> <span class="n">ain</span><span class="p">,</span> <span class="n">number_of_ones</span><span class="p">,</span> <span class="p">$</span><span class="kt">time</span><span class="p">);</span>
+      <span class="k">end</span>
+      <span class="c1">// Indicate completion of the simulation</span>
+      <span class="p">$</span><span class="nb">display</span><span class="p">(</span><span class="s">"Simulation Done"</span><span class="p">);</span>
+    <span class="k">end</span>
+
+
+<span class="k">endmodule</span>
+
+
+</code></pre></div></div> <p>We can run a Simulation to check the code by clicking the Run Simulation under the SIMULATION and choosing the first Run Behavioral Simulation.</p> <div align="center"><img src="imgs/v1/24.png" alt="drawing" width="600" /></div> <h2 id="testbench"> <a href="#testbench" class="anchor-heading" aria-labelledby="testbench"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Testbench </h2> <p>The major components of a testbench are:</p> <ul> <li> <p>`timescale declaration: Specify the time unit for all delays</p> </li> <li> <p>Module, which defines the testbench top-level structure: A testbench usually does not have ports</p> </li> <li> <p>Internal signals, which will drive the stimuli into the UUT and monitor the response from the UUT: Signal to drive and monitor</p> </li> <li> <p>UUT instantiation</p> </li> <li> <p>Stimuli generation: Write statements to create stimulus and procedural block</p> </li> <li> <p>Response monitoring and comparing: Self-testing statements that will report values, errors, and warnings; $display, $write, $strobe, and/or $monitor system tasks</p> </li> </ul> <p>Verilog supports two types of delay modeling: (i) inertial and (ii) transport. The inertial delay is the delay that a gate or circuit may experience due to the physical nature of the gate or circuit. Depending on the technology used, it can be in ps or ns. The inertial delay is also used to determine if the input has an effect on the gate or circuit. If the input does not remain changed, at least for the initial delay then the input change is ignored. For example, an inertial delay of 5 ns means whenever the input changes, it should remain changed at least for 5 ns to be considered as changed otherwise the change is ignored (considered noise spike). The transport delay is the time-of-flight of a signal traveling a wire of a circuit. Here are some examples of transport and inertial delays:</p> <div class="language-verilog highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">wire</span> <span class="p">#</span><span class="mi">2</span> <span class="n">a_long_wire</span><span class="p">;</span> <span class="c1">// transport delay of 2 units is modeled</span>
+<span class="kt">xor</span> <span class="p">#</span><span class="mi">1</span> <span class="n">M1</span><span class="p">(</span><span class="n">sum</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">);</span> <span class="c1">// inertial delay of 1 unit exerted by xor gate </span>
+</code></pre></div></div> <p>The <code class="language-plaintext highlighter-rouge">initial</code> statements are used in the testbench to generate stimuli and control simulation execution. Here is an example of it:</p> <div class="language-verilog highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">initial</span> <span class="k">begin</span>
+ <span class="p">#</span><span class="mi">100</span> <span class="p">$</span><span class="nb">finish</span><span class="p">;</span> <span class="c1">// run simulation for 100 units</span>
+<span class="k">end</span>
+<span class="k">initial</span> <span class="k">begin</span>
+ <span class="p">#</span><span class="mi">10</span> <span class="n">a</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">b</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="c1">// a, b zero after 10 units delay. Between 0 and 10, it is x</span>
+ <span class="p">#</span><span class="mi">10</span> <span class="n">b</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span> <span class="c1">// At 20, make b=1</span>
+ <span class="p">#</span><span class="mi">10</span> <span class="n">a</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span> <span class="c1">// at 30, make a=1</span>
+ <span class="p">#</span><span class="mi">10</span> <span class="n">b</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="c1">// at 40, make b=0</span>
+<span class="k">end</span> 
+
+</code></pre></div></div> <p>Here is another example of the initial statement usage to generate a periodic signal called clock. It will generate a clock signal of 50% duty cycle with a period of 20 units.</p> <div class="language-verilog highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">reg</span> <span class="n">clock</span><span class="p">;</span>
+<span class="k">parameter</span> <span class="n">half_cycle</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+<span class="k">initial</span>
+ <span class="k">begin</span>
+ <span class="n">clock</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+ <span class="k">forever</span>
+ <span class="k">begin</span>
+ <span class="p">#</span><span class="n">half_cycle</span> <span class="n">clock</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+ <span class="p">#</span><span class="n">half_cycle</span> <span class="n">clock</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+ <span class="k">end</span>
+ <span class="k">end</span> 
+</code></pre></div></div> <h3 id="part4-3-1"> <a href="#part4-3-1" class="anchor-heading" aria-labelledby="part4-3-1"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Part4-3-1 </h3> <p>Develop a testbench to verify the 4-bit ripple carry adder functionality. Use the ripple carry design (and its associated fulladder_dataflow module) you developed in Part 3-1 of Lab 2. Modify the design to include 2 units of inertial delay for every assignment statement in the design. Develop a testbench such that it computes expected output, compares the result, and displays the result as “Test Passed” or “Test Failed”</p> <p><strong>lab4_3_1.v</strong></p> <div class="language-verilog highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">module</span> <span class="n">lab4_3_1</span><span class="p">(</span>
+    <span class="kt">input</span> <span class="n">a</span><span class="p">,</span>     <span class="c1">// First input bit</span>
+    <span class="kt">input</span> <span class="n">b</span><span class="p">,</span>     <span class="c1">// Second input bit</span>
+    <span class="kt">input</span> <span class="n">cin</span><span class="p">,</span>   <span class="c1">// Input carry bit</span>
+    <span class="kt">output</span> <span class="n">sum</span><span class="p">,</span>    <span class="c1">// Sum output bit</span>
+    <span class="kt">output</span> <span class="n">cout</span>  <span class="c1">// Carry output bit</span>
+<span class="p">);</span>
+
+    <span class="c1">// Implement the sum and carry using dataflow modeling expressions.</span>
+    <span class="c1">// Sum (s) is the XOR of the three inputs.</span>
+    <span class="k">assign</span> <span class="p">#</span><span class="mi">2</span> <span class="o">{</span><span class="n">cout</span><span class="p">,</span><span class="n">sum</span><span class="o">}</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">+</span> <span class="n">cin</span><span class="p">;</span>
+
+<span class="k">endmodule</span>
+</code></pre></div></div> <p><strong>tb.v</strong></p> <div class="language-verilog highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">module</span> <span class="n">tb_ripple_carry_adder</span><span class="p">;</span>
+
+    <span class="c1">// Testbench signals</span>
+    <span class="kt">reg</span>  <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">;</span>
+    <span class="kt">reg</span> <span class="n">cin</span><span class="p">;</span>
+    <span class="kt">wire</span>  <span class="n">sum</span><span class="p">;</span>
+    <span class="kt">wire</span> <span class="n">cout</span><span class="p">;</span>
+    <span class="kt">reg</span> <span class="p">[</span><span class="mi">2</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">expected</span><span class="p">;</span> <span class="c1">// Expected result includes sum and carry out</span>
+    <span class="kt">integer</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">;</span>
+
+    <span class="c1">// Instantiate the Device Under Test (DUT)</span>
+    <span class="n">lab4_3_1</span> <span class="n">DUT</span> <span class="p">(</span>
+        <span class="p">.</span><span class="n">a</span><span class="p">(</span><span class="n">a</span><span class="p">),</span>
+        <span class="p">.</span><span class="n">b</span><span class="p">(</span><span class="n">b</span><span class="p">),</span>
+        <span class="p">.</span><span class="n">cin</span><span class="p">(</span><span class="n">cin</span><span class="p">),</span>
+        <span class="p">.</span><span class="n">sum</span><span class="p">(</span><span class="n">sum</span><span class="p">),</span>
+        <span class="p">.</span><span class="n">cout</span><span class="p">(</span><span class="n">cout</span><span class="p">)</span>
+    <span class="p">);</span>
+
+    <span class="c1">// Test sequence</span>
+    <span class="k">initial</span> <span class="k">begin</span>
+        <span class="c1">// Initialize inputs</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">cin</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="c1">// Run through all possible input combinations</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">;</span> <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">begin</span>
+            <span class="k">for</span> <span class="p">(</span><span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">;</span> <span class="n">j</span> <span class="o">=</span> <span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">begin</span>
+                <span class="n">a</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span> <span class="n">b</span> <span class="o">=</span> <span class="n">j</span><span class="p">;</span> <span class="n">cin</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+                <span class="p">#</span><span class="mi">10</span><span class="p">;</span> <span class="c1">// Wait for ripple to propagate, adjust time as needed</span>
+                <span class="n">expected</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="n">j</span><span class="p">;</span>
+                <span class="c1">// Check result</span>
+                <span class="k">if</span> <span class="p">(</span><span class="o">{</span><span class="n">cout</span><span class="p">,</span> <span class="n">sum</span><span class="o">}</span> <span class="o">!==</span> <span class="n">expected</span><span class="p">)</span> <span class="k">begin</span>
+                    <span class="p">$</span><span class="nb">display</span><span class="p">(</span><span class="s">"Test Failed: a=%b, b=%b, cin=%b, sum=%b, cout=%b, Expected=%b"</span><span class="p">,</span>
+                             <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">cin</span><span class="p">,</span> <span class="n">sum</span><span class="p">,</span> <span class="n">cout</span><span class="p">,</span> <span class="n">expected</span><span class="p">);</span>
+                <span class="k">end</span> <span class="k">else</span> <span class="k">begin</span>
+                    <span class="p">$</span><span class="nb">display</span><span class="p">(</span><span class="s">"Test Passed: a=%b, b=%b, cin=%b, sum=%b, cout=%b"</span><span class="p">,</span>
+                             <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">cin</span><span class="p">,</span> <span class="n">sum</span><span class="p">,</span> <span class="n">cout</span><span class="p">);</span>
+                <span class="k">end</span>
+                <span class="p">#</span><span class="mi">10</span><span class="p">;</span> <span class="c1">// Additional delay for clarity in simulation</span>
+            <span class="k">end</span>
+        <span class="k">end</span>
+        <span class="p">$</span><span class="nb">finish</span><span class="p">;</span>
+    <span class="k">end</span>
+
+
+    <span class="c1">// Monitoring changes (optional for debug)</span>
+    <span class="k">initial</span> <span class="k">begin</span>
+        <span class="p">$</span><span class="nb">monitor</span><span class="p">(</span><span class="s">"Time = %t: a = %b, b = %b, cin = %b, sum = %b, cout = %b"</span><span class="p">,</span>
+                 <span class="p">$</span><span class="kt">time</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">cin</span><span class="p">,</span> <span class="n">sum</span><span class="p">,</span> <span class="n">cout</span><span class="p">);</span>
+    <span class="k">end</span>
+
+<span class="k">endmodule</span>
+
+</code></pre></div></div> <p>We can see the simulation result as below:</p> <div align="center"><img src="imgs/v1/26.png" alt="drawing" width="600" /></div> <h3 id="part4-3-2"> <a href="#part4-3-2" class="anchor-heading" aria-labelledby="part4-3-2"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Part4-3-2 </h3> <p>Develop a testbench that generates the waveform shown below.</p> <div align="center"><img src="imgs/v1/27.png" alt="drawing" width="600" /></div> <p><strong>lab4_3_2.v</strong></p> <div class="language-verilog highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">module</span> <span class="n">waveform_generator</span><span class="p">(</span>
+    <span class="kt">output</span> <span class="kt">reg</span> <span class="n">A</span><span class="p">,</span>
+    <span class="kt">output</span> <span class="kt">reg</span> <span class="n">G1</span><span class="p">,</span>
+    <span class="kt">output</span> <span class="kt">reg</span> <span class="n">G2</span>
+<span class="p">);</span>
+
+<span class="k">initial</span> <span class="k">begin</span>
+    <span class="c1">// Initialize signals</span>
+    <span class="n">A</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">G1</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">G2</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    
+    <span class="c1">// A waveform</span>
+  
+    <span class="p">#</span><span class="mi">40</span> <span class="n">A</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="c1">// At 40ns</span>
+    
+    <span class="c1">// G1 waveform</span>
+    <span class="p">#</span><span class="mi">20</span> <span class="n">G1</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="c1">// At 60ns</span>
+    
+    <span class="p">#</span><span class="mi">20</span> <span class="n">G2</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">// At 80ns</span>
+    
+    <span class="p">#</span><span class="mi">20</span> <span class="n">A</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">// At 100ns</span>
+    
+    <span class="c1">// G2 waveform</span>
+    <span class="p">#</span><span class="mi">20</span> <span class="n">G1</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">// At 120ns</span>
+    <span class="p">#</span><span class="mi">20</span> <span class="n">G2</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="c1">// At 140ns</span>
+<span class="k">end</span>
+
+<span class="k">endmodule</span>
+</code></pre></div></div> <p><strong>tb.v</strong></p> <div class="language-verilog highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">`timescale</span> <span class="mi">1</span><span class="n">ns</span> <span class="o">/</span> <span class="mi">1</span><span class="n">ps</span>
+
+<span class="k">module</span> <span class="n">waveform_generator_tb</span><span class="p">;</span>
+
+    <span class="c1">// Instantiate the waveform generator outputs</span>
+    <span class="kt">wire</span> <span class="n">A</span><span class="p">,</span> <span class="n">G1</span><span class="p">,</span> <span class="n">G2</span><span class="p">;</span>
+
+    <span class="c1">// Instantiate the waveform generator module</span>
+    <span class="n">waveform_generator</span> <span class="n">uut</span> <span class="p">(</span>
+        <span class="p">.</span><span class="n">A</span><span class="p">(</span><span class="n">A</span><span class="p">),</span>
+        <span class="p">.</span><span class="n">G1</span><span class="p">(</span><span class="n">G1</span><span class="p">),</span>
+        <span class="p">.</span><span class="n">G2</span><span class="p">(</span><span class="n">G2</span><span class="p">)</span>
+    <span class="p">);</span>
+
+    <span class="k">initial</span> <span class="k">begin</span>
+        <span class="c1">// Initialize simulation</span>
+        <span class="p">$</span><span class="nb">dumpfile</span><span class="p">(</span><span class="s">"waveform_generator_tb.vcd"</span><span class="p">);</span>
+        <span class="p">$</span><span class="nb">dumpvars</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">waveform_generator_tb</span><span class="p">);</span>
+
+        <span class="c1">// Simulate for 150 ns</span>
+        <span class="p">#</span><span class="mi">150</span><span class="p">;</span>
+
+        <span class="c1">// End simulation</span>
+        <span class="p">$</span><span class="nb">finish</span><span class="p">;</span>
+    <span class="k">end</span>
+
+<span class="k">endmodule</span>
+
+</code></pre></div></div> <div align="center"><img src="imgs/v1/28.png" alt="drawing" width="600" /></div> <h2 id="conclusion"> <a href="#conclusion" class="anchor-heading" aria-labelledby="conclusion"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Conclusion </h2> <p>In this lab, you learned how to write functions, tasks, and testbenches. You also learned the differences between functions and tasks, both in their definitions and in usage. You saw how a function can be used in a testbench to compute expected output.</p> </main> </div> </div> <div class="search-overlay"></div> </div> </body> </html>

@@ -1,0 +1,968 @@
+<!DOCTYPE html> <html lang="en-US"> <head> <meta charset="UTF-8"> <meta http-equiv="X-UA-Compatible" content="IE=Edge"> <link rel="stylesheet" href="/ParallelProgrammingLabs/assets/css/just-the-docs-default.css"> <link rel="stylesheet" href="/ParallelProgrammingLabs/assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet"> <style id="jtd-nav-activation"> .site-nav > ul.nav-list:first-child > li > a, .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(23)) > a, .site-nav > ul.nav-list:first-child > li > ul > li > ul > li > a { background-image: none; } .site-nav > ul.nav-list:not(:first-child) a, .site-nav li.external a { background-image: none; } .site-nav > ul.nav-list:first-child > li:nth-child(5) > ul > li:nth-child(23) > a { font-weight: 600; text-decoration: none; }.site-nav > ul.nav-list:first-child > li:nth-child(5) > button svg, .site-nav > ul.nav-list:first-child > li:nth-child(5) > ul > li:nth-child(23) > button svg { transform: rotate(-90deg); }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(5) > ul.nav-list, .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(5) > ul.nav-list > li.nav-list-item:nth-child(23) > ul.nav-list { display: block; } </style> <script src="/ParallelProgrammingLabs/assets/js/vendor/lunr.min.js"></script> <script src="/ParallelProgrammingLabs/assets/js/just-the-docs.js"></script> <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- Begin Jekyll SEO tag v2.8.0 --> <title>Lab23 | FPGA/SoC/Verilog/HLS</title> <meta name="generator" content="Jekyll v4.3.3" /> <meta property="og:title" content="Lab23" /> <meta property="og:locale" content="en_US" /> <meta name="description" content="FPGA, SoC, Verilog, and HLS labs" /> <meta property="og:description" content="FPGA, SoC, Verilog, and HLS labs" /> <link rel="canonical" href="https://wei-nextlab.github.io/ParallelProgrammingLabs/docs/HLS_Labs/Lab23.html" /> <meta property="og:url" content="https://wei-nextlab.github.io/ParallelProgrammingLabs/docs/HLS_Labs/Lab23.html" /> <meta property="og:site_name" content="FPGA/SoC/Verilog/HLS" /> <meta property="og:type" content="website" /> <meta name="twitter:card" content="summary" /> <meta property="twitter:title" content="Lab23" /> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"WebPage","description":"FPGA, SoC, Verilog, and HLS labs","headline":"Lab23","url":"https://wei-nextlab.github.io/ParallelProgrammingLabs/docs/HLS_Labs/Lab23.html"}</script> <!-- End Jekyll SEO tag --> </head> <body> <a class="skip-to-main" href="#main-content">Skip to main content</a> <svg xmlns="http://www.w3.org/2000/svg" class="d-none"> <symbol id="svg-link" viewBox="0 0 24 24"> <title>Link</title> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"> <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path> </svg> </symbol> <symbol id="svg-menu" viewBox="0 0 24 24"> <title>Menu</title> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"> <line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line> </svg> </symbol> <symbol id="svg-arrow-right" viewBox="0 0 24 24"> <title>Expand</title> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"> <polyline points="9 18 15 12 9 6"></polyline> </svg> </symbol> <!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE --> <symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"> <title id="svg-external-link-title">(external link)</title> <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line> </symbol> <symbol id="svg-doc" viewBox="0 0 24 24"> <title>Document</title> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"> <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline> </svg> </symbol> <symbol id="svg-search" viewBox="0 0 24 24"> <title>Search</title> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"> <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line> </svg> </symbol> <!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md --> <symbol id="svg-copy" viewBox="0 0 16 16"> <title>Copy</title> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16"> <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/> <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/> </svg> </symbol> <symbol id="svg-copied" viewBox="0 0 16 16"> <title>Copied</title> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16"> <path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/> <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/> </svg> </symbol> </svg> <div class="side-bar"> <div class="site-header" role="banner"> <a href="/ParallelProgrammingLabs/" class="site-title lh-tight"> FPGA/SoC/Verilog/HLS </a> <button id="menu-button" class="site-button btn-reset" aria-label="Toggle menu" aria-pressed="false"> <svg viewBox="0 0 24 24" class="icon" aria-hidden="true"><use xlink:href="#svg-menu"></use></svg> </button> </div> <nav aria-label="Main" id="site-nav" class="site-nav"> <ul class="nav-list"><li class="nav-list-item"><a href="/ParallelProgrammingLabs/" class="nav-list-link">Home</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Preparation category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/ParallelProgrammingLabs/docs/Vitis_HLS_Tutor/" class="nav-list-link">Preparation</a><ul class="nav-list"><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Vitis_HLS_Tutor/Install_Vitis.html" class="nav-list-link">Install Vitis</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Vitis_HLS_Tutor/Create_Vitis_HLS_Prj.html" class="nav-list-link">Create Vitis HLS Project</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Vitis_HLS_Tutor/Generating_bitstream_in_Vivado.html" class="nav-list-link">Generating Bitstream in Vivado</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Vitis_HLS_Tutor/Deploying_the_Adder_on_FPGA.html" class="nav-list-link">Deploying the Adder on FPGA</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Verilog Labs (Basics) category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/" class="nav-list-link">Verilog Labs (Basics)</a><ul class="nav-list"><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/Lab1_Modeling_Concepts.html" class="nav-list-link">Lab1</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/Lab2_Addition.html" class="nav-list-link">Lab2</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/Lab3_Multi-Output%20Circuits.html" class="nav-list-link">Lab3</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/Lab4_Tasks,%20Functions,%20and%20Testbench%20.html" class="nav-list-link">Lab4</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/Lab5_Modeling%20Latches%20and%20Flip-flops%20.html" class="nav-list-link">Lab5</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/Lab6_Modeling%20Registers%20and%20Counters%20.html" class="nav-list-link">Lab6</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/Lab7_Behavioral%20Modeling%20and%20Timing%20Constraints.html" class="nav-list-link">Lab7</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/Lab8_Architectural%20Wizard%20and%20IP%20Catalog.html" class="nav-list-link">Lab8</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/Lab9_Counters,%20Timers%20and%20Real-Time%20Clock.html" class="nav-list-link">Lab9</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/Lab10_Finite%20State%20Machines%20.html" class="nav-list-link">Lab10</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Verilog_Labs/Lab11_Sequential%20System%20Design%20Using%20ASM%20Charts%20.html" class="nav-list-link">Lab11</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in FPGA/SoC Labs category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/ParallelProgrammingLabs/docs/Labs/" class="nav-list-link">FPGA/SoC Labs</a><ul class="nav-list"><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Labs/Lab1_led.html" class="nav-list-link">Lab1</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Labs/Lab2_uart.html" class="nav-list-link">Lab2</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Labs/Lab3_IO_Planning.html" class="nav-list-link">Lab3</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Labs/Lab4_ILA.html" class="nav-list-link">Lab4</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Labs/Lab5_IPI.html" class="nav-list-link">Lab5</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Labs/Lab6_DMA.html" class="nav-list-link">Lab6</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Labs/Lab7_Fibonacci_sp.html" class="nav-list-link">Lab7</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Labs/Lab8_State_Machines.html" class="nav-list-link">Lab8</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Labs/Lab9_Simple_Processor.html" class="nav-list-link">Lab9</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/Labs/Lab10_Bit-pair%20Recoded%20Multiplier.html" class="nav-list-link">Lab10</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in HLS Labs category" aria-pressed="false"> <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg> </button><a href="/ParallelProgrammingLabs/docs/HLS_Labs/" class="nav-list-link">HLS Labs</a><ul class="nav-list"><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab1.html" class="nav-list-link">Lab1</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab2.html" class="nav-list-link">Lab2</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab3.html" class="nav-list-link">Lab3</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab4.html" class="nav-list-link">Lab4</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab5.html" class="nav-list-link">Lab5</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab6.html" class="nav-list-link">Lab6</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab7.html" class="nav-list-link">Lab7</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab8.html" class="nav-list-link">Lab8</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab9.html" class="nav-list-link">Lab9</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab10.html" class="nav-list-link">Lab10</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab11.html" class="nav-list-link">Lab11</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab12.html" class="nav-list-link">Lab12</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab13.html" class="nav-list-link">Lab13</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab14.html" class="nav-list-link">Lab14</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab15.html" class="nav-list-link">Lab15</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab16.html" class="nav-list-link">Lab16</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab17.html" class="nav-list-link">Lab17</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab18.html" class="nav-list-link">Lab18</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab19.html" class="nav-list-link">Lab19</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab20.html" class="nav-list-link">Lab20</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab21.html" class="nav-list-link">Lab21</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab22.html" class="nav-list-link">Lab22</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab23.html" class="nav-list-link">Lab23</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab24.html" class="nav-list-link">Lab24</a></li><li class="nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/Lab25.html" class="nav-list-link">Lab25</a></li></ul></li></ul> </nav> <footer class="site-footer"> This site uses <a href="https://github.com/just-the-docs/just-the-docs">Just the Docs</a>, a documentation theme for Jekyll. </footer> </div> <div class="main" id="top"> <div id="main-header" class="main-header"> <div class="search" role="search"> <div class="search-input-wrap"> <input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search FPGA/SoC/Verilog/HLS" aria-label="Search FPGA/SoC/Verilog/HLS" autocomplete="off"> <label for="search-input" class="search-label"><svg viewBox="0 0 24 24" class="search-icon"><use xlink:href="#svg-search"></use></svg></label> </div> <div id="search-results" class="search-results"></div> </div> <nav aria-label="Auxiliary" class="aux-nav"> <ul class="aux-nav-list"> <li class="aux-nav-list-item"> <a href="https://github.com/wei-nextlab/ParallelProgrammingLabs" class="site-button" > GitHub Repository </a> </li> </ul> </nav> </div> <div class="main-content-wrap"> <nav aria-label="Breadcrumb" class="breadcrumb-nav"> <ol class="breadcrumb-nav-list"> <li class="breadcrumb-nav-list-item"><a href="/ParallelProgrammingLabs/docs/HLS_Labs/">HLS Labs</a></li> <li class="breadcrumb-nav-list-item"><span>Lab23</span></li> </ol> </nav> <div id="main-content" class="main-content"> <main> <h1 id="lab23-linebuffer_1"> <a href="#lab23-linebuffer_1" class="anchor-heading" aria-labelledby="lab23-linebuffer_1"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Lab23 Linebuffer_1 </h1> <script type="text/x-mathjax-config"> MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], displayMath: [ ['$$','$$'], ["\\[","\\]"] ], processEscapes: false, } }); </script> <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"> </script> <h3 id="second-way-of-linebuffer"> <a href="#second-way-of-linebuffer" class="anchor-heading" aria-labelledby="second-way-of-linebuffer"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Second way of linebuffer </h3> <p>The second way is different from the first way because we can use the data_drive to implement the <code class="language-plaintext highlighter-rouge">line buffer</code> structure. We use the 5-point to compute the Jacobi in this example, as shown below. The system view is shown below:</p> <div align="center"><img src="Images/20/8.png" alt="drawing" width="900" /></div> <p>I will explain the functions and parameters so you can understand them better. First, the buffer module aims to select the data corresponding to the location. For example, we need five parts of data from five locations, like the following:</p> <div align="center"><img src="Images/20/9.png" alt="drawing" width="300" /></div> <p>If we want to get the result of the center data, we need to get the top data, center left data, center correct data, and the bot data to compute their addition to get the new center data. We transmit data as a stream to save time reading data from DDR. So we must provide a d,ata buffer channel until we finish the computing. If the matrix size is 3×6, the output data size should be 3×6. Then we will computer the number of the center data, which is four like below. Here, we use <code class="language-plaintext highlighter-rouge">ccc</code> to replace the <code class="language-plaintext highlighter-rouge">center data</code> and <code class="language-plaintext highlighter-rouge">ccl</code> to replace the <code class="language-plaintext highlighter-rouge">center left data</code> and <code class="language-plaintext highlighter-rouge">ccr</code> to replace the <code class="language-plaintext highlighter-rouge">center right data</code>.</p> <div align="center"><img src="Images/20/10.png" alt="drawing" width="500" /></div> <p>So the <code class="language-plaintext highlighter-rouge">top_buffer</code> module only contains the first row’s data for every three rows of data, and the <code class="language-plaintext highlighter-rouge">ccl_buffer</code> module contains the center-left data for every three rows of data. And the <code class="language-plaintext highlighter-rouge">ccc_buffer</code> <code class="language-plaintext highlighter-rouge">ccr_buffer</code> and <code class="language-plaintext highlighter-rouge">bot_buffer</code>modules, respectively, contain the center data, center-right data, and bot data for every three rows of data. The <code class="language-plaintext highlighter-rouge">data_buffer</code>contains the data except the center data because the center data will be center-right, and the center data will be replaced 0 temporarily. The <code class="language-plaintext highlighter-rouge">corrector</code> modules want to move the data from all five locations to the center location so that the <code class="language-plaintext highlighter-rouge">PE_add</code> module can get all the data needed to compute. The <code class="language-plaintext highlighter-rouge">PE_add</code> module contains the new center data; other data will be 0. The <code class="language-plaintext highlighter-rouge">all_toatl</code> module will combine the data, including the center location and the new center data.</p> <p>For example, if we have the 18 data, which is a 3×6 matrix like below, we want to update the center data (yellow marked) by computing the addition.</p> <div align="center"><img src="Images/20/21.png" alt="drawing" width="300" /></div> <p>From the <code class="language-plaintext highlighter-rouge">top_buffer</code> module, we can get the <code class="language-plaintext highlighter-rouge">top_data</code> like below:</p> <div align="center"><img src="Images/20/22.png" alt="drawing" width="300" /></div> <p>From the <code class="language-plaintext highlighter-rouge">up_corrector</code> module, we can get the <code class="language-plaintext highlighter-rouge">top_data</code> like below:</p> <div align="center"><img src="Images/20/23.png" alt="drawing" width="300" /></div> <p>The other four parts of data can all be obtained by the above way.</p> <p>Every buffer module contains two functions: copy the data, transfer the input data to the next module, and choose the data from five parts of the location. The buffer module view is shown below:</p> <div align="center"><img src="Images/20/19.png" alt="drawing" width="500" /></div> <p>Every corrector module contains two functions: retaining the data from the <code class="language-plaintext highlighter-rouge">top</code> or <code class="language-plaintext highlighter-rouge">ccr</code> or <code class="language-plaintext highlighter-rouge">bot</code> location and keeping these. data the same as the center data location.</p> <div align="center"><img src="Images/20/20.png" alt="drawing" width="500" /></div> <p><strong>FIFO_buffer.hpp</strong></p> <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#ifndef __FIFO_BUFFER__
+#define __FIFO_BUFFER__
+</span>
+<span class="cp">#include</span> <span class="cpf">"linebuffer_1.h"</span><span class="cp">
+</span>
+<span class="k">template</span><span class="o">&lt;</span><span class="kt">int</span> <span class="n">PPC</span><span class="p">,</span> <span class="kt">int</span> <span class="n">width</span><span class="p">,</span> <span class="kt">int</span> <span class="n">ID</span><span class="p">&gt;</span>
+<span class="kt">void</span> <span class="nf">right_holder</span><span class="p">(</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">stream_in</span><span class="p">,</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">stream_out</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="cp">#pragma HLS INTERFACE ap_ctrl_none port=return
+#pragma HLS INTERFACE mode=AXIS port=stream_in register_mode=off
+#pragma HLS INTERFACE mode=AXIS port=stream_out register_mode=off
+#pragma HLS PIPELINE II=1 style=flp
+</span>	<span class="k">static</span> <span class="kt">bool</span> <span class="n">inite</span><span class="o">=</span><span class="nb">false</span><span class="p">;</span>
+	<span class="k">static</span> <span class="kt">int</span> <span class="n">element_counter</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+	<span class="k">static</span> <span class="kt">int</span> <span class="n">batch_counter</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+	<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">inite</span><span class="p">)</span>
+	<span class="p">{</span>
+		<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">stream_in</span><span class="p">.</span><span class="n">empty</span><span class="p">()){</span>
+			<span class="n">inite</span><span class="o">=</span><span class="nb">true</span><span class="p">;</span>
+		<span class="p">}</span>
+		<span class="n">element_counter</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+		<span class="n">batch_counter</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+	<span class="p">}</span>
+	<span class="k">else</span>
+	<span class="p">{</span>
+		<span class="n">mat</span> <span class="n">temp</span><span class="p">;</span>
+
+		<span class="k">if</span><span class="p">(</span><span class="n">batch_counter</span><span class="o">==</span><span class="n">width</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+		<span class="p">{</span>
+			<span class="k">if</span><span class="p">(</span><span class="n">element_counter</span><span class="o">==</span><span class="n">PPC</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+			<span class="p">{</span>
+				<span class="n">temp</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+				<span class="n">stream_out</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">temp</span><span class="p">);</span>
+			<span class="p">}</span>
+			<span class="k">else</span>
+			<span class="p">{</span>
+				<span class="n">temp</span><span class="o">=</span><span class="n">stream_in</span><span class="p">.</span><span class="n">read</span><span class="p">();</span>
+				<span class="n">stream_out</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">temp</span><span class="p">);</span>
+			<span class="p">}</span>
+
+		<span class="p">}</span>
+		<span class="k">else</span><span class="p">{</span>
+			<span class="n">temp</span><span class="o">=</span><span class="n">stream_in</span><span class="p">.</span><span class="n">read</span><span class="p">();</span>
+			<span class="n">stream_out</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">temp</span><span class="p">);</span>
+		<span class="p">}</span>
+		<span class="k">if</span><span class="p">(</span><span class="n">element_counter</span><span class="o">==</span><span class="n">PPC</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+		<span class="p">{</span>
+			<span class="n">element_counter</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+			<span class="k">if</span><span class="p">(</span><span class="n">batch_counter</span><span class="o">==</span><span class="n">width</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+			<span class="p">{</span>
+				<span class="n">batch_counter</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+			<span class="p">}</span>
+			<span class="k">else</span>
+			<span class="p">{</span>
+				<span class="n">batch_counter</span><span class="o">++</span><span class="p">;</span>
+			<span class="p">}</span>
+		<span class="p">}</span>
+		<span class="k">else</span>
+		<span class="p">{</span>
+
+			<span class="n">element_counter</span><span class="o">++</span><span class="p">;</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">template</span><span class="o">&lt;</span> <span class="kt">int</span> <span class="n">PPC</span><span class="p">,</span> <span class="kt">int</span> <span class="n">width</span><span class="p">,</span> <span class="kt">int</span> <span class="n">ID</span><span class="p">&gt;</span>
+<span class="kt">void</span> <span class="nf">retain_right</span><span class="p">(</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">right_stream</span><span class="p">,</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">U_left</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="cp">#pragma HLS INTERFACE ap_ctrl_none port=return
+#pragma HLS INTERFACE mode=AXIS port=right_stream register_mode=off
+#pragma HLS INTERFACE mode=AXIS port=U_left register_mode=off
+#pragma HLS PIPELINE II=1 style=flp
+</span>	<span class="k">static</span> <span class="kt">bool</span> <span class="n">inited</span><span class="o">=</span><span class="nb">false</span><span class="p">;</span>
+    <span class="k">static</span> <span class="kt">int</span> <span class="n">element_counter</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">static</span> <span class="kt">int</span> <span class="n">batch_counter</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">inited</span><span class="p">)</span>
+    <span class="p">{</span>
+    	<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">right_stream</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span>
+    	<span class="p">{</span>
+    		<span class="n">inited</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+    	<span class="p">}</span>
+    	<span class="n">element_counter</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+    	<span class="n">batch_counter</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">else</span>
+    <span class="p">{</span>
+    	<span class="n">mat</span> <span class="n">temp</span><span class="p">;</span>
+    	<span class="n">temp</span><span class="o">=</span><span class="n">right_stream</span><span class="p">.</span><span class="n">read</span><span class="p">();</span>
+    	<span class="k">if</span><span class="p">(</span><span class="n">batch_counter</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span>
+    	<span class="p">{</span>
+
+    	<span class="p">}</span>
+    	<span class="k">else</span>
+    	<span class="p">{</span>
+
+    		<span class="n">U_left</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">temp</span><span class="p">);</span>
+    	<span class="p">}</span>
+    	<span class="k">if</span><span class="p">(</span><span class="n">batch_counter</span><span class="o">==</span><span class="mi">39</span><span class="p">)</span>
+    	<span class="p">{</span>
+    		<span class="n">batch_counter</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+    	<span class="p">}</span>
+    	<span class="k">else</span>
+    	<span class="p">{</span>
+    		<span class="n">batch_counter</span><span class="o">++</span><span class="p">;</span>
+    	<span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">template</span><span class="o">&lt;</span><span class="kt">int</span> <span class="n">PPC</span><span class="p">,</span> <span class="kt">int</span> <span class="n">width</span><span class="p">,</span> <span class="kt">int</span> <span class="n">ID</span><span class="p">&gt;</span>
+<span class="kt">void</span> <span class="nf">ccr_corrector</span><span class="p">(</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;&amp;</span> <span class="n">stream_in</span><span class="p">,</span> <span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;&amp;</span> <span class="n">stream_out</span><span class="p">){</span>
+<span class="cp">#pragma HLS INTERFACE axis register_mode=off port=stream_in
+#pragma HLS INTERFACE axis register_mode=off port=stream_out
+#pragma HLS INTERFACE ap_ctrl_none port=return
+</span>
+
+    <span class="n">hls_thread_local</span> <span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="p">,</span><span class="n">total</span><span class="o">&gt;</span> <span class="n">data_path</span><span class="p">;</span>
+
+    <span class="n">hls_thread_local</span> <span class="n">hls</span><span class="o">::</span><span class="n">task</span> <span class="n">drop</span><span class="p">(</span><span class="n">retain_right</span><span class="o">&lt;</span><span class="n">PPC</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">ID</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">stream_in</span><span class="p">,</span> <span class="n">data_path</span><span class="p">);</span>
+    <span class="n">hls_thread_local</span> <span class="n">hls</span><span class="o">::</span><span class="n">task</span> <span class="n">pad_1</span><span class="p">(</span><span class="n">right_holder</span><span class="o">&lt;</span><span class="n">PPC</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">ID</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">data_path</span><span class="p">,</span> <span class="n">stream_out</span><span class="p">);</span>
+<span class="p">}</span>
+
+
+<span class="k">template</span><span class="o">&lt;</span><span class="kt">int</span> <span class="n">PPC</span><span class="p">,</span> <span class="kt">int</span> <span class="n">width</span><span class="p">,</span> <span class="kt">int</span> <span class="n">ID</span><span class="p">&gt;</span>
+<span class="kt">void</span> <span class="nf">bot_holder</span><span class="p">(</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">stream_in</span><span class="p">,</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">stream_out</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="cp">#pragma HLS INTERFACE ap_ctrl_none port=return
+#pragma HLS INTERFACE mode=AXIS port=stream_in register_mode=off
+#pragma HLS INTERFACE mode=AXIS port=stream_out register_mode=off
+#pragma HLS PIPELINE II=1 style=flp
+</span>	<span class="k">static</span> <span class="kt">bool</span> <span class="n">inite</span><span class="o">=</span><span class="nb">false</span><span class="p">;</span>
+	<span class="k">static</span> <span class="kt">int</span> <span class="n">element_counter</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+	<span class="k">static</span> <span class="kt">int</span> <span class="n">batch_counter</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+	<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">inite</span><span class="p">)</span>
+	<span class="p">{</span>
+		<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">stream_in</span><span class="p">.</span><span class="n">empty</span><span class="p">()){</span>
+			<span class="n">inite</span><span class="o">=</span><span class="nb">true</span><span class="p">;</span>
+		<span class="p">}</span>
+		<span class="n">element_counter</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+		<span class="n">batch_counter</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+	<span class="p">}</span>
+	<span class="k">else</span>
+	<span class="p">{</span>
+		<span class="n">mat</span> <span class="n">temp</span><span class="p">;</span>
+
+		<span class="k">if</span><span class="p">(</span><span class="n">batch_counter</span><span class="o">==</span><span class="n">width</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+		<span class="p">{</span>
+			<span class="n">temp</span><span class="o">=</span><span class="n">stream_in</span><span class="p">.</span><span class="n">read</span><span class="p">();</span>
+			<span class="n">stream_out</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">temp</span><span class="p">);</span>
+		<span class="p">}</span>
+		<span class="k">else</span><span class="p">{</span>
+			<span class="n">temp</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+			<span class="n">stream_out</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">temp</span><span class="p">);</span>
+		<span class="p">}</span>
+		<span class="k">if</span><span class="p">(</span><span class="n">element_counter</span><span class="o">==</span><span class="n">PPC</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+		<span class="p">{</span>
+			<span class="n">element_counter</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+			<span class="k">if</span><span class="p">(</span><span class="n">batch_counter</span><span class="o">==</span><span class="n">width</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+			<span class="p">{</span>
+				<span class="n">batch_counter</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+			<span class="p">}</span>
+			<span class="k">else</span>
+			<span class="p">{</span>
+				<span class="n">batch_counter</span><span class="o">++</span><span class="p">;</span>
+			<span class="p">}</span>
+		<span class="p">}</span>
+		<span class="k">else</span>
+		<span class="p">{</span>
+			<span class="n">element_counter</span><span class="o">++</span><span class="p">;</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">template</span><span class="o">&lt;</span> <span class="kt">int</span> <span class="n">PPC</span><span class="p">,</span> <span class="kt">int</span> <span class="n">width</span><span class="p">,</span> <span class="kt">int</span> <span class="n">ID</span><span class="p">&gt;</span>
+<span class="kt">void</span> <span class="nf">retain_bot</span><span class="p">(</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">stream_in</span><span class="p">,</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">stream_bot</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="cp">#pragma HLS INTERFACE ap_ctrl_none port=return
+#pragma HLS INTERFACE mode=AXIS port=stream_in register_mode=off
+#pragma HLS INTERFACE mode=AXIS port=stream_bot register_mode=off
+#pragma HLS PIPELINE II=1 style=flp
+</span>
+	<span class="k">static</span> <span class="kt">bool</span> <span class="n">inite</span><span class="o">=</span><span class="nb">false</span><span class="p">;</span>
+	<span class="k">static</span> <span class="kt">int</span> <span class="n">counter</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+	<span class="k">static</span> <span class="kt">int</span> <span class="n">row_counter</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+	<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">inite</span><span class="p">)</span>
+	<span class="p">{</span>
+		<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">stream_in</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span>
+		<span class="p">{</span>
+			<span class="n">inite</span><span class="o">=</span><span class="nb">true</span><span class="p">;</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+	<span class="k">else</span>
+	<span class="p">{</span>
+		<span class="n">mat</span> <span class="n">temp</span><span class="p">;</span>
+		<span class="n">temp</span><span class="o">=</span><span class="n">stream_in</span><span class="p">.</span><span class="n">read</span><span class="p">();</span>
+		<span class="k">if</span><span class="p">(</span><span class="n">row_counter</span><span class="o">&lt;</span><span class="n">width</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+		<span class="p">{</span>
+
+		<span class="p">}</span>
+		<span class="k">else</span>
+		<span class="p">{</span>
+			<span class="n">stream_bot</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">temp</span><span class="p">);</span>
+		<span class="p">}</span>
+		<span class="k">if</span><span class="p">(</span><span class="n">counter</span><span class="o">==</span><span class="n">PPC</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+		<span class="p">{</span>
+			<span class="n">counter</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+			<span class="k">if</span><span class="p">(</span><span class="n">row_counter</span><span class="o">==</span><span class="n">width</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+			<span class="p">{</span>
+				<span class="n">row_counter</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+			<span class="p">}</span>
+			<span class="k">else</span>
+			<span class="p">{</span>
+				<span class="n">row_counter</span><span class="o">++</span><span class="p">;</span>
+			<span class="p">}</span>
+		<span class="p">}</span>
+		<span class="k">else</span>
+		<span class="p">{</span>
+			<span class="n">counter</span><span class="o">++</span><span class="p">;</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+<span class="k">template</span><span class="o">&lt;</span><span class="kt">int</span> <span class="n">PPC</span><span class="p">,</span> <span class="kt">int</span> <span class="n">width</span><span class="p">,</span> <span class="kt">int</span> <span class="n">ID</span><span class="p">&gt;</span>
+<span class="kt">void</span> <span class="nf">bot_corrector</span><span class="p">(</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;&amp;</span> <span class="n">stream_in</span><span class="p">,</span> <span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;&amp;</span> <span class="n">stream_out</span><span class="p">){</span>
+<span class="cp">#pragma HLS INTERFACE axis register_mode=off port=stream_in
+#pragma HLS INTERFACE axis register_mode=off port=stream_out
+#pragma HLS INTERFACE ap_ctrl_none port=return
+</span>    <span class="n">hls_thread_local</span> <span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="p">,</span><span class="n">total</span><span class="o">&gt;</span> <span class="n">data_path</span><span class="p">;</span>
+
+    <span class="n">hls_thread_local</span> <span class="n">hls</span><span class="o">::</span><span class="n">task</span> <span class="n">drop</span><span class="p">(</span><span class="n">retain_bot</span><span class="o">&lt;</span><span class="n">PPC</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">ID</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">stream_in</span><span class="p">,</span> <span class="n">data_path</span><span class="p">);</span>
+    <span class="n">hls_thread_local</span> <span class="n">hls</span><span class="o">::</span><span class="n">task</span> <span class="n">pad_1</span><span class="p">(</span><span class="n">bot_holder</span><span class="o">&lt;</span><span class="n">PPC</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">ID</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">data_path</span><span class="p">,</span> <span class="n">stream_out</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">template</span><span class="o">&lt;</span><span class="kt">int</span> <span class="n">PPC</span><span class="p">,</span> <span class="kt">int</span> <span class="n">width</span><span class="p">,</span><span class="kt">int</span> <span class="n">ID</span><span class="p">&gt;</span>
+<span class="kt">void</span> <span class="nf">up_holder</span><span class="p">(</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">stream_in</span><span class="p">,</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">stream_out</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="cp">#pragma HLS INTERFACE ap_ctrl_none port=return
+#pragma HLS INTERFACE mode=AXIS port=stream_in register_mode=off
+#pragma HLS INTERFACE mode=AXIS port=stream_out register_mode=off
+#pragma HLS PIPELINE II=1 style=flp
+</span>	<span class="k">static</span> <span class="kt">bool</span> <span class="n">inite</span><span class="o">=</span><span class="nb">false</span><span class="p">;</span>
+	<span class="k">static</span> <span class="kt">int</span> <span class="n">element_counter</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+	<span class="k">static</span> <span class="kt">int</span> <span class="n">batch_counter</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+	<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">inite</span><span class="p">)</span>
+	<span class="p">{</span>
+		<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">stream_in</span><span class="p">.</span><span class="n">empty</span><span class="p">()){</span>
+			<span class="n">inite</span><span class="o">=</span><span class="nb">true</span><span class="p">;</span>
+		<span class="p">}</span>
+		<span class="n">element_counter</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+		<span class="n">batch_counter</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+	<span class="p">}</span>
+	<span class="k">else</span>
+	<span class="p">{</span>
+		<span class="n">mat</span> <span class="n">temp</span><span class="p">;</span>
+
+		<span class="k">if</span><span class="p">(</span><span class="n">batch_counter</span><span class="o">&gt;</span><span class="mi">0</span><span class="o">&amp;&amp;</span><span class="n">batch_counter</span><span class="o">&lt;</span><span class="n">width</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+		<span class="p">{</span>
+			<span class="n">temp</span><span class="o">=</span><span class="n">stream_in</span><span class="p">.</span><span class="n">read</span><span class="p">();</span>
+			<span class="n">stream_out</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">temp</span><span class="p">);</span>
+		<span class="p">}</span>
+		<span class="k">else</span><span class="p">{</span>
+			<span class="n">temp</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+			<span class="n">stream_out</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">temp</span><span class="p">);</span>
+		<span class="p">}</span>
+		<span class="k">if</span><span class="p">(</span><span class="n">element_counter</span><span class="o">==</span><span class="n">PPC</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+		<span class="p">{</span>
+			<span class="n">element_counter</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+			<span class="k">if</span><span class="p">(</span><span class="n">batch_counter</span><span class="o">==</span><span class="n">width</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+			<span class="p">{</span>
+				<span class="n">batch_counter</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+			<span class="p">}</span>
+			<span class="k">else</span>
+			<span class="p">{</span>
+				<span class="n">batch_counter</span><span class="o">++</span><span class="p">;</span>
+			<span class="p">}</span>
+		<span class="p">}</span>
+		<span class="k">else</span>
+		<span class="p">{</span>
+			<span class="n">element_counter</span><span class="o">++</span><span class="p">;</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">template</span><span class="o">&lt;</span> <span class="kt">int</span> <span class="n">PPC</span><span class="p">,</span> <span class="kt">int</span> <span class="n">width</span><span class="p">,</span> <span class="kt">int</span> <span class="n">ID</span><span class="p">&gt;</span>
+<span class="kt">void</span> <span class="nf">retain_up</span><span class="p">(</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">stream_in</span><span class="p">,</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">stream_bot</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="cp">#pragma HLS INTERFACE ap_ctrl_none port=return
+#pragma HLS INTERFACE mode=AXIS port=stream_in register_mode=off
+#pragma HLS INTERFACE mode=AXIS port=stream_bot register_mode=off
+#pragma HLS PIPELINE II=1 style=flp
+</span>
+	<span class="k">static</span> <span class="kt">bool</span> <span class="n">inite</span><span class="o">=</span><span class="nb">false</span><span class="p">;</span>
+	<span class="k">static</span> <span class="kt">int</span> <span class="n">counter</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+	<span class="k">static</span> <span class="kt">int</span> <span class="n">row_counter</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+	<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">inite</span><span class="p">)</span>
+	<span class="p">{</span>
+		<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">stream_in</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span>
+		<span class="p">{</span>
+			<span class="n">inite</span><span class="o">=</span><span class="nb">true</span><span class="p">;</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+	<span class="k">else</span>
+	<span class="p">{</span>
+		<span class="n">mat</span> <span class="n">temp</span><span class="p">;</span>
+		<span class="n">temp</span><span class="o">=</span><span class="n">stream_in</span><span class="p">.</span><span class="n">read</span><span class="p">();</span>
+
+		<span class="k">if</span><span class="p">(</span><span class="n">row_counter</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span>
+		<span class="p">{</span>
+			<span class="n">stream_bot</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">temp</span><span class="p">);</span>
+		<span class="p">}</span>
+		<span class="k">else</span>
+		<span class="p">{</span>
+
+		<span class="p">}</span>
+		<span class="k">if</span><span class="p">(</span><span class="n">counter</span><span class="o">==</span><span class="n">PPC</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+		<span class="p">{</span>
+			<span class="n">counter</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+			<span class="k">if</span><span class="p">(</span><span class="n">row_counter</span><span class="o">==</span><span class="n">width</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+			<span class="p">{</span>
+				<span class="n">row_counter</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+			<span class="p">}</span>
+			<span class="k">else</span>
+			<span class="p">{</span>
+				<span class="n">row_counter</span><span class="o">++</span><span class="p">;</span>
+			<span class="p">}</span>
+		<span class="p">}</span>
+		<span class="k">else</span>
+		<span class="p">{</span>
+			<span class="n">counter</span><span class="o">++</span><span class="p">;</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">template</span><span class="o">&lt;</span><span class="kt">int</span> <span class="n">PPC</span><span class="p">,</span> <span class="kt">int</span> <span class="n">width</span><span class="p">,</span> <span class="kt">int</span> <span class="n">ID</span><span class="p">&gt;</span>
+<span class="kt">void</span> <span class="nf">up_corrector</span><span class="p">(</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;&amp;</span> <span class="n">stream_in</span><span class="p">,</span> <span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;&amp;</span> <span class="n">stream_out</span><span class="p">){</span>
+<span class="cp">#pragma HLS INTERFACE axis register_mode=off port=stream_in
+#pragma HLS INTERFACE axis register_mode=off port=stream_out
+#pragma HLS INTERFACE ap_ctrl_none port=return
+</span>
+    <span class="n">hls_thread_local</span> <span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="p">,</span><span class="n">total</span><span class="o">&gt;</span> <span class="n">data_path</span><span class="p">;</span>
+
+    <span class="n">hls_thread_local</span> <span class="n">hls</span><span class="o">::</span><span class="n">task</span> <span class="n">drop</span><span class="p">(</span><span class="n">retain_up</span><span class="o">&lt;</span><span class="n">PPC</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">ID</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">stream_in</span><span class="p">,</span> <span class="n">data_path</span><span class="p">);</span>
+    <span class="n">hls_thread_local</span> <span class="n">hls</span><span class="o">::</span><span class="n">task</span> <span class="n">pad_1</span><span class="p">(</span><span class="n">up_holder</span><span class="o">&lt;</span><span class="n">PPC</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">ID</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">data_path</span><span class="p">,</span> <span class="n">stream_out</span><span class="p">);</span>
+
+<span class="p">}</span>
+
+<span class="k">template</span><span class="o">&lt;</span><span class="kt">int</span> <span class="n">ID</span><span class="p">&gt;</span>
+<span class="kt">void</span> <span class="nf">data_copy</span><span class="p">(</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">stream_in</span><span class="p">,</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">stream_1</span><span class="p">,</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">stream_2</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="cp">#pragma HLS INTERFACE ap_ctrl_none port=return
+#pragma HLS INTERFACE mode=AXIS port=stream_1 register_mode=off
+#pragma HLS INTERFACE mode=AXIS port=stream_2 register_mode=off
+#pragma HLS PIPELINE II=1 style=flp
+</span>
+	<span class="n">mat</span> <span class="n">temp</span><span class="p">;</span>
+	<span class="n">temp</span><span class="o">=</span><span class="n">stream_in</span><span class="p">.</span><span class="n">read</span><span class="p">();</span>
+	<span class="n">stream_1</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">temp</span><span class="p">);</span>
+	<span class="n">stream_2</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">temp</span><span class="p">);</span>
+
+<span class="p">}</span>
+
+<span class="k">template</span><span class="o">&lt;</span><span class="kt">int</span> <span class="n">ID</span><span class="p">&gt;</span>
+<span class="kt">void</span> <span class="nf">PE_add</span><span class="p">(</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">up_in</span><span class="p">,</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">cl_in</span><span class="p">,</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">cc_in</span><span class="p">,</span>
+		<span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">cr_in</span><span class="p">,</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">b_in</span><span class="p">,</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">out</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="cp">#pragma HLS INTERFACE ap_ctrl_none port=return
+#pragma HLS INTERFACE mode=axis port=up_in
+#pragma HLS INTERFACE mode=axis port=cl_in
+#pragma HLS INTERFACE mode=axis port=cc_in
+#pragma HLS INTERFACE mode=axis port=cr_in
+#pragma HLS INTERFACE mode=axis port=b_in
+#pragma HLS INTERFACE mode=axis port=out
+#pragma HLS PIPELINE II=1 style=flp
+</span><span class="k">static</span>	<span class="n">mat</span> <span class="n">up</span><span class="p">,</span><span class="n">cl</span><span class="p">,</span><span class="n">cc</span><span class="p">,</span><span class="n">cr</span><span class="p">,</span><span class="n">b</span><span class="p">;</span>
+<span class="k">static</span>	<span class="n">mat</span> <span class="n">sum</span><span class="p">;</span>
+
+	<span class="n">up</span><span class="o">=</span><span class="n">up_in</span><span class="p">.</span><span class="n">read</span><span class="p">();</span>
+	<span class="n">cl</span><span class="o">=</span><span class="n">cl_in</span><span class="p">.</span><span class="n">read</span><span class="p">();</span>
+	<span class="n">cc</span><span class="o">=</span><span class="n">cc_in</span><span class="p">.</span><span class="n">read</span><span class="p">();</span>
+	<span class="n">cr</span><span class="o">=</span><span class="n">cr_in</span><span class="p">.</span><span class="n">read</span><span class="p">();</span>
+	<span class="n">b</span><span class="o">=</span><span class="n">b_in</span><span class="p">.</span><span class="n">read</span><span class="p">();</span>
+
+	<span class="n">sum</span><span class="o">=</span><span class="n">up</span><span class="o">+</span><span class="n">cl</span><span class="o">+</span><span class="n">cc</span><span class="o">+</span><span class="n">cr</span><span class="o">+</span><span class="n">b</span><span class="p">;</span>
+
+	<span class="n">out</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">sum</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">template</span><span class="o">&lt;</span><span class="kt">int</span> <span class="n">ID</span><span class="p">&gt;</span>
+<span class="kt">void</span> <span class="nf">all_total</span><span class="p">(</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;&amp;</span> <span class="n">stream_in</span><span class="p">,</span> <span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;&amp;</span> <span class="n">stream_in1</span><span class="p">,</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;&amp;</span> <span class="n">stream_out</span><span class="p">)</span>
+<span class="p">{</span>
+
+<span class="cp">#pragma HLS INTERFACE ap_ctrl_none port=return
+#pragma HLS INTERFACE mode=axis port=stream_in register_mode=off
+#pragma HLS INTERFACE mode=axis port=stream_in1 register_mode=off
+#pragma HLS INTERFACE mode=axis port=stream_out register_mode=off
+#pragma HLS PIPELINE II=1 style=flp
+</span><span class="k">static</span>	<span class="n">mat</span> <span class="n">add1</span><span class="p">,</span><span class="n">add2</span><span class="p">;</span>
+<span class="k">static</span>	<span class="n">mat</span> <span class="n">sum</span><span class="p">;</span>
+
+	<span class="n">add1</span><span class="o">=</span><span class="n">stream_in</span><span class="p">.</span><span class="n">read</span><span class="p">();</span>
+	<span class="n">add2</span><span class="o">=</span><span class="n">stream_in1</span><span class="p">.</span><span class="n">read</span><span class="p">();</span>
+
+	<span class="n">sum</span><span class="o">=</span><span class="n">add1</span><span class="o">+</span><span class="n">add2</span><span class="p">;</span>
+
+	<span class="n">stream_out</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">sum</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">template</span><span class="o">&lt;</span><span class="kt">int</span> <span class="n">ID</span><span class="p">&gt;</span>
+<span class="kt">void</span> <span class="nf">ccl_holder</span><span class="p">(</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">stream_in</span><span class="p">,</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">stream_out</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="cp">#pragma HLS INTERFACE ap_ctrl_none port=return
+#pragma HLS INTERFACE mode=AXIS port=stream_in register_mode=off
+#pragma HLS INTERFACE mode=AXIS port=stream_out register_mode=off
+#pragma HLS PIPELINE II=1 style=flp
+</span>
+		<span class="k">static</span> <span class="kt">bool</span> <span class="n">inite</span><span class="o">=</span><span class="nb">false</span><span class="p">;</span>
+		<span class="k">static</span> <span class="kt">int</span> <span class="n">counter</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+
+		<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">inite</span><span class="p">)</span>
+		<span class="p">{</span>
+			<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">stream_in</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span>
+			<span class="p">{</span>
+				<span class="n">inite</span><span class="o">=</span><span class="nb">true</span><span class="p">;</span>
+			<span class="p">}</span>
+		<span class="p">}</span>
+		<span class="k">else</span>
+		<span class="p">{</span>
+			<span class="n">mat</span> <span class="n">temp</span><span class="p">;</span>
+
+			<span class="k">if</span><span class="p">(</span><span class="n">counter</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span>
+			<span class="p">{</span>
+				<span class="n">temp</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+				<span class="n">stream_out</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">temp</span><span class="p">);</span>
+			<span class="p">}</span>
+			<span class="k">else</span>
+			<span class="p">{</span>
+				<span class="n">temp</span><span class="o">=</span><span class="n">stream_in</span><span class="p">.</span><span class="n">read</span><span class="p">();</span>
+				<span class="n">stream_out</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">temp</span><span class="p">);</span>
+			<span class="p">}</span>
+			<span class="n">counter</span><span class="o">++</span><span class="p">;</span>
+		<span class="p">}</span>
+<span class="p">}</span>
+
+<span class="cp">#endif
+</span></code></pre></div></div> <p><strong>module.cpp</strong></p> <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">"linebuffer_1.h"</span><span class="cp">
+</span>
+<span class="kt">void</span> <span class="nf">buffer_top</span><span class="p">(</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">stream_in</span><span class="p">,</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">stream_up</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="cp">#pragma HLS INTERFACE ap_ctrl_none port=return
+#pragma HLS INTERFACE mode=AXIS port=stream_in register_mode=off
+#pragma HLS INTERFACE mode=AXIS port=stream_up register_mode=off
+#pragma HLS PIPELINE II=1 style=flp
+</span>
+	<span class="k">static</span> <span class="kt">bool</span> <span class="n">inite</span><span class="o">=</span><span class="nb">false</span><span class="p">;</span>
+	<span class="k">static</span> <span class="kt">int</span> <span class="n">counter</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+	<span class="k">static</span> <span class="kt">int</span> <span class="n">row_counter</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+	<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">inite</span><span class="p">)</span>
+	<span class="p">{</span>
+		<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">stream_in</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span>
+		<span class="p">{</span>
+			<span class="n">inite</span><span class="o">=</span><span class="nb">true</span><span class="p">;</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+	<span class="k">else</span>
+	<span class="p">{</span>
+		<span class="n">mat</span> <span class="n">temp</span><span class="p">;</span>
+		<span class="n">temp</span><span class="o">=</span><span class="n">stream_in</span><span class="p">.</span><span class="n">read</span><span class="p">();</span>
+		<span class="k">if</span><span class="p">(</span><span class="n">row_counter</span><span class="o">&lt;</span><span class="n">HEIGHT</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+		<span class="p">{</span>
+			<span class="k">if</span><span class="p">(</span><span class="n">counter</span><span class="o">==</span><span class="mi">0</span><span class="o">||</span><span class="n">counter</span><span class="o">==</span><span class="n">WIDTH</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+			<span class="p">{</span>
+				<span class="n">temp</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+				<span class="n">stream_up</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">temp</span><span class="p">);</span>
+			<span class="p">}</span>
+			<span class="k">else</span>
+			<span class="p">{</span>
+				<span class="n">stream_up</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">temp</span><span class="p">);</span>
+			<span class="p">}</span>
+
+
+		<span class="p">}</span>
+		<span class="k">else</span>
+		<span class="p">{</span>
+			<span class="n">temp</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+			<span class="n">stream_up</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">temp</span><span class="p">);</span>
+		<span class="p">}</span>
+		<span class="k">if</span><span class="p">(</span><span class="n">counter</span><span class="o">==</span><span class="n">WIDTH</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+		<span class="p">{</span>
+			<span class="n">counter</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+			<span class="k">if</span><span class="p">(</span><span class="n">row_counter</span><span class="o">==</span><span class="n">HEIGHT</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+			<span class="p">{</span>
+				<span class="n">row_counter</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+			<span class="p">}</span>
+			<span class="k">else</span>
+			<span class="p">{</span>
+				<span class="n">row_counter</span><span class="o">++</span><span class="p">;</span>
+			<span class="p">}</span>
+		<span class="p">}</span>
+		<span class="k">else</span>
+		<span class="p">{</span>
+			<span class="n">counter</span><span class="o">++</span><span class="p">;</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+
+
+
+<span class="kt">void</span> <span class="nf">top_buffer</span><span class="p">(</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">stream_in</span><span class="p">,</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">stream_R</span><span class="p">,</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">stream_top</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="cp">#pragma HLS INTERFACE ap_ctrl_none port=return
+#pragma HLS INTERFACE mode=AXIS port=stream_in register_mode=off
+#pragma HLS INTERFACE mode=AXIS port=stream_R register_mode=off
+#pragma HLS INTERFACE mode=AXIS port=stream_top register_mode=off
+</span>
+	<span class="n">hls_thread_local</span> <span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="p">,</span><span class="n">total</span><span class="o">&gt;</span> <span class="n">buffer_up</span><span class="p">,</span><span class="n">top</span><span class="p">,</span><span class="n">fl</span><span class="p">,</span><span class="n">top_data</span><span class="p">;</span>
+	<span class="n">hls_thread_local</span> <span class="n">hls</span><span class="o">::</span><span class="n">task</span>	<span class="n">data_0</span><span class="p">(</span><span class="n">data_copy</span><span class="o">&lt;</span><span class="mi">0</span><span class="o">&gt;</span><span class="p">,</span><span class="n">stream_in</span><span class="p">,</span><span class="n">buffer_up</span><span class="p">,</span><span class="n">stream_R</span><span class="p">);</span>
+	<span class="n">hls_thread_local</span> <span class="n">hls</span><span class="o">::</span><span class="n">task</span>  <span class="n">top_1</span><span class="p">(</span><span class="n">buffer_top</span><span class="p">,</span><span class="n">buffer_up</span><span class="p">,</span><span class="n">stream_top</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">buffer_ccl</span><span class="p">(</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">stream_in</span><span class="p">,</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">stream_up</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="cp">#pragma HLS INTERFACE ap_ctrl_none port=return
+#pragma HLS INTERFACE mode=AXIS port=stream_in register_mode=off
+#pragma HLS INTERFACE mode=AXIS port=stream_up register_mode=off
+#pragma HLS PIPELINE II=1 style=flp
+</span>
+	<span class="k">static</span> <span class="kt">bool</span> <span class="n">inite</span><span class="o">=</span><span class="nb">false</span><span class="p">;</span>
+	<span class="k">static</span> <span class="kt">int</span> <span class="n">counter</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+	<span class="k">static</span> <span class="kt">int</span> <span class="n">row_counter</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+	<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">inite</span><span class="p">)</span>
+	<span class="p">{</span>
+		<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">stream_in</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span>
+		<span class="p">{</span>
+			<span class="n">inite</span><span class="o">=</span><span class="nb">true</span><span class="p">;</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+	<span class="k">else</span>
+	<span class="p">{</span>
+		<span class="n">mat</span> <span class="n">temp</span><span class="p">;</span>
+		<span class="n">temp</span><span class="o">=</span><span class="n">stream_in</span><span class="p">.</span><span class="n">read</span><span class="p">();</span>
+		<span class="k">if</span><span class="p">(</span><span class="n">row_counter</span><span class="o">&gt;</span><span class="mi">0</span><span class="o">&amp;&amp;</span><span class="n">row_counter</span><span class="o">&lt;</span><span class="n">HEIGHT</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+		<span class="p">{</span>
+			<span class="k">if</span><span class="p">(</span><span class="n">counter</span><span class="o">&lt;</span><span class="n">WIDTH</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+			<span class="p">{</span>
+				<span class="n">stream_up</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">temp</span><span class="p">);</span>
+			<span class="p">}</span>
+			<span class="k">else</span>
+			<span class="p">{</span>
+				<span class="n">temp</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+				<span class="n">stream_up</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">temp</span><span class="p">);</span>
+			<span class="p">}</span>
+		<span class="p">}</span>
+		<span class="k">else</span>
+		<span class="p">{</span>
+			<span class="n">temp</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+			<span class="n">stream_up</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">temp</span><span class="p">);</span>
+		<span class="p">}</span>
+		<span class="k">if</span><span class="p">(</span><span class="n">counter</span><span class="o">==</span><span class="n">WIDTH</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+		<span class="p">{</span>
+			<span class="n">counter</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+			<span class="k">if</span><span class="p">(</span><span class="n">row_counter</span><span class="o">==</span><span class="n">HEIGHT</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+			<span class="p">{</span>
+				<span class="n">row_counter</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+			<span class="p">}</span>
+			<span class="k">else</span>
+			<span class="p">{</span>
+				<span class="n">row_counter</span><span class="o">++</span><span class="p">;</span>
+			<span class="p">}</span>
+		<span class="p">}</span>
+		<span class="k">else</span>
+		<span class="p">{</span>
+			<span class="n">counter</span><span class="o">++</span><span class="p">;</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">ccl_buffer</span><span class="p">(</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">stream_in</span><span class="p">,</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">stream_R</span><span class="p">,</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">stream_ccc</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="cp">#pragma HLS INTERFACE ap_ctrl_none port=return
+#pragma HLS INTERFACE mode=AXIS port=stream_in register_mode=off
+#pragma HLS INTERFACE mode=AXIS port=stream_R register_mode=off
+#pragma HLS INTERFACE mode=AXIS port=stream_ccc register_mode=off
+</span>
+	<span class="n">hls_thread_local</span> <span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="p">,</span><span class="n">total</span><span class="o">&gt;</span> <span class="n">ccl</span><span class="p">,</span><span class="n">ccl_choose</span><span class="p">;</span>
+
+	<span class="n">hls_thread_local</span> <span class="n">hls</span><span class="o">::</span><span class="n">task</span>	<span class="n">data_1</span><span class="p">(</span><span class="n">data_copy</span><span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;</span><span class="p">,</span><span class="n">stream_in</span><span class="p">,</span><span class="n">ccl</span><span class="p">,</span><span class="n">stream_R</span><span class="p">);</span>
+	<span class="n">hls_thread_local</span> <span class="n">hls</span><span class="o">::</span><span class="n">task</span>	<span class="n">data_ccc</span><span class="p">(</span><span class="n">buffer_ccl</span><span class="p">,</span><span class="n">ccl</span><span class="p">,</span><span class="n">ccl_choose</span><span class="p">);</span>
+	<span class="n">hls_thread_local</span> <span class="n">hls</span><span class="o">::</span><span class="n">task</span>	<span class="n">ccl_1</span><span class="p">(</span><span class="n">ccl_holder</span><span class="o">&lt;</span><span class="mi">0</span><span class="o">&gt;</span><span class="p">,</span><span class="n">ccl_choose</span><span class="p">,</span><span class="n">stream_ccc</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">buffer_ccc</span><span class="p">(</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">stream_in</span><span class="p">,</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">stream_up</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="cp">#pragma HLS INTERFACE ap_ctrl_none port=return
+#pragma HLS INTERFACE mode=AXIS port=stream_in register_mode=off
+#pragma HLS INTERFACE mode=AXIS port=stream_up register_mode=off
+#pragma HLS PIPELINE II=1 style=flp
+</span>
+	<span class="k">static</span> <span class="kt">bool</span> <span class="n">inite</span><span class="o">=</span><span class="nb">false</span><span class="p">;</span>
+	<span class="k">static</span> <span class="kt">int</span> <span class="n">counter</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+	<span class="k">static</span> <span class="kt">int</span> <span class="n">row_counter</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+	<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">inite</span><span class="p">)</span>
+	<span class="p">{</span>
+		<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">stream_in</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span>
+		<span class="p">{</span>
+			<span class="n">inite</span><span class="o">=</span><span class="nb">true</span><span class="p">;</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+	<span class="k">else</span>
+	<span class="p">{</span>
+		<span class="n">mat</span> <span class="n">temp</span><span class="p">;</span>
+		<span class="n">temp</span><span class="o">=</span><span class="n">stream_in</span><span class="p">.</span><span class="n">read</span><span class="p">();</span>
+		<span class="k">if</span><span class="p">(</span><span class="n">row_counter</span><span class="o">&gt;</span><span class="mi">0</span><span class="o">&amp;&amp;</span><span class="n">row_counter</span><span class="o">&lt;</span><span class="n">HEIGHT</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+		<span class="p">{</span>
+			<span class="k">if</span><span class="p">(</span><span class="n">counter</span><span class="o">&gt;</span><span class="mi">0</span><span class="o">&amp;&amp;</span><span class="n">counter</span><span class="o">&lt;</span><span class="n">WIDTH</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+			<span class="p">{</span>
+				<span class="n">stream_up</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">temp</span><span class="p">);</span>
+			<span class="p">}</span>
+			<span class="k">else</span>
+			<span class="p">{</span>
+				<span class="n">temp</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+				<span class="n">stream_up</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">temp</span><span class="p">);</span>
+			<span class="p">}</span>
+		<span class="p">}</span>
+		<span class="k">else</span>
+		<span class="p">{</span>
+			<span class="n">temp</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+			<span class="n">stream_up</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">temp</span><span class="p">);</span>
+		<span class="p">}</span>
+		<span class="k">if</span><span class="p">(</span><span class="n">counter</span><span class="o">==</span><span class="n">WIDTH</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+		<span class="p">{</span>
+			<span class="n">counter</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+			<span class="k">if</span><span class="p">(</span><span class="n">row_counter</span><span class="o">==</span><span class="n">HEIGHT</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+			<span class="p">{</span>
+				<span class="n">row_counter</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+			<span class="p">}</span>
+			<span class="k">else</span>
+			<span class="p">{</span>
+				<span class="n">row_counter</span><span class="o">++</span><span class="p">;</span>
+			<span class="p">}</span>
+		<span class="p">}</span>
+		<span class="k">else</span>
+		<span class="p">{</span>
+			<span class="n">counter</span><span class="o">++</span><span class="p">;</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">ccc_buffer</span><span class="p">(</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">stream_in</span><span class="p">,</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">stream_R</span><span class="p">,</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">stream_ccc</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="cp">#pragma HLS INTERFACE ap_ctrl_none port=return
+#pragma HLS INTERFACE mode=AXIS port=stream_in register_mode=off
+#pragma HLS INTERFACE mode=AXIS port=stream_R register_mode=off
+#pragma HLS INTERFACE mode=AXIS port=stream_ccc register_mode=off
+</span>
+
+	<span class="n">hls_thread_local</span> <span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="p">,</span><span class="n">total</span><span class="o">&gt;</span> <span class="n">ccc_data</span><span class="p">;</span>
+
+	<span class="n">hls_thread_local</span> <span class="n">hls</span><span class="o">::</span><span class="n">task</span>	<span class="n">data_2</span><span class="p">(</span><span class="n">data_copy</span><span class="o">&lt;</span><span class="mi">2</span><span class="o">&gt;</span><span class="p">,</span><span class="n">stream_in</span><span class="p">,</span><span class="n">ccc_data</span><span class="p">,</span><span class="n">stream_R</span><span class="p">);</span>
+	<span class="n">hls_thread_local</span> <span class="n">hls</span><span class="o">::</span><span class="n">task</span>	<span class="n">data_ccc</span><span class="p">(</span><span class="n">buffer_ccc</span><span class="p">,</span><span class="n">ccc_data</span><span class="p">,</span><span class="n">stream_ccc</span><span class="p">);</span>
+
+<span class="p">}</span>
+
+
+<span class="kt">void</span> <span class="nf">buffer_ccr</span><span class="p">(</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">stream_in</span><span class="p">,</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">stream_up</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="cp">#pragma HLS INTERFACE ap_ctrl_none port=return
+#pragma HLS INTERFACE mode=AXIS port=stream_in register_mode=off
+#pragma HLS INTERFACE mode=AXIS port=stream_up register_mode=off
+#pragma HLS PIPELINE II=1 style=flp
+</span>
+	<span class="k">static</span> <span class="kt">bool</span> <span class="n">inite</span><span class="o">=</span><span class="nb">false</span><span class="p">;</span>
+	<span class="k">static</span> <span class="kt">int</span> <span class="n">counter</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+	<span class="k">static</span> <span class="kt">int</span> <span class="n">row_counter</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+	<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">inite</span><span class="p">)</span>
+	<span class="p">{</span>
+		<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">stream_in</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span>
+		<span class="p">{</span>
+			<span class="n">inite</span><span class="o">=</span><span class="nb">true</span><span class="p">;</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+	<span class="k">else</span>
+	<span class="p">{</span>
+		<span class="n">mat</span> <span class="n">temp</span><span class="p">;</span>
+		<span class="n">temp</span><span class="o">=</span><span class="n">stream_in</span><span class="p">.</span><span class="n">read</span><span class="p">();</span>
+		<span class="k">if</span><span class="p">(</span><span class="n">row_counter</span><span class="o">&gt;</span><span class="mi">0</span><span class="o">&amp;&amp;</span><span class="n">row_counter</span><span class="o">&lt;</span><span class="n">HEIGHT</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+		<span class="p">{</span>
+			<span class="k">if</span><span class="p">(</span><span class="n">counter</span><span class="o">&gt;</span><span class="mi">1</span><span class="p">)</span>
+			<span class="p">{</span>
+				<span class="n">stream_up</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">temp</span><span class="p">);</span>
+			<span class="p">}</span>
+			<span class="k">else</span>
+			<span class="p">{</span>
+				<span class="n">temp</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+				<span class="n">stream_up</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">temp</span><span class="p">);</span>
+			<span class="p">}</span>
+		<span class="p">}</span>
+		<span class="k">else</span>
+		<span class="p">{</span>
+			<span class="n">temp</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+			<span class="n">stream_up</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">temp</span><span class="p">);</span>
+		<span class="p">}</span>
+		<span class="k">if</span><span class="p">(</span><span class="n">counter</span><span class="o">==</span><span class="n">WIDTH</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+		<span class="p">{</span>
+			<span class="n">counter</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+			<span class="k">if</span><span class="p">(</span><span class="n">row_counter</span><span class="o">==</span><span class="n">HEIGHT</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+			<span class="p">{</span>
+				<span class="n">row_counter</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+			<span class="p">}</span>
+			<span class="k">else</span>
+			<span class="p">{</span>
+				<span class="n">row_counter</span><span class="o">++</span><span class="p">;</span>
+			<span class="p">}</span>
+		<span class="p">}</span>
+		<span class="k">else</span>
+		<span class="p">{</span>
+			<span class="n">counter</span><span class="o">++</span><span class="p">;</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">ccr_buffer</span><span class="p">(</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">stream_in</span><span class="p">,</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">stream_R</span><span class="p">,</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">stream_ccr</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="cp">#pragma HLS INTERFACE ap_ctrl_none port=return
+#pragma HLS INTERFACE mode=AXIS port=stream_in register_mode=off
+#pragma HLS INTERFACE mode=AXIS port=stream_R register_mode=off
+#pragma HLS INTERFACE mode=AXIS port=stream_ccr register_mode=off
+</span>
+	<span class="n">hls_thread_local</span> <span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="p">,</span><span class="n">total</span><span class="o">&gt;</span> <span class="n">ccr</span><span class="p">;</span>
+
+	<span class="n">hls_thread_local</span> <span class="n">hls</span><span class="o">::</span><span class="n">task</span>	<span class="n">data_3</span><span class="p">(</span><span class="n">data_copy</span><span class="o">&lt;</span><span class="mi">3</span><span class="o">&gt;</span><span class="p">,</span><span class="n">stream_in</span><span class="p">,</span><span class="n">ccr</span><span class="p">,</span><span class="n">stream_R</span><span class="p">);</span>
+	<span class="n">hls_thread_local</span> <span class="n">hls</span><span class="o">::</span><span class="n">task</span>	<span class="n">data_ccr</span><span class="p">(</span><span class="n">buffer_ccr</span><span class="p">,</span><span class="n">ccr</span><span class="p">,</span><span class="n">stream_ccr</span><span class="p">);</span>
+
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">buffer_bot</span><span class="p">(</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">stream_in</span><span class="p">,</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">stream_up</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="cp">#pragma HLS INTERFACE ap_ctrl_none port=return
+#pragma HLS INTERFACE mode=AXIS port=stream_in register_mode=off
+#pragma HLS INTERFACE mode=AXIS port=stream_up register_mode=off
+#pragma HLS PIPELINE II=1 style=flp
+</span>
+	<span class="k">static</span> <span class="kt">bool</span> <span class="n">inite</span><span class="o">=</span><span class="nb">false</span><span class="p">;</span>
+	<span class="k">static</span> <span class="kt">int</span> <span class="n">counter</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+	<span class="k">static</span> <span class="kt">int</span> <span class="n">row_counter</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+	<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">inite</span><span class="p">)</span>
+	<span class="p">{</span>
+		<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">stream_in</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span>
+		<span class="p">{</span>
+			<span class="n">inite</span><span class="o">=</span><span class="nb">true</span><span class="p">;</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+	<span class="k">else</span>
+	<span class="p">{</span>
+		<span class="n">mat</span> <span class="n">temp</span><span class="p">;</span>
+		<span class="n">temp</span><span class="o">=</span><span class="n">stream_in</span><span class="p">.</span><span class="n">read</span><span class="p">();</span>
+		<span class="k">if</span><span class="p">(</span><span class="n">row_counter</span><span class="o">&gt;</span><span class="mi">1</span><span class="p">)</span>
+		<span class="p">{</span>
+			<span class="k">if</span><span class="p">(</span><span class="n">counter</span><span class="o">==</span><span class="mi">0</span><span class="o">||</span><span class="n">counter</span><span class="o">==</span><span class="n">WIDTH</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+			<span class="p">{</span>
+				<span class="n">temp</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+				<span class="n">stream_up</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">temp</span><span class="p">);</span>
+			<span class="p">}</span>
+			<span class="k">else</span>
+			<span class="p">{</span>
+				<span class="n">stream_up</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">temp</span><span class="p">);</span>
+			<span class="p">}</span>
+		<span class="p">}</span>
+		<span class="k">else</span>
+		<span class="p">{</span>
+			<span class="n">temp</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+			<span class="n">stream_up</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">temp</span><span class="p">);</span>
+		<span class="p">}</span>
+		<span class="k">if</span><span class="p">(</span><span class="n">counter</span><span class="o">==</span><span class="n">WIDTH</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+		<span class="p">{</span>
+			<span class="n">counter</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+			<span class="k">if</span><span class="p">(</span><span class="n">row_counter</span><span class="o">==</span><span class="n">HEIGHT</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+			<span class="p">{</span>
+				<span class="n">row_counter</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+			<span class="p">}</span>
+			<span class="k">else</span>
+			<span class="p">{</span>
+				<span class="n">row_counter</span><span class="o">++</span><span class="p">;</span>
+			<span class="p">}</span>
+		<span class="p">}</span>
+		<span class="k">else</span>
+		<span class="p">{</span>
+			<span class="n">counter</span><span class="o">++</span><span class="p">;</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">bot_buffer</span><span class="p">(</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">stream_in</span><span class="p">,</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">stream_R</span><span class="p">,</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">stream_bot</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="cp">#pragma HLS INTERFACE ap_ctrl_none port=return
+#pragma HLS INTERFACE mode=AXIS port=stream_in register_mode=off
+#pragma HLS INTERFACE mode=AXIS port=stream_R register_mode=off
+#pragma HLS INTERFACE mode=AXIS port=stream_bot register_mode=off
+</span>
+	<span class="n">hls_thread_local</span> <span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="p">,</span><span class="n">total</span><span class="o">&gt;</span> <span class="n">bot</span><span class="p">,</span><span class="n">fl</span><span class="p">;</span>
+
+	<span class="n">hls_thread_local</span> <span class="n">hls</span><span class="o">::</span><span class="n">task</span>	<span class="n">data_4</span><span class="p">(</span><span class="n">data_copy</span><span class="o">&lt;</span><span class="mi">4</span><span class="o">&gt;</span><span class="p">,</span><span class="n">stream_in</span><span class="p">,</span><span class="n">bot</span><span class="p">,</span><span class="n">stream_R</span><span class="p">);</span>
+	<span class="n">hls_thread_local</span> <span class="n">hls</span><span class="o">::</span><span class="n">task</span>  <span class="n">bot_data</span><span class="p">(</span><span class="n">buffer_bot</span><span class="p">,</span><span class="n">bot</span><span class="p">,</span><span class="n">stream_bot</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">data_buffer</span><span class="p">(</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">stream_in</span><span class="p">,</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">stream_up</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="cp">#pragma HLS INTERFACE ap_ctrl_none port=return
+#pragma HLS INTERFACE mode=AXIS port=stream_in register_mode=off
+#pragma HLS INTERFACE mode=AXIS port=stream_up register_mode=off
+#pragma HLS PIPELINE II=1 style=flp
+</span>
+	<span class="k">static</span> <span class="kt">bool</span> <span class="n">inite</span><span class="o">=</span><span class="nb">false</span><span class="p">;</span>
+	<span class="k">static</span> <span class="kt">int</span> <span class="n">counter</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+	<span class="k">static</span> <span class="kt">int</span> <span class="n">row_counter</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+	<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">inite</span><span class="p">)</span>
+	<span class="p">{</span>
+		<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">stream_in</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span>
+		<span class="p">{</span>
+			<span class="n">inite</span><span class="o">=</span><span class="nb">true</span><span class="p">;</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+	<span class="k">else</span>
+	<span class="p">{</span>
+		<span class="n">mat</span> <span class="n">temp</span><span class="p">;</span>
+		<span class="n">temp</span><span class="o">=</span><span class="n">stream_in</span><span class="p">.</span><span class="n">read</span><span class="p">();</span>
+		<span class="k">if</span><span class="p">(</span><span class="n">row_counter</span><span class="o">&gt;</span><span class="mi">0</span><span class="o">&amp;&amp;</span><span class="n">row_counter</span><span class="o">&lt;</span><span class="n">HEIGHT</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+		<span class="p">{</span>
+			<span class="k">if</span><span class="p">(</span><span class="n">counter</span><span class="o">==</span><span class="mi">0</span><span class="o">||</span><span class="n">counter</span><span class="o">==</span><span class="n">WIDTH</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+			<span class="p">{</span>
+				<span class="n">stream_up</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">temp</span><span class="p">);</span>
+			<span class="p">}</span>
+			<span class="k">else</span>
+			<span class="p">{</span>
+				<span class="n">temp</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+				<span class="n">stream_up</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">temp</span><span class="p">);</span>
+			<span class="p">}</span>
+		<span class="p">}</span>
+		<span class="k">else</span>
+		<span class="p">{</span>
+			<span class="n">stream_up</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">temp</span><span class="p">);</span>
+		<span class="p">}</span>
+		<span class="k">if</span><span class="p">(</span><span class="n">counter</span><span class="o">==</span><span class="n">WIDTH</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+		<span class="p">{</span>
+			<span class="n">counter</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+			<span class="k">if</span><span class="p">(</span><span class="n">row_counter</span><span class="o">==</span><span class="n">HEIGHT</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+			<span class="p">{</span>
+				<span class="n">row_counter</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+			<span class="p">}</span>
+			<span class="k">else</span>
+			<span class="p">{</span>
+				<span class="n">row_counter</span><span class="o">++</span><span class="p">;</span>
+			<span class="p">}</span>
+		<span class="p">}</span>
+		<span class="k">else</span>
+		<span class="p">{</span>
+			<span class="n">counter</span><span class="o">++</span><span class="p">;</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div> <p><strong>linebuffer_1.h</strong></p> <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;assert.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;ap_fixed.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">"hls_task.h"</span><span class="cp">
+#include</span> <span class="cpf">"hls_stream.h"</span><span class="cp">
+#include</span> <span class="cpf">"FIFO_buffer.hpp"</span><span class="cp">
+#include</span> <span class="cpf">&lt;ap_axi_sdata.h&gt;</span><span class="cp">
+</span>
+<span class="cp">#ifndef __LINEBUFFER_1__
+#define __LINEBUFFER_1__
+</span>
+<span class="cp">#define WIDTH 13
+#define HEIGHT 3
+#define total 52
+</span><span class="k">typedef</span> <span class="kt">int</span> <span class="n">mat</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="n">Mat_stream</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="n">hls</span><span class="o">::</span><span class="n">axis</span><span class="o">&lt;</span><span class="n">mat</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="o">&gt;</span> <span class="n">F_mat</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">F_mat</span><span class="o">&gt;</span> <span class="n">F_stream</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">linebuffer_data_driven</span><span class="p">(</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">stream_in</span><span class="p">,</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">stream_out</span><span class="p">);</span>
+
+<span class="kt">void</span> <span class="nf">buffer_up</span><span class="p">(</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">stream_in</span><span class="p">,</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">stream_up</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">top_buffer</span><span class="p">(</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">stream_in</span><span class="p">,</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">stream_R</span><span class="p">,</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">stream_top</span><span class="p">);</span>
+
+
+<span class="kt">void</span> <span class="nf">buffer_ccl</span><span class="p">(</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">stream_in</span><span class="p">,</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">stream_up</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">ccl_buffer</span><span class="p">(</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">stream_in</span><span class="p">,</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">stream_R</span><span class="p">,</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">stream_ccc</span><span class="p">);</span>
+
+<span class="kt">void</span> <span class="nf">buffer_ccc</span><span class="p">(</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">stream_in</span><span class="p">,</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">stream_up</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">ccc_buffer</span><span class="p">(</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">stream_in</span><span class="p">,</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">stream_R</span><span class="p">,</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">stream_ccc</span><span class="p">);</span>
+
+<span class="kt">void</span> <span class="nf">buffer_ccr</span><span class="p">(</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">stream_in</span><span class="p">,</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">stream_up</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">ccr_buffer</span><span class="p">(</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">stream_in</span><span class="p">,</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">stream_R</span><span class="p">,</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">stream_ccc</span><span class="p">);</span>
+
+<span class="kt">void</span> <span class="nf">buffer_bot</span><span class="p">(</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">stream_in</span><span class="p">,</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">stream_up</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">bot_buffer</span><span class="p">(</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">stream_in</span><span class="p">,</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">stream_R</span><span class="p">,</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">stream_top</span><span class="p">);</span>
+
+<span class="kt">void</span> <span class="nf">cr_buffer</span><span class="p">(</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">stream_in</span><span class="p">,</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">stream_up</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">data_buffer</span><span class="p">(</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">stream_in</span><span class="p">,</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">stream_up</span><span class="p">);</span>
+
+
+<span class="cp">#endif
+</span></code></pre></div></div> <p><strong>linebuffer_2.cpp</strong></p> <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">"linebuffer_1.h"</span><span class="cp">
+</span>
+<span class="kt">void</span> <span class="nf">linebuffer_data_driven</span><span class="p">(</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">stream_in</span><span class="p">,</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">stream_out</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="cp">#pragma HLS INTERFACE ap_ctrl_none port=return
+#pragma HLS INTERFACE mode=AXIS port=stream_in register_mode=off
+#pragma HLS INTERFACE mode=AXIS port=stream_out register_mode=off
+</span>
+	<span class="n">hls_thread_local</span> <span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="p">,</span><span class="n">total</span><span class="o">&gt;</span> <span class="n">top_r</span><span class="p">,</span><span class="n">top_data</span><span class="p">,</span><span class="n">ccl_r</span><span class="p">,</span><span class="n">add_data1</span><span class="p">,</span><span class="n">ccc_r</span><span class="p">,</span><span class="n">ccr_r</span><span class="p">,</span><span class="n">ccr_data</span><span class="p">,</span><span class="n">bot_r</span><span class="p">,</span><span class="n">bot_data</span><span class="p">;</span>
+	<span class="n">hls_thread_local</span> <span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">mat</span><span class="p">,</span><span class="n">total</span><span class="o">&gt;</span> <span class="n">cr_buffer</span><span class="p">,</span><span class="n">b_buffer</span><span class="p">,</span><span class="n">t_buffer</span><span class="p">,</span><span class="n">ccc_data</span><span class="p">,</span><span class="n">ccl_data</span><span class="p">,</span><span class="n">data_other</span><span class="p">,</span><span class="n">add_buffer</span><span class="p">;</span>
+
+	<span class="n">hls_thread_local</span> <span class="n">hls</span><span class="o">::</span><span class="n">task</span>	<span class="n">top</span><span class="p">(</span><span class="n">top_buffer</span><span class="p">,</span><span class="n">stream_in</span><span class="p">,</span><span class="n">top_r</span><span class="p">,</span><span class="n">top_data</span><span class="p">);</span>
+	<span class="n">hls_thread_local</span> <span class="n">hls</span><span class="o">::</span><span class="n">task</span>	<span class="n">t</span><span class="p">(</span><span class="n">up_corrector</span><span class="o">&lt;</span><span class="n">WIDTH</span><span class="p">,</span><span class="n">HEIGHT</span><span class="p">,</span><span class="mi">0</span><span class="o">&gt;</span><span class="p">,</span><span class="n">top_data</span><span class="p">,</span><span class="n">t_buffer</span><span class="p">);</span><span class="c1">///cr</span>
+
+	<span class="n">hls_thread_local</span> <span class="n">hls</span><span class="o">::</span><span class="n">task</span>	<span class="n">ccl</span><span class="p">(</span><span class="n">ccl_buffer</span><span class="p">,</span><span class="n">top_r</span><span class="p">,</span><span class="n">ccl_r</span><span class="p">,</span><span class="n">ccl_data</span><span class="p">);</span>
+
+	<span class="n">hls_thread_local</span> <span class="n">hls</span><span class="o">::</span><span class="n">task</span>	<span class="n">ccc</span><span class="p">(</span><span class="n">ccc_buffer</span><span class="p">,</span><span class="n">ccl_r</span><span class="p">,</span><span class="n">ccc_r</span><span class="p">,</span><span class="n">ccc_data</span><span class="p">);</span>
+
+	<span class="n">hls_thread_local</span> <span class="n">hls</span><span class="o">::</span><span class="n">task</span>	<span class="n">ccr</span><span class="p">(</span><span class="n">ccr_buffer</span><span class="p">,</span><span class="n">ccc_r</span><span class="p">,</span><span class="n">ccr_r</span><span class="p">,</span><span class="n">ccr_data</span><span class="p">);</span>
+	<span class="n">hls_thread_local</span> <span class="n">hls</span><span class="o">::</span><span class="n">task</span>	<span class="n">cr</span><span class="p">(</span><span class="n">ccr_corrector</span><span class="o">&lt;</span><span class="n">WIDTH</span><span class="p">,</span><span class="n">HEIGHT</span><span class="p">,</span><span class="mi">0</span><span class="o">&gt;</span><span class="p">,</span><span class="n">ccr_data</span><span class="p">,</span><span class="n">cr_buffer</span><span class="p">);</span><span class="c1">///cr</span>
+
+	<span class="n">hls_thread_local</span> <span class="n">hls</span><span class="o">::</span><span class="n">task</span>	<span class="n">bot</span><span class="p">(</span><span class="n">bot_buffer</span><span class="p">,</span><span class="n">ccr_r</span><span class="p">,</span><span class="n">bot_r</span><span class="p">,</span><span class="n">bot_data</span><span class="p">);</span>
+	<span class="n">hls_thread_local</span> <span class="n">hls</span><span class="o">::</span><span class="n">task</span>	<span class="n">b</span><span class="p">(</span><span class="n">bot_corrector</span><span class="o">&lt;</span><span class="n">WIDTH</span><span class="p">,</span><span class="n">HEIGHT</span><span class="p">,</span><span class="mi">0</span><span class="o">&gt;</span><span class="p">,</span><span class="n">bot_data</span><span class="p">,</span><span class="n">b_buffer</span><span class="p">);</span><span class="c1">//bot</span>
+
+	<span class="n">hls_thread_local</span> <span class="n">hls</span><span class="o">::</span><span class="n">task</span>      <span class="n">add</span><span class="p">(</span><span class="n">PE_add</span><span class="o">&lt;</span><span class="mi">6</span><span class="o">&gt;</span><span class="p">,</span><span class="n">t_buffer</span><span class="p">,</span><span class="n">ccl_data</span><span class="p">,</span><span class="n">ccc_data</span><span class="p">,</span><span class="n">cr_buffer</span><span class="p">,</span><span class="n">b_buffer</span><span class="p">,</span><span class="n">add_buffer</span><span class="p">);</span>
+	<span class="n">hls_thread_local</span> <span class="n">hls</span><span class="o">::</span><span class="n">task</span>	<span class="n">data_around</span><span class="p">(</span><span class="n">data_buffer</span><span class="p">,</span><span class="n">bot_r</span><span class="p">,</span><span class="n">data_other</span><span class="p">);</span>
+
+	<span class="n">hls_thread_local</span> <span class="n">hls</span><span class="o">::</span><span class="n">task</span>	<span class="n">all_total_sum</span><span class="p">(</span><span class="n">all_total</span><span class="o">&lt;</span><span class="mi">0</span><span class="o">&gt;</span><span class="p">,</span><span class="n">add_buffer</span><span class="p">,</span><span class="n">data_other</span><span class="p">,</span><span class="n">stream_out</span><span class="p">);</span><span class="c1">//bot</span>
+
+<span class="p">}</span>
+</code></pre></div></div> <p>The synthesis report is shown below:</p> <div align="center"><img src="Images/20/24.png" alt="drawing" width="800" /></div> <p><strong>linebuffer_1_tb.cpp</strong></p> <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">"linebuffer_1.h"</span><span class="cp">
+</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+
+	<span class="n">mat</span> <span class="n">outdata</span><span class="p">;</span>
+	<span class="n">mat</span> <span class="n">outdata1</span><span class="p">;</span>
+	<span class="n">hls</span><span class="o">::</span><span class="n">stream</span> <span class="o">&lt;</span><span class="n">mat</span><span class="p">,</span><span class="n">total</span><span class="o">&gt;</span> <span class="n">in</span><span class="p">;</span>
+	<span class="n">hls</span><span class="o">::</span><span class="n">stream</span> <span class="o">&lt;</span><span class="n">mat</span><span class="p">,</span><span class="n">total</span><span class="o">&gt;</span> <span class="n">out</span><span class="p">,</span><span class="n">out1</span><span class="p">;</span>
+	<span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">78</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+	<span class="p">{</span>
+		<span class="n">in</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+	<span class="p">}</span>
+	<span class="n">linebuffer_data_driven</span><span class="p">(</span><span class="n">in</span><span class="p">,</span><span class="n">out1</span><span class="p">);</span>
+	<span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">78</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+	<span class="p">{</span>
+		<span class="p">{</span>
+			<span class="n">outdata1</span><span class="o">=</span><span class="n">out1</span><span class="p">.</span><span class="n">read</span><span class="p">();</span>
+			<span class="n">printf</span><span class="p">(</span><span class="s">"outdata1 is %d</span><span class="se">\r\n</span><span class="s">"</span><span class="p">,</span><span class="n">outdata1</span><span class="p">);</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div> <h4 id="create-the-vivado-project"> <a href="#create-the-vivado-project" class="anchor-heading" aria-labelledby="create-the-vivado-project"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Create the Vivado project </h4> <p>The configure block design can use reference materials <a href="https://uri-nextlab.github.io/ParallelProgrammingLabs/docs/HLS_Labs/Lab1.html">here</a>. We also need to choose the number of the DMA according to the number of the interface.</p> <div align="center"><img src="Images/19/22.png" alt="drawing" width="1200" /></div> <h4 id="run-synthesis--implementation-and-generate-bitstream"> <a href="#run-synthesis--implementation-and-generate-bitstream" class="anchor-heading" aria-labelledby="run-synthesis--implementation-and-generate-bitstream"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Run synthesis, Implementation, and generate bitstream </h4> <p>It may show some errors about I/O Ports; please fix them.</p> <h4 id="download-the-bitstream-file-to-pynq"> <a href="#download-the-bitstream-file-to-pynq" class="anchor-heading" aria-labelledby="download-the-bitstream-file-to-pynq"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Download the bitstream file to PYNQ </h4> <div align="center"><img src="Images/8_16.png" alt="drawing" width="800" /></div> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">pynq</span> <span class="kn">import</span> <span class="n">Overlay</span>
+<span class="kn">from</span> <span class="n">pynq</span> <span class="kn">import</span> <span class="n">allocate</span>
+<span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="n">hw</span> <span class="o">=</span> <span class="nc">Overlay</span><span class="p">(</span><span class="sh">'</span><span class="s">design_1.bit</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">s2mm</span> <span class="o">=</span> <span class="n">hw</span><span class="p">.</span><span class="n">axi_dma_0</span><span class="p">.</span><span class="n">sendchannel</span>
+<span class="n">mm2s</span> <span class="o">=</span> <span class="n">hw</span><span class="p">.</span><span class="n">axi_dma_0</span><span class="p">.</span><span class="n">recvchannel</span>
+<span class="n">N</span> <span class="o">=</span> <span class="mi">78</span>
+<span class="n">oBuf_0</span> <span class="o">=</span> <span class="nf">allocate</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">N</span><span class="p">,),</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">int32</span><span class="p">)</span>
+<span class="n">iBuf_0</span> <span class="o">=</span> <span class="nf">allocate</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">N</span><span class="p">,),</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">int32</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+    <span class="n">oBuf_0</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span> <span class="n">i</span>
+
+<span class="n">s2mm</span><span class="p">.</span><span class="nf">transfer</span><span class="p">(</span><span class="n">oBuf_0</span><span class="p">)</span>
+<span class="n">mm2s</span><span class="p">.</span><span class="nf">transfer</span><span class="p">(</span><span class="n">iBuf_0</span><span class="p">)</span>
+<span class="n">s2mm</span><span class="p">.</span><span class="nf">wait</span><span class="p">()</span>
+<span class="n">mm2s</span><span class="p">.</span><span class="nf">wait</span><span class="p">()</span>
+</code></pre></div></div> <p>We will see:</p> <div align="center"><img src="Images/19/23.png" alt="drawing" width="600" /></div> <h2 id="demonstrate"> <a href="#demonstrate" class="anchor-heading" aria-labelledby="demonstrate"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Demonstrate </h2> <p>Please finish the example in a data-driven way and implement it on the PYNQ-Z2 board.</p> </main> </div> </div> <div class="search-overlay"></div> </div> </body> </html>
